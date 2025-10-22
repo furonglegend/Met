@@ -41,16 +41,16 @@ where = ["src"]
 name = "emmet-edit"
 python = "3.9.7"
 channels = ["pytorch", "conda-forge", "defaults"]
-pip_exclude = ["torch", "torchvision", "torchaudio", "cudatoolkit", "cpuonly"]
+pip_exclude = ["torch", "torchvision", "torchaudio", "pytorch", "cudatoolkit", "cpuonly"]
 
 [tool.emmet.env.cpu]
-torch = "1.12.1"
+pytorch = "1.12.1"
 torchvision = "0.13.1"
 torchaudio = "0.12.1"
 cpuonly = ""
 
 [tool.emmet.env.gpu]
-torch = "1.12.1"
+pytorch = "1.12.1"
 torchvision = "0.13.1"
 torchaudio = "0.12.1"
 cudatoolkit = "11.3"

@@ -56,11 +56,12 @@ else
   exit 1
 fi
 
-TMP_ENV_FILE="$(mktemp)"
-TMP_ENV_LIST="$(mktemp)"
+TMP_WORK_DIR="$(mktemp -d)"
+TMP_ENV_FILE="${TMP_WORK_DIR}/environment.yml"
+TMP_ENV_LIST="${TMP_WORK_DIR}/envs.json"
 cleanup() {
   if [[ "${DEBUG_SETUP:-0}" != "1" ]]; then
-    rm -f "${TMP_ENV_FILE}" "${TMP_ENV_LIST}"
+    rm -rf "${TMP_WORK_DIR}"
   fi
 }
 trap cleanup EXIT
@@ -70,6 +71,7 @@ ENV_NAME="$(${PY_CMD[@]} - "$PYPROJECT_PATH" "${REQUESTED_DEVICE}" "${TMP_ENV_FI
 import ast
 import pathlib
 import sys
+import os
 
 pyproject = pathlib.Path(sys.argv[1])
 device = sys.argv[2]
@@ -140,6 +142,7 @@ env_name = parse_value(env_data.get("name", '"emmet-edit"'))
 python_version = parse_value(env_data.get("python", '"3.9"'))
 channels = list(parse_value(env_data.get("channels", '["pytorch", "conda-forge", "defaults"]')))
 pip_exclude = set(parse_value(env_data.get("pip_exclude", "[]")))
+pip_exclude.add("pip")
 
 if device == "gpu" and "nvidia" not in channels:
     if channels:
@@ -156,6 +159,10 @@ for pkg_name, version in target_table.items():
     conda_deps.append(entry)
 
 pip_deps = [spec for spec in dependencies if normalize_pkg(spec) not in pip_exclude]
+
+if os.environ.get("DEBUG_SETUP") == "1":
+  sys.stderr.write(f"[setup][debug] conda dependencies: {conda_deps}\n")
+  sys.stderr.write(f"[setup][debug] pip dependencies: {pip_deps}\n")
 
 lines = [f"name: {env_name}", "channels:"]
 for channel in channels:
@@ -215,10 +222,10 @@ fi
 
 if [[ "${env_exists}" == true ]]; then
   echo "[setup] Updating environment ${ENV_NAME} with ${PKG_MGR}."
-  "${PKG_MGR}" env update --name "${ENV_NAME}" --file "${TMP_ENV_FILE}" --prune
+  "${PKG_MGR}" env update --yes --name "${ENV_NAME}" --file "${TMP_ENV_FILE}" --prune
 else
   echo "[setup] Creating environment ${ENV_NAME} with ${PKG_MGR}."
-  "${PKG_MGR}" env create --name "${ENV_NAME}" --file "${TMP_ENV_FILE}"
+  "${PKG_MGR}" env create --yes --name "${ENV_NAME}" --file "${TMP_ENV_FILE}"
 fi
 
 echo "[setup] Done. Activate the environment via: conda activate ${ENV_NAME}"
