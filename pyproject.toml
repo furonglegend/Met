@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emmet-stability-replay"
+version = "0.1.0"
+description = "Stability-focused extensions to EMMET model editing workflows."
+readme = "README.md"
+license = { text = "Proprietary" }
+requires-python = ">=3.9,<3.10"
+dependencies = [
+	"attrdict==2.0.1",
+	"datasets==1.18.3",
+	"higher==0.2.1",
+	"hydra-core==1.2.0",
+	"jsonlines==3.1.0",
+	"matplotlib==3.6.1",
+	"nltk==3.7",
+	"numpy==1.23.5",
+	"omegaconf==2.2.3",
+	"pyyaml==6.0",
+	"scikit-learn==1.0.2",
+	"scipy==1.9.2",
+	"seaborn==0.12.0",
+	"torch==1.12.1",
+	"torchaudio==0.12.1",
+	"torchvision==0.13.1",
+	"transformers==4.23.1",
+	"tqdm==4.64.1",
+	"wandb==0.13.4"
+]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.emmet.env]
+name = "emmet-edit"
+python = "3.9.7"
+channels = ["pytorch", "conda-forge", "defaults"]
+pip_exclude = ["torch", "torchvision", "torchaudio", "cudatoolkit", "cpuonly"]
+
+[tool.emmet.env.cpu]
+torch = "1.12.1"
+torchvision = "0.13.1"
+torchaudio = "0.12.1"
+cpuonly = ""
+
+[tool.emmet.env.gpu]
+torch = "1.12.1"
+torchvision = "0.13.1"
+torchaudio = "0.12.1"
+cudatoolkit = "11.3"
