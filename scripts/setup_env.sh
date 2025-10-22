@@ -17,6 +17,35 @@ else
   exit 1
 fi
 
+pkg_exec() {
+  local status
+  "${PKG_MGR}" "$@"
+  status=$?
+  if [[ ${status} -ne 0 && "${PKG_MGR}" == "mamba" ]]; then
+    if command -v conda >/dev/null 2>&1; then
+      echo "[setup] mamba $* failed (exit ${status}); retrying with conda." >&2
+      PKG_MGR="conda"
+      "${PKG_MGR}" "$@"
+      status=$?
+    fi
+  fi
+  return ${status}
+}
+
+get_env_python() {
+  local env_name=$1
+  local exe
+  exe=$("${PKG_MGR}" run -n "${env_name}" python -c "import sys; print(sys.executable)" 2>/dev/null)
+  if [[ -z "${exe}" && "${PKG_MGR}" == "mamba" ]]; then
+    if command -v conda >/dev/null 2>&1; then
+      echo "[setup] Failed to query python via mamba run; retrying with conda." >&2
+      PKG_MGR="conda"
+      exe=$("${PKG_MGR}" run -n "${env_name}" python -c "import sys; print(sys.executable)" 2>/dev/null)
+    fi
+  fi
+  printf '%s' "${exe}"
+}
+
 detect_gpu() {
   if command -v nvidia-smi >/dev/null 2>&1; then
     if nvidia-smi >/dev/null 2>&1; then
@@ -59,6 +88,7 @@ fi
 TMP_WORK_DIR="$(mktemp -d)"
 TMP_ENV_FILE="${TMP_WORK_DIR}/environment.yml"
 TMP_ENV_LIST="${TMP_WORK_DIR}/envs.json"
+TMP_PIP_REQ="${TMP_WORK_DIR}/pip_requirements.txt"
 cleanup() {
   if [[ "${DEBUG_SETUP:-0}" != "1" ]]; then
     rm -rf "${TMP_WORK_DIR}"
@@ -161,21 +191,22 @@ for pkg_name, version in target_table.items():
 pip_deps = [spec for spec in dependencies if normalize_pkg(spec) not in pip_exclude]
 
 if os.environ.get("DEBUG_SETUP") == "1":
-  sys.stderr.write(f"[setup][debug] conda dependencies: {conda_deps}\n")
-  sys.stderr.write(f"[setup][debug] pip dependencies: {pip_deps}\n")
+    sys.stderr.write(f"[setup][debug] conda dependencies: {conda_deps}\n")
+    sys.stderr.write(f"[setup][debug] pip dependencies: {pip_deps}\n")
 
-lines = [f"name: {env_name}", "channels:"]
+yaml_lines = [f"name: {env_name}", "channels:"]
 for channel in channels:
-    lines.append(f"  - {channel}")
-lines.append("dependencies:")
+    yaml_lines.append(f"  - {channel}")
+yaml_lines.append("dependencies:")
 for dep in conda_deps:
-    lines.append(f"  - {dep}")
-if pip_deps:
-    lines.append("  - pip:")
-    for dep in pip_deps:
-        lines.append(f"    - {dep}")
+    yaml_lines.append(f"  - {dep}")
 
-dest.write_text("\n".join(lines) + "\n", encoding="utf-8")
+dest.write_text("\n".join(yaml_lines) + "\n", encoding="utf-8")
+req_path = dest.parent / "pip_requirements.txt"
+if pip_deps:
+    req_path.write_text("\n".join(pip_deps) + "\n", encoding="utf-8")
+elif req_path.exists():
+    req_path.unlink()
 print(env_name)
 PY
 )"
@@ -195,6 +226,10 @@ fi
 if [[ "${DEBUG_SETUP:-0}" == "1" ]]; then
   echo "[setup] Generated environment specification (${TMP_ENV_FILE}):"
   cat "${TMP_ENV_FILE}"
+  if [[ -s "${TMP_PIP_REQ}" ]]; then
+    echo "[setup] Pending pip/uv requirements (${TMP_PIP_REQ}):"
+    cat "${TMP_PIP_REQ}"
+  fi
 fi
 
 env_exists=false
@@ -222,10 +257,34 @@ fi
 
 if [[ "${env_exists}" == true ]]; then
   echo "[setup] Updating environment ${ENV_NAME} with ${PKG_MGR}."
-  "${PKG_MGR}" env update --yes --name "${ENV_NAME}" --file "${TMP_ENV_FILE}" --prune
+  if ! pkg_exec env update --yes --name "${ENV_NAME}" --file "${TMP_ENV_FILE}" --prune; then
+    echo "[setup] Failed to update environment ${ENV_NAME}." >&2
+    exit 1
+  fi
 else
   echo "[setup] Creating environment ${ENV_NAME} with ${PKG_MGR}."
-  "${PKG_MGR}" env create --yes --name "${ENV_NAME}" --file "${TMP_ENV_FILE}"
+  if ! pkg_exec env create --yes --name "${ENV_NAME}" --file "${TMP_ENV_FILE}"; then
+    echo "[setup] Failed to create environment ${ENV_NAME}." >&2
+    exit 1
+  fi
+fi
+
+if [[ -s "${TMP_PIP_REQ}" ]]; then
+  echo "[setup] Installing remaining packages for ${ENV_NAME}."
+  if command -v uv >/dev/null 2>&1; then
+    PY_EXE=$(get_env_python "${ENV_NAME}")
+    if [[ -n "${PY_EXE}" ]]; then
+      uv pip install --python "${PY_EXE}" --upgrade -r "${TMP_PIP_REQ}"
+    else
+      echo "[setup] Failed to locate python executable inside ${ENV_NAME}." >&2
+      exit 1
+    fi
+  else
+    if ! pkg_exec run -n "${ENV_NAME}" python -m pip install --upgrade -r "${TMP_PIP_REQ}"; then
+      echo "[setup] Failed to install pip dependencies for ${ENV_NAME}." >&2
+      exit 1
+    fi
+  fi
 fi
 
 echo "[setup] Done. Activate the environment via: conda activate ${ENV_NAME}"
