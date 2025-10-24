@@ -36,6 +36,7 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["*.egg-info"]
 
 [tool.emmet.env]
 name = "emmet-edit"
