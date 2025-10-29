@@ -5,59 +5,6 @@ Stability-focused extensions to EMMET model editing workflows.
 ## 项目结构
 
 ```
-llm_project/  # 项目名称
-├── LICENSE  # 开源许可证（如 MIT 或 Apache-2.0）
-├── README.md  # 项目概述、安装指南和使用示例
-├── pyproject.toml  # 项目配置：管理依赖、构建、工具（如 black、pytest）
-├── Makefile  # 自动化任务脚本（make env, make install, make test）
-├── .gitignore  # 排除 data/、models/、.venv/ 等大型文件
-├── data/  # 数据目录
-│   ├── raw/  # 原始数据集（如文本语料）
-│   ├── processed/  # 处理后的数据（如 tokenized 数据集）
-│   └── embeddings/  # 预计算的向量嵌入
-├── configs/  # 配置目录
-│   ├── model.yaml  # LLM 参数（如温度、top_p）
-│   └── prompts/  # 提示模板文件
-├── models/  # 模型目录
-│   ├── checkpoints/  # 微调后的模型权重
-│   └── download_scripts/  # 下载预训练模型的脚本
-├── src/  # 源代码包
-│   ├── __init__.py  # 包初始化
-│   ├── main.py  # 入口脚本
-│   ├── core.py  # 核心逻辑
-│   ├── data/  # 数据处理模块
-│   │   ├── __init__.py
-│   │   └── make_dataset.py
-│   ├── features/  # 特征工程模块
-# EMMET Stability Replay
-
-Stability-focused extensions to EMMET model editing workflows.
-
-## 项目结构
-
-### 当前结构
-
-```
-emmet-stability-replay/
-├── Makefile              # 自动化构建脚本
-├── pyproject.toml        # 项目配置和依赖
-├── README.md
-├── src/                  # 源代码（扁平结构）
-│   ├── __init__.py
-│   ├── data/
-│   │   ├── __init__.py
-│   │   └── make_dataset.py
-│   ├── features/
-│   │   └── __init__.py
-│   └── utils/
-│       └── __init__.py
-├── test/                 # 测试目录
-└── scripts/              # 辅助脚本
-```
-
-### 推荐的完整 LLM 项目结构（参考）
-
-```
 llm_project/
 ├── LICENSE
 ├── README.md
@@ -75,27 +22,20 @@ llm_project/
 │   ├── checkpoints/     # 微调后的权重
 │   └── download_scripts/
 ├── src/                  # 源代码包
-│   ├── __init__.py
 │   ├── main.py
 │   ├── core.py
 │   ├── data/
-│   │   ├── __init__.py
 │   │   └── make_dataset.py
 │   ├── features/
-│   │   ├── __init__.py
 │   │   └── build_embeddings.py
 │   ├── models/
-│   │   ├── __init__.py
 │   │   └── train_model.py
 │   ├── integrations/
-│   │   ├── __init__.py
 │   │   ├── huggingface.py
 │   │   └── openai.py
 │   └── utils/
-│       ├── __init__.py
 │       └── logging.py
 ├── tests/
-│   ├── __init__.py
 │   ├── test_core.py
 │   └── conftest.py
 ├── docs/
@@ -158,3 +98,22 @@ python -c "from data import make_dataset; print('✅ 安装成功')"
 - **模块导入**：`from data import make_dataset`（简洁的扁平结构）
 - **环境变量**：`DEVICE=cpu make env` 手动指定设备
 - **打包发布**：`make build` 生成 wheel 包到 `dist/` 目录
+
+## 依赖管理
+
+### 使用uv
+
+```bash
+# 新增包
+uv add <package-name>
+
+# 新增特定版本包
+uv add <package-name>==<version>
+
+# 移除包
+uv remove <package-name>
+```
+
+### 不使用uv
+
+添加时使用 pip 或 conda 手动管理依赖，并手动添加到 `pyproject.toml` 的 `dependencies` 部分，删除同理
