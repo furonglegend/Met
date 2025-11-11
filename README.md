@@ -4,7 +4,7 @@ Stability-focused extensions to EMMET model editing workflows.
 
 ## 项目结构
 
-```
+```plaintext
 llm_project/
 ├── LICENSE
 ├── README.md
@@ -47,13 +47,17 @@ llm_project/
 ## 环境要求
 
 **所有平台：**
+
 - 安装 [Miniforge](https://github.com/conda-forge/miniforge)（推荐，自带 mamba）
 
 **Linux / macOS：**
+
 - ✅ 系统自带 make
 
 **Windows：**
+
 - 安装 GNU Make：
+  
   ```powershell
   choco install make
   # 或

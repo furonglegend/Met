@@ -11,6 +11,7 @@
 - [ ] 输出一份包含方法、实验与结论的最终报告/笔记本与可运行脚本。
 
 验收产物：
+
 - 实验脚本与配置（可一键运行、含随机种子与日志）。
 - 结果表格与图：ES/PS/NS/GE/S、遗忘曲线、批量规模对性能的影响、顺序-批量对比。
 - 简要技术报告草稿（可合入最终报告）。
@@ -18,11 +19,13 @@
 ## 2. 需要学习/补齐的知识点
 
 理论/算法：
+
 - [ ] ROME 等式约束编辑的基本推导与目标函数；MEMIT 的最小二乘放宽、批量编辑思想。
 - [ ] EMMET 的统一视角与闭式解（等式约束的批量解法），理解 KKT 条件、约束最小二乘与矩阵分解的数值稳定性问题。
 - [ ] 遗忘现象：渐进遗忘与灾难遗忘的区别与成因；顺序编辑与批量编辑的干扰机制。
 
 工程/实践：
+
 - [ ] `unified-model-editing` 代码结构：数据集管线（CounterFact/ZSRE）、`emmet/memit/rome` 各模块、`util/nethook.py` 钩子机制、评测脚本与指标实现。
 - [ ] PyTorch Hook/Forward Intervene 技巧、Hugging Face Transformers（以 Llama 系列为例）的层命名与权重注入位置。
 - [ ] PEFT（LoRA/Prefix/Adapters）基本原理与库用法（优先 LoRA），如何将更新限制在低秩/适配器参数中。
@@ -49,12 +52,14 @@
 ## 5. 实现 Memory Replay for EMMET（稳定性增强 1）
 
 设计要点：
+
 - [ ] Buffer 结构：存储过往编辑的 (subject, relation, object)、原/改写提示、必要的中间统计（若可复用，如 Keys/Values/层位点）。
 - [ ] 采样策略：每次新编辑时，按比例 r 从 Buffer 采样历史样本并一并纳入 EMMET 的等式约束/矩阵求解中。
 - [ ] 代价与稳定性：控制历史约束权重或数量，避免矩阵病态；必要时加入正则或数值技巧（加噪、Tikhonov 等）。
 - [ ] 配置化：在 `hparams/EMMET` 增加 `replay_rate`、`replay_max_items`、`replay_weight` 等参数；日志记录实际使用的历史样本数与指标变化。
 
 实施步骤：
+
 - [ ] 阅读 `emmet/compute_ks.py`、`emmet/compute_z.py` 与 `emmet_main.py`，定位等式约束构建与闭式解步骤。
 - [ ] 在构建约束时拼接当前批与历史批（按采样策略），确保维度与索引一致。
 - [ ] 增加缓冲区维护模块（插入、采样、去重策略），并在成功编辑后更新 Buffer。
@@ -65,13 +70,15 @@
 ## 6. 实现 EMMET + PEFT（LoRA/Adapters）（稳定性增强 2）
 
 设计要点：
+
 - [ ] 在目标层仅更新 LoRA/Adapter 参数，冻结原权重；等式约束/闭式解仅作用于可训练（低秩）参数。
 - [ ] 可选两种路径：
-	- 直接用 Hugging Face PEFT 库封装目标层；
-	- 自实现低秩分解（W ≈ W0 + A·B），将闭式解作用到 A/B 的梯度/参数更新上。
+  - 直接用 Hugging Face PEFT 库封装目标层；
+  - 自实现低秩分解（W ≈ W0 + A·B），将闭式解作用到 A/B 的梯度/参数更新上。
 - [ ] 配置化 LoRA 超参：rank、alpha、dropout；与 Replay 组合时要控制总约束规模与求解稳定性。
 
 实施步骤：
+
 - [ ] 为目标 MLP/Attention 层添加 LoRA 适配模块与开关（`--use_lora`）。
 - [ ] 在求解/更新路径中只触达 LoRA 参数；验证参数量与显存占用的下降。
 - [ ] 结合 Replay 做小规模对比实验，观察 NS/历史编辑保留的变化。
@@ -123,7 +130,7 @@
 
 附：可选命令片段（Windows CMD，按需调整环境名/路径）
 
-```
+```plaintext
 :: 创建并激活环境（优先 conda）
 conda create -n emmet-replay python=3.10 -y
 conda activate emmet-replay
@@ -137,4 +144,3 @@ python unified-model-editing/create_samples_cf.py --n_samples 200
 python unified-model-editing/emmet/emmet_main.py --hparams unified-model-editing/hparams/EMMET/some_config.json
 python unified-model-editing/downstream_eval/current_edit_scores.py --results_dir results/baselines
 ```
-
