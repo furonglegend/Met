@@ -1,0 +1,9 @@
+{
+  "description": "Example batch experiment configuration",
+  "methods": ["rome", "memit", "emmet"],
+  "models": ["gpt2-xl"],
+  "num_edits": [100, 500],
+  "seeds": [42, 43, 44],
+  "dataset": "counterfact_sampled_unique_cf_10_20000",
+  "notes": "Quick validation experiments with small sample"
+}

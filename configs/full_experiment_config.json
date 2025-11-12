@@ -1,0 +1,9 @@
+{
+  "description": "Full experiment matrix for paper",
+  "methods": ["rome", "memit", "emmet"],
+  "models": ["gpt2-xl", "llama3.2-3b"],
+  "num_edits": [1, 8, 32, 128, 512, 1024],
+  "seeds": [1, 2, 3],
+  "dataset": "counterfact_sampled_unique_cf_10_20000",
+  "notes": "Full experiment matrix as specified in todo.md section 7"
+}

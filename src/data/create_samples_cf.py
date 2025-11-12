@@ -20,13 +20,13 @@ if __name__ == '__main__':
 
     dataset = CounterFactDataset('data', multi=mcf_flag)
 
-    ####select unique subjects
+    # select unique subjects
     all_subjects = {}
 
     subject2rel = []
     selected_indices = []
     for i in range(len(dataset)):
-        item = dataset.__getitem__(i)
+        item = dataset[i]
 
         found_flag = False
         relation = item['requested_rewrite']['relation_id'].lower()
