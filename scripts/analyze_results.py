@@ -89,18 +89,27 @@ class ResultsAnalyzer:
         if df is None or df.empty:
             return None
         
-        # Group by method and model
-        group_cols = ["method", "model"]
+        # Group by method, batch_size, and replay_rate
+        group_cols = []
+        if "method" in df.columns:
+            group_cols.append("method")
+        if "batch_size" in df.columns:
+            group_cols.append("batch_size")
+        if "replay_rate" in df.columns:
+            group_cols.append("replay_rate")
         
-        if all(col in df.columns for col in group_cols):
-            stats = df.groupby(group_cols).agg({
-                "efficacy_success": ["mean", "std", "count"],
-                "paraphrase_success": ["mean", "std"],
-                "neighborhood_specificity": ["mean", "std"],
-                "generation_entropy": ["mean", "std"],
-                "success_rate": ["mean", "std"]
-            })
-            
+        if not group_cols:
+            return None
+        
+        # Aggregate metrics
+        agg_dict = {}
+        for metric in ["efficacy_success", "paraphrase_success", "neighborhood_specificity", 
+                       "composite_score", "generation_entropy", "success_rate"]:
+            if metric in df.columns:
+                agg_dict[metric] = ["mean", "std", "count"]
+        
+        if agg_dict:
+            stats = df.groupby(group_cols).agg(agg_dict)
             self.logger.info("Statistics computed")
             return stats
         
@@ -136,18 +145,35 @@ class ResultsAnalyzer:
             f.write(f"Total Experiments: {len(df)}\n")
             f.write(f"Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
             
-            # Summary by method
+            # Summary by method and replay_rate
             if "method" in df.columns:
                 f.write("-"*80 + "\n")
                 f.write("Results by Method:\n")
                 f.write("-"*80 + "\n")
-                for method, group in df.groupby("method"):
-                    f.write(f"\n{method.upper()}:\n")
+                
+                # Group by method and replay_rate if available
+                group_cols = ["method"]
+                if "replay_rate" in df.columns:
+                    group_cols.append("replay_rate")
+                if "batch_size" in df.columns:
+                    group_cols.append("batch_size")
+                
+                for group_key, group in df.groupby(group_cols):
+                    if isinstance(group_key, tuple):
+                        group_name = "_".join([f"{k}={v}" for k, v in zip(group_cols, group_key)])
+                    else:
+                        group_name = f"{group_cols[0]}={group_key}"
+                    
+                    f.write(f"\n{group_name}:\n")
                     f.write(f"  Count: {len(group)}\n")
                     if "efficacy_success" in group.columns:
-                        f.write(f"  Efficacy Success: {group['efficacy_success'].mean():.4f} ± {group['efficacy_success'].std():.4f}\n")
+                        f.write(f"  Efficacy Success (ES): {group['efficacy_success'].mean():.4f} ± {group['efficacy_success'].std():.4f}\n")
+                    if "paraphrase_success" in group.columns:
+                        f.write(f"  Paraphrase Success (PS): {group['paraphrase_success'].mean():.4f} ± {group['paraphrase_success'].std():.4f}\n")
                     if "neighborhood_specificity" in group.columns:
-                        f.write(f"  Neighborhood Specificity: {group['neighborhood_specificity'].mean():.4f} ± {group['neighborhood_specificity'].std():.4f}\n")
+                        f.write(f"  Neighborhood Specificity (NS): {group['neighborhood_specificity'].mean():.4f} ± {group['neighborhood_specificity'].std():.4f}\n")
+                    if "composite_score" in group.columns:
+                        f.write(f"  Composite Score (S): {group['composite_score'].mean():.4f} ± {group['composite_score'].std():.4f}\n")
         
         self.logger.info(f"Report saved to {report_file}")
     

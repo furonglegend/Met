@@ -21,7 +21,7 @@ class BatchExperimentRunner:
     """Run batch experiments with grid search"""
     
     def __init__(self, config_file=None, methods=None, models=None, 
-                 num_edits_list=None, seeds=None):
+                 num_edits_list=None, batch_sizes=None, replay_rates=None, seeds=None):
         self.setup_logging()
         
         if config_file:
@@ -29,8 +29,10 @@ class BatchExperimentRunner:
         else:
             # Use command line arguments
             self.methods = methods or ["emmet"]
-            self.models = models or ["gpt2-xl"]
+            self.models = models or ["gpt2"]
             self.num_edits_list = num_edits_list or [100]
+            self.batch_sizes = batch_sizes or [1]
+            self.replay_rates = replay_rates or [0.0]
             self.seeds = seeds or [42]
         
         self.results = []
@@ -59,8 +61,10 @@ class BatchExperimentRunner:
             config = json.load(f)
         
         self.methods = config.get("methods", ["emmet"])
-        self.models = config.get("models", ["gpt2-xl"])
+        self.models = config.get("models", ["gpt2"])
         self.num_edits_list = config.get("num_edits", [100])
+        self.batch_sizes = config.get("batch_sizes", [1])
+        self.replay_rates = config.get("replay_rates", [0.0])
         self.seeds = config.get("seeds", [42])
         self.dataset = config.get("dataset", "counterfact_sampled_unique_cf_10_20000")
         
@@ -68,13 +72,16 @@ class BatchExperimentRunner:
         """Generate all experiment combinations"""
         experiments = []
         
-        for method, model, num_edits, seed in product(
-            self.methods, self.models, self.num_edits_list, self.seeds
+        for method, model, num_edits, batch_size, replay_rate, seed in product(
+            self.methods, self.models, self.num_edits_list, 
+            self.batch_sizes, self.replay_rates, self.seeds
         ):
             exp = {
                 "method": method,
                 "model": model,
                 "num_edits": num_edits,
+                "batch_size": batch_size,
+                "replay_rate": replay_rate,
                 "seed": seed
             }
             experiments.append(exp)
@@ -84,7 +91,7 @@ class BatchExperimentRunner:
     
     def run_experiment(self, exp):
         """Run a single experiment"""
-        exp_name = f"{exp['method']}_{exp['model']}_n{exp['num_edits']}_s{exp['seed']}"
+        exp_name = f"{exp['method']}_{exp['model']}_n{exp['num_edits']}_b{exp['batch_size']}_r{exp['replay_rate']}_s{exp['seed']}"
         self.logger.info(f"Running experiment: {exp_name}")
         
         cmd = [
@@ -92,6 +99,8 @@ class BatchExperimentRunner:
             "--method", exp["method"],
             "--model", exp["model"],
             "--num_edits", str(exp["num_edits"]),
+            "--batch_size", str(exp["batch_size"]),
+            "--replay_rate", str(exp["replay_rate"]),
             "--seed", str(exp["seed"])
         ]
         
@@ -172,6 +181,10 @@ def main():
                        help="List of models")
     parser.add_argument("--num_edits", nargs="+", type=int,
                        help="List of num_edits values")
+    parser.add_argument("--batch_sizes", nargs="+", type=int,
+                       help="List of batch sizes")
+    parser.add_argument("--replay_rates", nargs="+", type=float,
+                       help="List of replay rates (0.0-1.0)")
     parser.add_argument("--seeds", nargs="+", type=int,
                        help="List of random seeds")
     
@@ -183,6 +196,8 @@ def main():
         methods=args.methods,
         models=args.models,
         num_edits_list=args.num_edits,
+        batch_sizes=args.batch_sizes,
+        replay_rates=args.replay_rates,
         seeds=args.seeds
     )
     

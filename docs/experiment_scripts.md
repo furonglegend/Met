@@ -226,7 +226,7 @@ python scripts/run_batch_experiments.py --config configs/full_experiment_config.
 确保激活了正确的 conda 环境：
 
 ```bash
-conda activate emmet-replay
+conda activate emmet-edit
 ```
 
 ### 2. 显存不足

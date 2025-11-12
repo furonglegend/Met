@@ -3,8 +3,9 @@ Baseline Experiment Runner
 Run ROME/MEMIT/EMMET baseline experiments with configurable parameters
 
 Usage:
-    python scripts/run_baseline.py --method emmet --model gpt2-xl --num_edits 100
-    python scripts/run_baseline.py --method rome --model llama3.2-3b --num_edits 500 --seed 42
+    python scripts/run_baseline.py --method emmet --model gpt2 --num_edits 100
+    python scripts/run_baseline.py --method emmet --model gpt2 --num_edits 500 --batch_size 32 --seed 42
+    python scripts/run_baseline.py --method emmet --model gpt2 --num_edits 500 --batch_size 32 --replay_rate 0.3
 """
 
 import argparse
@@ -14,10 +15,16 @@ import sys
 from datetime import datetime
 from pathlib import Path
 import logging
+import random
+from typing import Dict, List
+
+import torch
+import numpy as np
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 
 class ExperimentConfig:
@@ -31,6 +38,8 @@ class ExperimentConfig:
         self.batch_size = args.batch_size
         self.dataset = args.dataset
         self.output_dir = args.output_dir
+        self.replay_rate = args.replay_rate if hasattr(args, 'replay_rate') else 0.0
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
         # Setup paths
         self.hparams_path = PROJECT_ROOT / f"src/hparams/{self.method.upper()}/{self.model}.json"
@@ -38,7 +47,8 @@ class ExperimentConfig:
         
         # Create output directory
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.run_dir = Path(self.output_dir) / f"{self.method}_{self.model}_{timestamp}"
+        replay_suffix = f"_replay{self.replay_rate}" if self.replay_rate > 0 else ""
+        self.run_dir = Path(self.output_dir) / f"{self.method}_{self.model}_b{self.batch_size}{replay_suffix}_{timestamp}"
         self.run_dir.mkdir(parents=True, exist_ok=True)
         
         # Setup logging
@@ -65,14 +75,16 @@ class ExperimentConfig:
             "num_edits": self.num_edits,
             "seed": self.seed,
             "batch_size": self.batch_size,
+            "replay_rate": self.replay_rate,
             "dataset": self.dataset,
+            "device": self.device,
             "timestamp": datetime.now().isoformat(),
             "hparams_path": str(self.hparams_path),
             "data_path": str(self.data_path)
         }
         
         config_file = self.run_dir / "config.json"
-        with open(config_file, 'w') as f:
+        with open(config_file, 'w', encoding='utf-8') as f:
             json.dump(config_dict, f, indent=2)
         
         self.logger.info(f"Configuration saved to {config_file}")
@@ -97,142 +109,436 @@ class BaselineRunner:
         self.logger = config.logger
         
     def load_data(self):
-        """Load dataset"""
+        """Load dataset and prepare requests"""
         self.logger.info(f"Loading dataset from {self.config.data_path}")
-        with open(self.config.data_path, 'r') as f:
+        with open(self.config.data_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
+        
+        # Handle different data formats
+        if isinstance(data, dict):
+            # Convert dict format to list
+            data = list(data.values())
         
         # Sample num_edits examples
         if len(data) > self.config.num_edits:
-            import random
             random.seed(self.config.seed)
             data = random.sample(data, self.config.num_edits)
         
         self.logger.info(f"Loaded {len(data)} examples")
-        return data
+        
+        # Convert to request format expected by EMMET
+        requests = []
+        for idx, record in enumerate(data):
+            if isinstance(record, dict) and "requested_rewrite" in record:
+                rewrite = record["requested_rewrite"]
+                request = {
+                    "case_id": record.get("case_id", idx),
+                    "subject": rewrite["subject"],
+                    "prompt": rewrite["prompt"],
+                    "target_new": rewrite["target_new"],
+                    "target_true": rewrite.get("target_true", {"str": ""}),
+                    "paraphrase_prompts": record.get("paraphrase_prompts", []),
+                    "neighborhood_prompts": record.get("neighborhood_prompts", []),
+                    "generation_prompts": record.get("generation_prompts", []),
+                }
+                requests.append(request)
+            else:
+                self.logger.warning(f"Skipping malformed record at index {idx}")
+        
+        self.logger.info(f"Prepared {len(requests)} editing requests")
+        return requests, data
     
     def load_model(self):
         """Load model and tokenizer"""
         self.logger.info(f"Loading model: {self.config.model}")
-        # TODO: Implement model loading
-        # from transformers import AutoModelForCausalLM, AutoTokenizer
-        # model = AutoModelForCausalLM.from_pretrained(...)
-        # tokenizer = AutoTokenizer.from_pretrained(...)
-        self.logger.info("Model loaded (placeholder)")
-        return None, None
+        
+        # Load tokenizer
+        tok = AutoTokenizer.from_pretrained(self.config.model)
+        tok.pad_token = tok.eos_token
+        self.logger.info(f"Tokenizer loaded: {len(tok)} tokens")
+        
+        # Load model
+        model = AutoModelForCausalLM.from_pretrained(self.config.model)
+        model.to(self.config.device)
+        model.eval()
+        
+        # Count parameters
+        total_params = sum(p.numel() for p in model.parameters())
+        self.logger.info(f"Model loaded: {total_params:,} parameters on {self.config.device}")
+        
+        return model, tok
     
-    def run_editing(self, model, tokenizer, data):
+    def run_editing(self, model, tokenizer, requests):
         """Run model editing"""
         self.logger.info(f"Starting {self.config.method.upper()} editing...")
+        self.logger.info(f"Batch size: {self.config.batch_size}, Replay rate: {self.config.replay_rate}")
         
-        results = []
-        for i, example in enumerate(data):
-            self.logger.info(f"Processing example {i+1}/{len(data)}")
-            
-            # TODO: Implement editing logic based on method
-            # if self.config.method == "rome":
-            #     edited_model = apply_rome_to_model(...)
-            # elif self.config.method == "memit":
-            #     edited_model = apply_memit_to_model(...)
-            # elif self.config.method == "emmet":
-            #     edited_model = apply_emmet_to_model(...)
-            
-            result = {
-                "example_id": i,
-                "subject": example.get("requested_rewrite", {}).get("subject", ""),
-                "status": "placeholder"
-            }
-            results.append(result)
+        # Load hyperparameters
+        with open(self.config.hparams_path, 'r') as f:
+            hparams_dict = json.load(f)
         
-        return results
+        # Import appropriate modules
+        if self.config.method == "emmet":
+            from emmet.emmet_hparams import EMMETHyperParams
+            from emmet.emmet_main import apply_emmet_to_model
+            hparams = EMMETHyperParams.from_json(self.config.hparams_path)
+        elif self.config.method == "memit":
+            from memit.memit_hparams import MEMITHyperParams
+            from memit.memit_main import apply_memit_to_model
+            hparams = MEMITHyperParams.from_json(self.config.hparams_path)
+        elif self.config.method == "rome":
+            from rome.rome_hparams import ROMEHyperParams
+            from rome.rome_main import apply_rome_to_model
+            hparams = ROMEHyperParams.from_json(self.config.hparams_path)
+        else:
+            raise ValueError(f"Unknown method: {self.config.method}")
+        
+        self.logger.info(f"Loaded hyperparameters from {self.config.hparams_path}")
+        
+        # Process in batches
+        all_results = []
+        num_batches = (len(requests) + self.config.batch_size - 1) // self.config.batch_size
+        
+        for batch_idx in range(num_batches):
+            start_idx = batch_idx * self.config.batch_size
+            end_idx = min(start_idx + self.config.batch_size, len(requests))
+            batch_requests = requests[start_idx:end_idx]
+            
+            self.logger.info(f"\n{'='*80}")
+            self.logger.info(f"Batch {batch_idx + 1}/{num_batches}: Editing examples {start_idx}-{end_idx-1}")
+            self.logger.info(f"{'='*80}")
+            
+            # Apply editing
+            try:
+                if self.config.method == "emmet":
+                    edited_model, orig_weights, edit_distances = apply_emmet_to_model(
+                        model, tokenizer, batch_requests, hparams,
+                        copy=False, return_orig_weights=True
+                    )
+                elif self.config.method == "memit":
+                    edited_model, orig_weights = apply_memit_to_model(
+                        model, tokenizer, batch_requests, hparams,
+                        copy=False, return_orig_weights=True
+                    )
+                    edit_distances = {}
+                elif self.config.method == "rome":
+                    edited_model, orig_weights = apply_rome_to_model(
+                        model, tokenizer, batch_requests, hparams,
+                        copy=False, return_orig_weights=True
+                    )
+                    edit_distances = {}
+                
+                self.logger.info(f"✅ Batch editing completed successfully")
+                
+                # Store batch results
+                batch_result = {
+                    "batch_idx": batch_idx,
+                    "start_idx": start_idx,
+                    "end_idx": end_idx,
+                    "num_edits": len(batch_requests),
+                    "subjects": [req["subject"] for req in batch_requests],
+                    "edit_distances": edit_distances,
+                    "status": "success"
+                }
+                all_results.append(batch_result)
+                
+            except Exception as e:
+                self.logger.error(f"❌ Batch editing failed: {str(e)}", exc_info=True)
+                batch_result = {
+                    "batch_idx": batch_idx,
+                    "start_idx": start_idx,
+                    "end_idx": end_idx,
+                    "num_edits": len(batch_requests),
+                    "status": "failed",
+                    "error": str(e)
+                }
+                all_results.append(batch_result)
+                # Continue to next batch rather than failing completely
+                continue
+        
+        self.logger.info(f"\n{'='*80}")
+        self.logger.info(f"Editing completed: {len(all_results)} batches processed")
+        self.logger.info(f"{'='*80}\n")
+        
+        return all_results, model, tokenizer
     
-    def evaluate(self, model, tokenizer, results):
-        """Evaluate editing results"""
-        self.logger.info("Evaluating results...")
+    def evaluate(self, model, tokenizer, requests, original_data):
+        """Evaluate editing results - compute ES, PS, NS metrics"""
+        self.logger.info("\n" + "="*80)
+        self.logger.info("Evaluating editing results...")
+        self.logger.info("="*80)
         
-        # TODO: Implement evaluation
-        # Calculate ES, PS, NS, GE, S metrics
+        model.eval()
         
+        # Store detailed results for each example
+        detailed_results = []
+        
+        # Aggregate metrics
+        rewrite_success = []
+        paraphrase_success = []
+        neighborhood_success = []
+        
+        for idx, (request, record) in enumerate(zip(requests, original_data)):
+            if idx % 50 == 0:
+                self.logger.info(f"Evaluating example {idx+1}/{len(requests)}")
+            
+            try:
+                # Extract test prompts
+                subject = request["subject"]
+                target_new = request["target_new"]["str"]
+                target_true = request["target_true"]["str"]
+                
+                # Efficacy Score (ES): Test on rewrite prompt
+                rewrite_prompt = request["prompt"].format(subject)
+                es = self._test_prediction(model, tokenizer, rewrite_prompt, target_new, target_true)
+                rewrite_success.append(es)
+                
+                # Paraphrase Score (PS): Test on paraphrase prompts
+                paraphrase_prompts = request.get("paraphrase_prompts", [])
+                if paraphrase_prompts:
+                    ps_scores = [
+                        self._test_prediction(model, tokenizer, pp, target_new, target_true)
+                        for pp in paraphrase_prompts[:5]  # Limit to 5 to save time
+                    ]
+                    ps = np.mean(ps_scores) if ps_scores else 0.0
+                    paraphrase_success.append(ps)
+                else:
+                    ps = 0.0
+                
+                # Neighborhood Score (NS): Test on neighborhood prompts
+                neighborhood_prompts = request.get("neighborhood_prompts", [])
+                if neighborhood_prompts:
+                    ns_scores = [
+                        self._test_prediction(model, tokenizer, np_text, target_true, target_new)
+                        for np_text in neighborhood_prompts[:5]  # Should preserve original
+                    ]
+                    ns = np.mean(ns_scores) if ns_scores else 1.0
+                    neighborhood_success.append(ns)
+                else:
+                    ns = 1.0
+                
+                detailed_results.append({
+                    "example_id": idx,
+                    "subject": subject,
+                    "target_new": target_new,
+                    "target_true": target_true,
+                    "efficacy_score": float(es),
+                    "paraphrase_score": float(ps),
+                    "neighborhood_score": float(ns)
+                })
+                
+            except Exception as e:
+                self.logger.warning(f"Evaluation failed for example {idx}: {str(e)}")
+                detailed_results.append({
+                    "example_id": idx,
+                    "subject": request.get("subject", ""),
+                    "error": str(e),
+                    "efficacy_score": 0.0,
+                    "paraphrase_score": 0.0,
+                    "neighborhood_score": 0.0
+                })
+        
+        # Compute aggregate metrics
         metrics = {
-            "efficacy_success": 0.0,
-            "paraphrase_success": 0.0,
-            "neighborhood_specificity": 0.0,
-            "generation_entropy": 0.0,
-            "success_rate": 0.0
+            "efficacy_success": float(np.mean(rewrite_success)) if rewrite_success else 0.0,
+            "paraphrase_success": float(np.mean(paraphrase_success)) if paraphrase_success else 0.0,
+            "neighborhood_specificity": float(np.mean(neighborhood_success)) if neighborhood_success else 0.0,
+            "num_examples": len(requests),
+            "num_evaluated": len(detailed_results)
         }
         
-        self.logger.info(f"Metrics: {metrics}")
-        return metrics
-    
-    def save_results(self, results, metrics):
-        """Save results and metrics"""
-        # Save detailed results
-        results_file = self.config.run_dir / "results.json"
-        with open(results_file, 'w') as f:
-            json.dump(results, f, indent=2)
+        # Composite score (S)
+        metrics["composite_score"] = (
+            metrics["efficacy_success"] + 
+            metrics["paraphrase_success"] + 
+            metrics["neighborhood_specificity"]
+        ) / 3.0
         
-        # Save metrics
+        self.logger.info("\n" + "="*80)
+        self.logger.info("EVALUATION RESULTS:")
+        self.logger.info("="*80)
+        self.logger.info(f"Efficacy Score (ES):           {metrics['efficacy_success']:.4f}")
+        self.logger.info(f"Paraphrase Score (PS):         {metrics['paraphrase_success']:.4f}")
+        self.logger.info(f"Neighborhood Specificity (NS): {metrics['neighborhood_specificity']:.4f}")
+        self.logger.info(f"Composite Score (S):           {metrics['composite_score']:.4f}")
+        self.logger.info("="*80 + "\n")
+        
+        return metrics, detailed_results
+    
+    def _test_prediction(self, model, tokenizer, prompt, target_new, target_true):
+        """
+        Test if model predicts target_new instead of target_true
+        Returns 1.0 if correct (predicts target_new), 0.0 otherwise
+        """
+        try:
+            # Prepare inputs
+            prompt_new = f"{prompt} {target_new}"
+            prompt_true = f"{prompt} {target_true}"
+            
+            # Tokenize
+            inputs_new = tokenizer(prompt_new, return_tensors="pt").to(model.device)
+            inputs_true = tokenizer(prompt_true, return_tensors="pt").to(model.device)
+            
+            # Get log probabilities
+            with torch.no_grad():
+                outputs_new = model(**inputs_new, labels=inputs_new["input_ids"])
+                outputs_true = model(**inputs_true, labels=inputs_true["input_ids"])
+                
+                # Use negative loss as proxy for log probability
+                prob_new = -outputs_new.loss.item()
+                prob_true = -outputs_true.loss.item()
+            
+            # Return 1 if new target is more likely
+            return 1.0 if prob_new > prob_true else 0.0
+            
+        except Exception as e:
+            self.logger.debug(f"Prediction test failed: {str(e)}")
+            return 0.0
+    
+    def save_results(self, edit_results, metrics, detailed_results):
+        """Save results and metrics"""
+        # Save editing results
+        edit_results_file = self.config.run_dir / "edit_results.json"
+        with open(edit_results_file, 'w', encoding='utf-8') as f:
+            json.dump(edit_results, f, indent=2)
+        
+        # Save detailed evaluation results
+        detailed_file = self.config.run_dir / "detailed_results.json"
+        with open(detailed_file, 'w', encoding='utf-8') as f:
+            json.dump(detailed_results, f, indent=2)
+        
+        # Save aggregate metrics
         metrics_file = self.config.run_dir / "metrics.json"
-        with open(metrics_file, 'w') as f:
+        with open(metrics_file, 'w', encoding='utf-8') as f:
             json.dump(metrics, f, indent=2)
         
         # Save metrics CSV for easy aggregation
         csv_file = self.config.run_dir / "metrics.csv"
-        with open(csv_file, 'w') as f:
+        with open(csv_file, 'w', encoding='utf-8') as f:
             f.write("metric,value\n")
             for key, value in metrics.items():
                 f.write(f"{key},{value}\n")
         
-        self.logger.info(f"Results saved to {self.config.run_dir}")
+        # Save detailed results as CSV
+        detailed_csv = self.config.run_dir / "detailed_results.csv"
+        with open(detailed_csv, 'w', encoding='utf-8') as f:
+            f.write("example_id,subject,target_new,target_true,efficacy_score,paraphrase_score,neighborhood_score\n")
+            for result in detailed_results:
+                if "error" not in result:
+                    f.write(f"{result['example_id']},{result['subject']},"
+                           f"{result.get('target_new', '')},"
+                           f"{result.get('target_true', '')},"
+                           f"{result['efficacy_score']},"
+                           f"{result['paraphrase_score']},"
+                           f"{result['neighborhood_score']}\n")
+        
+        self.logger.info(f"\n✅ Results saved to {self.config.run_dir}")
+        self.logger.info(f"   - Edit results: {edit_results_file.name}")
+        self.logger.info(f"   - Detailed results: {detailed_file.name}")
+        self.logger.info(f"   - Metrics: {metrics_file.name}")
+        self.logger.info(f"   - CSV files: metrics.csv, detailed_results.csv\n")
     
     def run(self):
         """Run complete experiment"""
+        start_time = datetime.now()
+        
         try:
             # Validate configuration
             self.config.validate()
             self.config.save_config()
             
+            # Set random seeds for reproducibility
+            random.seed(self.config.seed)
+            np.random.seed(self.config.seed)
+            torch.manual_seed(self.config.seed)
+            if torch.cuda.is_available():
+                torch.cuda.manual_seed_all(self.config.seed)
+            
+            self.logger.info(f"Random seed set to: {self.config.seed}")
+            
             # Load data and model
-            data = self.load_data()
+            requests, original_data = self.load_data()
             model, tokenizer = self.load_model()
             
             # Run editing
-            results = self.run_editing(model, tokenizer, data)
+            edit_results, edited_model, tokenizer = self.run_editing(model, tokenizer, requests)
             
             # Evaluate
-            metrics = self.evaluate(model, tokenizer, results)
+            metrics, detailed_results = self.evaluate(edited_model, tokenizer, requests, original_data)
+            
+            # Add timing info
+            end_time = datetime.now()
+            duration = (end_time - start_time).total_seconds()
+            metrics["duration_seconds"] = duration
+            metrics["duration_formatted"] = str(end_time - start_time)
             
             # Save results
-            self.save_results(results, metrics)
+            self.save_results(edit_results, metrics, detailed_results)
             
-            self.logger.info("Experiment completed successfully!")
+            self.logger.info("\n" + "="*80)
+            self.logger.info("✅ EXPERIMENT COMPLETED SUCCESSFULLY!")
+            self.logger.info("="*80)
+            self.logger.info(f"Total duration: {metrics['duration_formatted']}")
+            self.logger.info(f"Results directory: {self.config.run_dir}")
+            self.logger.info("="*80 + "\n")
+            
             return True
             
         except Exception as e:
-            self.logger.error(f"Experiment failed: {str(e)}", exc_info=True)
+            self.logger.error("\n" + "="*80)
+            self.logger.error("❌ EXPERIMENT FAILED")
+            self.logger.error("="*80)
+            self.logger.error(f"Error: {str(e)}", exc_info=True)
+            self.logger.error("="*80 + "\n")
             return False
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run baseline experiments")
+    parser = argparse.ArgumentParser(
+        description="Run baseline experiments (ROME/MEMIT/EMMET)",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
     
+    # Required arguments
     parser.add_argument("--method", type=str, required=True,
                        choices=["rome", "memit", "emmet"],
                        help="Editing method")
     parser.add_argument("--model", type=str, required=True,
                        help="Model name (gpt2, gpt2-xl, llama3.2-3b)")
+    
+    # Optional arguments
     parser.add_argument("--num_edits", type=int, default=100,
                        help="Number of edits to perform")
     parser.add_argument("--seed", type=int, default=42,
-                       help="Random seed")
+                       help="Random seed for reproducibility")
     parser.add_argument("--batch_size", type=int, default=1,
                        help="Batch size for editing")
+    parser.add_argument("--replay_rate", type=float, default=0.0,
+                       help="Replay rate for memory replay (0.0 = no replay)")
     parser.add_argument("--dataset", type=str, default="counterfact_sampled_unique_cf_10_20000",
-                       help="Dataset name")
+                       help="Dataset name (without .json extension)")
     parser.add_argument("--output_dir", type=str, default="results/baseline",
-                       help="Output directory")
+                       help="Output directory for results")
     
     args = parser.parse_args()
+    
+    # Validate arguments
+    if not 0 <= args.replay_rate <= 1:
+        parser.error("replay_rate must be between 0.0 and 1.0")
+    
+    # Print experiment configuration
+    print("="*80)
+    print("EMMET Baseline Experiment Runner")
+    print("="*80)
+    print(f"Method:       {args.method.upper()}")
+    print(f"Model:        {args.model}")
+    print(f"Num edits:    {args.num_edits}")
+    print(f"Batch size:   {args.batch_size}")
+    print(f"Replay rate:  {args.replay_rate}")
+    print(f"Seed:         {args.seed}")
+    print(f"Dataset:      {args.dataset}")
+    print(f"Output dir:   {args.output_dir}")
+    print("="*80 + "\n")
     
     # Create and run experiment
     config = ExperimentConfig(args)
