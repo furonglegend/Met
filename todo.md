@@ -33,7 +33,7 @@
 
 ## 3. 环境与数据准备（优先完成）
 
-- [ ] 使用 conda 创建环境并安装依赖（优先 `conda`，必要时再补 `pip`）。
+- [x] 使用 conda 创建环境并安装依赖（优先 `conda`，必要时再补 `pip`）。
 - [ ] 校验 Python 版本与 PyTorch/CUDA，验证能加载测试模型与运行一个最小推理脚本。
 - [ ] 准备数据集：`data/counterfact_*.json` 已提供子集，验证读取与采样脚本 `create_samples_cf.py` 可用。
 - [ ] 准备基础模型权重（小模型优先，如 Llama-2/3-Instruct 小尺寸或 GPT2 作为快速迭代备选）。
