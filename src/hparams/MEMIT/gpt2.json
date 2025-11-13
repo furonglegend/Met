@@ -22,5 +22,8 @@
     "lm_head_module": "transformer.wte",
     "mom2_dataset": "wikipedia",
     "mom2_n_samples": 100000,
-    "mom2_dtype": "float32"
+    "mom2_dtype": "float32",
+    "calculate_objective_value": false,
+    "update_norm_lambda": 0,
+    "emmet_lambda": 0.1
 }

@@ -1,0 +1,13 @@
+{
+  "method": "emmet",
+  "model": "gpt2",
+  "num_edits": 10,
+  "seed": 42,
+  "batch_size": 2,
+  "replay_rate": 0.0,
+  "dataset": "counterfact_sampled_unique_cf_10_20000",
+  "device": "cpu",
+  "timestamp": "2025-11-13T16:13:29.634059",
+  "hparams_path": "/home/ubuntu-user/Documents/Atticus/Atticus Floder/emmet-stability-replay/src/hparams/EMMET/gpt2.json",
+  "data_path": "/home/ubuntu-user/Documents/Atticus/Atticus Floder/emmet-stability-replay/data/counterfact_sampled_unique_cf_10_20000.json"
+}
