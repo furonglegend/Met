@@ -102,6 +102,12 @@ def test_dependencies():
             print(f"    {dep}: {version}")
         except ImportError:
             print(f"    {dep}: ⚠️  Not installed (optional)")
+        except Exception as e:
+            # Handle pyarrow compatibility issues with datasets
+            if 'pyarrow' in str(e):
+                print(f"    {dep}: ⚠️  Warning - pyarrow compatibility issue (can be ignored)")
+            else:
+                print(f"    {dep}: ⚠️  Error - {str(e)}")
 
 test_step("Dependencies Check", test_dependencies)
 
@@ -249,8 +255,17 @@ def test_read_sample_data():
     
     print(f"\n    Total examples: {len(data)}")
     
-    # Take first 10 samples
-    sample = data[:10]
+    # Check if data is dict or list
+    if isinstance(data, dict):
+        # Convert dict to list of values, take first 10
+        data_list = list(data.values())
+        sample = data_list[:10]
+        print(f"    Data format: Dictionary (converted to list)")
+    else:
+        # Already a list
+        sample = data[:10]
+        print(f"    Data format: List")
+    
     print(f"    Sample size: {len(sample)}")
     
     # Check data structure

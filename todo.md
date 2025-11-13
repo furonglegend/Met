@@ -73,7 +73,7 @@
 - [x] 使用 conda 创建环境并安装依赖（优先 `conda`，必要时再补 `pip`）
 - [ ] 校验 Python 版本与 PyTorch/CUDA
 - [ ] 验证模型加载与最小推理脚本
-- [ ] 准备数据集：验证 `data/counterfact_*.json` 与采样脚本
+- [x] 准备数据集：验证 `data/counterfact_*.json` 与采样脚本
 - [ ] 准备基础模型（GPT-2 XL / Llama-2-7B）
 
 **产出**: `env.yaml` + 模型加载验证日志
@@ -86,7 +86,7 @@
 
 **任务**:
 
-- [ ] 准备 CounterFact 子集（200条用于调试）
+- [x] 准备 CounterFact 子集（200条用于调试）
 - [ ] 运行 EMMET 最小示例，验证代码可用性
 - [ ] 确认 ES/PS/NS/GE/S 指标计算正确
 - [ ] 调试超参数（学习率、层选择、批量大小）

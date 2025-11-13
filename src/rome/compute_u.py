@@ -8,9 +8,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from rome import repr_tools
 from utils.globals import *
 
-from layer_stats import layer_stats
-from layer_stats_dynamic import layer_stats_dynamic
-from rome_hparams import ROMEHyperParams
+from .layer_stats import layer_stats
+from .layer_stats_dynamic import layer_stats_dynamic
+from .rome_hparams import ROMEHyperParams
 
 # Cache variables
 inv_mom2_cache = {}

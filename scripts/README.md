@@ -32,6 +32,7 @@ python scripts/minimal_test.py
 ```
 
 验证项目:
+
 - ✅ Python 3.9
 - ✅ PyTorch 1.12.1 + CUDA
 - ✅ Transformers 4.23.1

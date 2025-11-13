@@ -10,9 +10,9 @@ import time
 from utils import nethook
 from utils.generate import generate_fast
 
-from compute_u import compute_u
-from compute_v import compute_v
-from rome_hparams import ROMEHyperParams
+from .compute_u import compute_u
+from .compute_v import compute_v
+from .rome_hparams import ROMEHyperParams
 
 CONTEXT_TEMPLATES_CACHE = None
 

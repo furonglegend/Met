@@ -14,9 +14,9 @@ from utils.globals import *
 from datetime import datetime
 import time
 
-from compute_ks import compute_ks
-from compute_z import compute_z, get_module_input_output_at_words, find_fact_lookup_idx
-from emmet_hparams import EMMETHyperParams
+from .compute_ks import compute_ks
+from .compute_z import compute_z, get_module_input_output_at_words, find_fact_lookup_idx
+from .emmet_hparams import EMMETHyperParams
 
 # Cache variable(s)
 CONTEXT_TEMPLATES_CACHE = None
