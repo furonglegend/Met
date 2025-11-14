@@ -180,7 +180,13 @@ class BaselineRunner:
         # Import appropriate modules
         if self.config.method == "emmet":
             from emmet.emmet_hparams import EMMETHyperParams
-            from emmet.emmet_main import apply_emmet_to_model
+            # Choose replay-enabled or standard EMMET
+            if self.config.replay_rate > 0:
+                from emmet.emmet_replay import apply_emmet_with_replay as apply_emmet_to_model
+                self.logger.info(f"Using EMMET with Memory Replay (rate={self.config.replay_rate})")
+            else:
+                from emmet.emmet_main import apply_emmet_to_model
+                self.logger.info("Using standard EMMET (no replay)")
             hparams = EMMETHyperParams.from_json(self.config.hparams_path)
         elif self.config.method == "memit":
             from memit.memit_hparams import MEMITHyperParams
@@ -211,10 +217,21 @@ class BaselineRunner:
             # Apply editing
             try:
                 if self.config.method == "emmet":
-                    edited_model, orig_weights, edit_distances = apply_emmet_to_model(
-                        model, tokenizer, batch_requests, hparams,
-                        copy=False, return_orig_weights=True
-                    )
+                    # Pass replay parameters if enabled
+                    if self.config.replay_rate > 0:
+                        edited_model, orig_weights, edit_distances = apply_emmet_to_model(
+                            model, tokenizer, batch_requests, hparams,
+                            copy=False, return_orig_weights=True,
+                            use_replay=True,
+                            replay_rate=self.config.replay_rate,
+                            replay_buffer_size=200,
+                            replay_strategy='random'
+                        )
+                    else:
+                        edited_model, orig_weights, edit_distances = apply_emmet_to_model(
+                            model, tokenizer, batch_requests, hparams,
+                            copy=False, return_orig_weights=True
+                        )
                 elif self.config.method == "memit":
                     edited_model, orig_weights = apply_memit_to_model(
                         model, tokenizer, batch_requests, hparams,

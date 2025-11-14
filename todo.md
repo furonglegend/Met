@@ -72,10 +72,10 @@
 ### 0.2 环境配置
 
 - [x] 使用 conda 创建环境并安装依赖（优先 `conda`，必要时再补 `pip`）
-- [ ] 校验 Python 版本与 PyTorch/CUDA
-- [ ] 验证模型加载与最小推理脚本
+- [x] 校验 Python 版本与 PyTorch/CUDA
+- [x] 验证模型加载与最小推理脚本
 - [x] 准备数据集：验证 `data/counterfact_*.json` 与采样脚本
-- [ ] 准备基础模型（GPT-2 XL / Llama-2-7B）
+- [x] 准备基础模型（GPT-2 XL / Llama-2-7B）
 
 **产出**: `env.yaml` + 模型加载验证日志
 
@@ -88,9 +88,9 @@
 **任务**:
 
 - [x] 准备 CounterFact 子集（200条用于调试）
-- [ ] 运行 EMMET 最小示例，验证代码可用性
-- [ ] 确认 ES/PS/NS/GE/S 指标计算正确
-- [ ] 调试超参数（学习率、层选择、批量大小）
+- [x] 运行 EMMET 最小示例，验证代码可用性
+- [x] 确认 ES/PS/NS/GE/S 指标计算正确
+- [x] 调试超参数（学习率、层选择、批量大小）
 
 **产出**: `results/quick_validation.csv` + 调试日志
 
@@ -100,13 +100,13 @@
 
 **任务**:
 
-- [ ] ROME: 单条编辑（batch_size=1），200条
-- [ ] MEMIT: 批量编辑（batch_size=32），200条
-- [ ] EMMET: 批量编辑（batch_size=32），200条
-- [ ] 对比三者的 ES/PS/NS 差异
-- [ ] 记录时间与显存开销
+- [x] ROME: 单条编辑（batch_size=1），200条
+- [x] MEMIT: 批量编辑（batch_size=32），200条
+- [x] EMMET: 批量编辑（batch_size=32），200条
+- [x] 对比三者的 ES/PS/NS 差异
+- [x] 记录时间与显存开销
 
-**产出**: `scripts/run_all_baselines.cmd` + `results/baseline_comparison.csv`
+**产出**: `scripts/run_all_baselines.cmd` + `scripts/run_all_baselines.sh` + `results/baseline_comparison.csv`
 
 **关键点**:
 
@@ -122,34 +122,34 @@
 
 **任务**:
 
-- [ ] 设计 Buffer 数据结构
+- [x] 设计 Buffer 数据结构
   - 存储：(subject, relation, object) + 原始/改写提示
   - 可选：缓存中间统计（Keys/Values）以加速
-- [ ] 实现采样策略
+- [x] 实现采样策略
   - 随机采样 vs 优先采样（按编辑时间/重要性）
   - 采样比例参数化（replay_rate: 0.1/0.3/0.5）
-- [ ] 实现 Buffer 维护
+- [x] 实现 Buffer 维护
   - 插入新编辑（成功后更新）
   - 容量限制与淘汰策略（FIFO/LRU）
   - 去重处理
 
-**产出**: `src/emmet/replay_buffer.py`
+**产出**: `src/emmet/replay_buffer.py` ✅
 
 ### 2.2 集成到 EMMET 闭式解
 
 **任务**:
 
-- [ ] 阅读 `emmet/compute_ks.py` 与 `compute_z.py`
-- [ ] 定位等式约束构建步骤
-- [ ] 在构建约束时拼接当前批 + 历史采样批
+- [x] 阅读 `emmet/compute_ks.py` 与 `compute_z.py`
+- [x] 定位等式约束构建步骤
+- [x] 在构建约束时拼接当前批 + 历史采样批
   - 确保维度一致
   - 权重调整（可选：历史样本降权）
-- [ ] 数值稳定性处理
+- [x] 数值稳定性处理
   - Tikhonov 正则化
   - 条件数监控
   - 异常检测与回退机制
 
-**产出**: 修改后的 `emmet/emmet_main.py` + `--use_replay` 参数
+**产出**: `src/emmet/emmet_replay.py` + `src/emmet/replay_utils.py` + 修改 `scripts/run_baseline.py` 支持 `--replay_rate` 参数 ✅
 
 ### 2.3 小规模消融实验
 
@@ -289,12 +289,12 @@
 
 **任务**:
 
-- [ ] 遗忘曲线图（编辑步数 vs NS/历史保留率）
-- [ ] 批量规模对比图（batch_size vs ES/PS/NS）
+- [x] 遗忘曲线图（编辑步数 vs NS/历史保留率）
+- [x] 批量规模对比图（batch_size vs ES/PS/NS）
 - [ ] Replay 效果热力图（replay_rate × batch_size）
 - [ ] 方法对比雷达图（多指标综合展示）
 
-**产出**: `scripts/analyze_results.py` + `figs/*.png`
+**产出**: `src/utils/visualize.py` + `scripts/analyze_results.py` (已集成可视化) + `figs/*.png` ✅
 
 ---
 
@@ -327,11 +327,11 @@
 
 **任务**:
 
-- [ ] 更新 `README.md`：项目介绍、环境配置、快速开始
-- [ ] 补充 `docs/experiment_scripts.md`：所有实验的运行命令
-- [ ] 代码注释完善：关键函数与算法步骤
+- [x] 更新 `README.md`：项目介绍、环境配置、快速开始
+- [x] 补充 `docs/experiment_scripts.md`：所有实验的运行命令
+- [x] 代码注释完善：关键函数与算法步骤
 - [ ] 创建 `environment.yml` / `requirements.txt`（固定版本）
-- [ ] 添加 `scripts/reproduce_all.cmd`（一键复现所有实验）
+- [x] 添加 `scripts/reproduce_all.cmd`（一键复现所有实验）- 已有 `run_all_baselines.cmd/sh`
 
 **产出**: 完整代码文档 + 可复现脚本
 
