@@ -1,0 +1,13 @@
+{
+  "method": "memit",
+  "model": "gpt2",
+  "num_edits": 200,
+  "seed": 42,
+  "batch_size": 32,
+  "replay_rate": 0.0,
+  "dataset": "counterfact",
+  "device": "cuda",
+  "timestamp": "2025-11-13T16:35:14.249464",
+  "hparams_path": "/home/ubuntu-user/Documents/Atticus/Atticus Floder/emmet-stability-replay/src/hparams/MEMIT/gpt2.json",
+  "data_path": "/home/ubuntu-user/Documents/Atticus/Atticus Floder/emmet-stability-replay/data/counterfact.json"
+}

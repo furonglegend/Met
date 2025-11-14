@@ -102,6 +102,12 @@ def test_dependencies():
             print(f"    {dep}: {version}")
         except ImportError:
             print(f"    {dep}: ⚠️  Not installed (optional)")
+        except Exception as e:
+            # Handle pyarrow compatibility issues with datasets
+            if 'pyarrow' in str(e):
+                print(f"    {dep}: ⚠️  Warning - pyarrow compatibility issue (can be ignored)")
+            else:
+                print(f"    {dep}: ⚠️  Error - {str(e)}")
 
 test_step("Dependencies Check", test_dependencies)
 
@@ -242,28 +248,38 @@ test_step("Project Module Imports", test_project_imports)
 
 # Test 9: Read sample data
 def test_read_sample_data():
-    data_file = PROJECT_ROOT / "data" / "counterfact_sampled_unique_cf_10_20000.json"
+    # Try to read the QNA data file first (contains actual examples)
+    qna_file = PROJECT_ROOT / "data" / "counterfact_qna.json"
+    sample_index_file = PROJECT_ROOT / "data" / "counterfact_sampled_unique_cf_10_20000.json"
     
-    with open(data_file, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    # Read sample indices
+    with open(sample_index_file, 'r', encoding='utf-8') as f:
+        sample_indices = json.load(f)
     
-    print(f"\n    Total examples: {len(data)}")
+    print(f"\n    Sample index file: {len(sample_indices)} groups")
+    print(f"    Index file format: Dictionary of index lists")
     
-    # Take first 10 samples
-    sample = data[:10]
-    print(f"    Sample size: {len(sample)}")
-    
-    # Check data structure
-    if len(sample) > 0:
-        first_example = sample[0]
-        print(f"    Example keys: {list(first_example.keys())}")
+    # Try to read actual data if available
+    if qna_file.exists():
+        with open(qna_file, 'r', encoding='utf-8') as f:
+            qna_data = json.load(f)
         
-        if 'requested_rewrite' in first_example:
-            rewrite = first_example['requested_rewrite']
-            print(f"    Rewrite keys: {list(rewrite.keys())}")
-            print(f"    Sample subject: {rewrite.get('subject', 'N/A')}")
-            print(f"    Sample prompt: {rewrite.get('prompt', 'N/A')}")
-            print(f"    Sample target: {rewrite.get('target_new', {}).get('str', 'N/A')}")
+        print(f"    QNA data file: {len(qna_data)} examples")
+        
+        # Take first 10 samples from QNA data
+        sample = qna_data[:10]
+        print(f"    Sample size: {len(sample)}")
+        
+        # Check data structure
+        if len(sample) > 0:
+            first_example = sample[0]
+            print(f"    Example keys: {list(first_example.keys())}")
+            print(f"    Sample question: {first_example.get('question', 'N/A')[:50]}...")
+            print(f"    Sample subject: {first_example.get('subject', 'N/A')}")
+            print(f"    Sample answer: {first_example.get('answer', 'N/A')}")
+    else:
+        print(f"    ⚠️  QNA data file not found, only indices available")
+        sample = sample_indices
     
     return sample
 

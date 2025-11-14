@@ -1,0 +1,1802 @@
+[
+  {
+    "example_id": 0,
+    "subject": "Angola",
+    "target_new": "Antarctica",
+    "target_true": "Africa",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 1,
+    "subject": "Shanghai",
+    "target_new": "Dresden",
+    "target_true": "Barcelona",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 2,
+    "subject": "2011 Cannes Film Festival",
+    "target_new": "Prescott",
+    "target_true": "Cannes",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 3,
+    "subject": "Delta Goodrem",
+    "target_new": "India",
+    "target_true": "Australia",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 4,
+    "subject": "Google Patents",
+    "target_new": "Microsoft",
+    "target_true": "Google",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 5,
+    "subject": "Lady Gaga",
+    "target_new": "violin",
+    "target_true": "piano",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 6,
+    "subject": "Cologne",
+    "target_new": "Cairo",
+    "target_true": "Beijing",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 7,
+    "subject": "Institut Polaire",
+    "target_new": "Budapest",
+    "target_true": "Perth",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 8,
+    "subject": "Allegro Non Troppo",
+    "target_new": "Serbian",
+    "target_true": "Italian",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 9,
+    "subject": "Thenewno2",
+    "target_new": "Leicester",
+    "target_true": "London",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 10,
+    "subject": "Lewin Brzeski",
+    "target_new": "Norway",
+    "target_true": "Poland",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 11,
+    "subject": "Charles Lang Freer House",
+    "target_new": "Somerset",
+    "target_true": "Detroit",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 12,
+    "subject": "Sunday Night Baseball",
+    "target_new": "CBS",
+    "target_true": "ESPN",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 13,
+    "subject": "Larry Stabbins",
+    "target_new": "Chicago",
+    "target_true": "Bristol",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 14,
+    "subject": "Marco Pannella",
+    "target_new": "Moscow",
+    "target_true": "Rome",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 15,
+    "subject": "Bob Mason",
+    "target_new": "midfielder",
+    "target_true": "goaltender",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 16,
+    "subject": "Bernard Giraudeau",
+    "target_new": "Polish",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 17,
+    "subject": "The Constellations",
+    "target_new": "Calgary",
+    "target_true": "Atlanta",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 18,
+    "subject": "christian worship",
+    "target_new": "Islam",
+    "target_true": "Christianity",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 19,
+    "subject": "Elizabeth Boleyn, Countess of Wiltshire",
+    "target_new": "Egypt",
+    "target_true": "Norfolk",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 20,
+    "subject": "Oak Street Beach",
+    "target_new": "Amazon",
+    "target_true": "Chicago",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 21,
+    "subject": "Guillaumes",
+    "target_new": "Norway",
+    "target_true": "France",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 22,
+    "subject": "Five Star Krishna",
+    "target_new": "comedian",
+    "target_true": "actor",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 23,
+    "subject": "Mandailing language",
+    "target_new": "Poland",
+    "target_true": "Indonesia",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 24,
+    "subject": "Allan Warren",
+    "target_new": "Spanish",
+    "target_true": "English",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 25,
+    "subject": "Dick Radatz",
+    "target_new": "midfielder",
+    "target_true": "pitcher",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 26,
+    "subject": "Louis McLane",
+    "target_new": "Barcelona",
+    "target_true": "Baltimore",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 27,
+    "subject": "Sinclair Radionics",
+    "target_new": "London",
+    "target_true": "Cambridge",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 28,
+    "subject": "KKBQ",
+    "target_new": "Miami",
+    "target_true": "Texas",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 29,
+    "subject": "Princeton University Press",
+    "target_new": "Beirut",
+    "target_true": "Princeton",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 30,
+    "subject": "Toei Company",
+    "target_new": "Birmingham",
+    "target_true": "Tokyo",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 31,
+    "subject": "Interstate 255",
+    "target_new": "Vienna",
+    "target_true": "Illinois",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 32,
+    "subject": "Johannes Schilling",
+    "target_new": "Paris",
+    "target_true": "Dresden",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 33,
+    "subject": "Edina High School",
+    "target_new": "Pennsylvania",
+    "target_true": "Minnesota",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 34,
+    "subject": "Tom McCall Waterfront Park",
+    "target_new": "Victoria",
+    "target_true": "Oregon",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 35,
+    "subject": "Austin Currie",
+    "target_new": "Canada",
+    "target_true": "Ireland",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 36,
+    "subject": "omphacite",
+    "target_new": "Peter",
+    "target_true": "grape",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 37,
+    "subject": "Space Sentinels",
+    "target_new": "BBC",
+    "target_true": "NBC",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 38,
+    "subject": "CBS Sports Spectacular",
+    "target_new": "PBS",
+    "target_true": "CBS",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 39,
+    "subject": "Kazi Nazrul Islam",
+    "target_new": "Sudan",
+    "target_true": "Bangladesh",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 40,
+    "subject": "Jens Evensen",
+    "target_new": "Ireland",
+    "target_true": "Norway",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 41,
+    "subject": "Persian Risk",
+    "target_new": "Edmonton",
+    "target_true": "Cardiff",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 42,
+    "subject": "North Side Gang",
+    "target_new": "Belfast",
+    "target_true": "Chicago",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 43,
+    "subject": "Justin Fleming",
+    "target_new": "Cardiff",
+    "target_true": "Sydney",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 44,
+    "subject": "The Bronx Is Burning",
+    "target_new": "CNN",
+    "target_true": "ESPN",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 45,
+    "subject": "Patrick Colquhoun",
+    "target_new": "Guam",
+    "target_true": "London",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 46,
+    "subject": "Nintendo Software Planning & Development",
+    "target_new": "Chicago",
+    "target_true": "Nintendo",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 47,
+    "subject": "Hilary Putnam",
+    "target_new": "actor",
+    "target_true": "philosopher",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 48,
+    "subject": "Michel Poniatowski",
+    "target_new": "Spanish",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 49,
+    "subject": "Ludwig Klages",
+    "target_new": "chemistry",
+    "target_true": "psychology",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 50,
+    "subject": "Washington McLean",
+    "target_new": "Detroit",
+    "target_true": "Cincinnati",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 51,
+    "subject": "George Cadogan, 5th Earl Cadogan",
+    "target_new": "Minneapolis",
+    "target_true": "London",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 52,
+    "subject": "Norway",
+    "target_new": "Rome",
+    "target_true": "Oslo",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 53,
+    "subject": "Hans Bol",
+    "target_new": "Rome",
+    "target_true": "Amsterdam",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 54,
+    "subject": "Ivar Antonsen",
+    "target_new": "guitar",
+    "target_true": "piano",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 55,
+    "subject": "Steve Yzerman",
+    "target_new": "football",
+    "target_true": "hockey",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 56,
+    "subject": "Northwest Branch Anacostia River",
+    "target_new": "Ontario",
+    "target_true": "Maryland",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 57,
+    "subject": "Alston G. Dayton",
+    "target_new": "actor",
+    "target_true": "politician",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 58,
+    "subject": "Alain Mabanckou",
+    "target_new": "Swedish",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 59,
+    "subject": "Maurice Schutz",
+    "target_new": "Russian",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 60,
+    "subject": "Siri",
+    "target_new": "IBM",
+    "target_true": "Apple",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 61,
+    "subject": "Abiel Smith School",
+    "target_new": "Arizona",
+    "target_true": "Boston",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 62,
+    "subject": "Cigoli",
+    "target_new": "actor",
+    "target_true": "architect",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 63,
+    "subject": "Neuburg Peak",
+    "target_new": "Europe",
+    "target_true": "Antarctica",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 64,
+    "subject": "Orpheus Island National Park",
+    "target_new": "Italy",
+    "target_true": "Australia",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 65,
+    "subject": "Dino Saluzzi",
+    "target_new": "actor",
+    "target_true": "composer",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 66,
+    "subject": "Cumberland University",
+    "target_new": "Cardiff",
+    "target_true": "Tennessee",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 67,
+    "subject": "Desejos de Mulher",
+    "target_new": "Poland",
+    "target_true": "Brazil",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 68,
+    "subject": "Thiruda Thirudi",
+    "target_new": "English",
+    "target_true": "Tamil",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 69,
+    "subject": "Mount Hallgren",
+    "target_new": "Africa",
+    "target_true": "Antarctica",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 70,
+    "subject": "Ticino",
+    "target_new": "Swedish",
+    "target_true": "Italian",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 71,
+    "subject": "Nintendo Software Planning & Development",
+    "target_new": "Paris",
+    "target_true": "Japan",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 72,
+    "subject": "Simdega",
+    "target_new": "Libya",
+    "target_true": "India",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 73,
+    "subject": "Baal Shem of London",
+    "target_new": "French",
+    "target_true": "Hebrew",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 74,
+    "subject": "Orchidea De Santis",
+    "target_new": "Spanish",
+    "target_true": "Italian",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 75,
+    "subject": "Jimdo",
+    "target_new": "Jakarta",
+    "target_true": "Hamburg",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 76,
+    "subject": "Selma Kurz",
+    "target_new": "London",
+    "target_true": "Vienna",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 77,
+    "subject": "Bituin",
+    "target_new": "Japan",
+    "target_true": "Philippines",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 78,
+    "subject": "Pelagius II",
+    "target_new": "Shah",
+    "target_true": "pope",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 79,
+    "subject": "Henri Queuille",
+    "target_new": "English",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 80,
+    "subject": "Ma Rainey",
+    "target_new": "Fantasy",
+    "target_true": "Paramount",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 81,
+    "subject": "Luca Pacioli",
+    "target_new": "physics",
+    "target_true": "mathematics",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 82,
+    "subject": "Split Airport",
+    "target_new": "Sweden",
+    "target_true": "Split",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 83,
+    "subject": "Aram Khachaturian",
+    "target_new": "Berlin",
+    "target_true": "Moscow",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 84,
+    "subject": "Ferrari Berlinetta Boxer",
+    "target_new": "Cadillac",
+    "target_true": "Ferrari",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 85,
+    "subject": "Arnie Herber",
+    "target_new": "midfielder",
+    "target_true": "quarterback",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 86,
+    "subject": "Junichi Suwabe",
+    "target_new": "Nottingham",
+    "target_true": "Tokyo",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 87,
+    "subject": "Chevrolet Corvette C5-R",
+    "target_new": "Atari",
+    "target_true": "Chevrolet",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 88,
+    "subject": "Rudolf Viest",
+    "target_new": "Norway",
+    "target_true": "Slovakia",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 89,
+    "subject": "World Association of Girl Guides and Girl Scouts",
+    "target_new": "Barcelona",
+    "target_true": "London",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 90,
+    "subject": "Valentin Conrart",
+    "target_new": "English",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 91,
+    "subject": "The Postal Service",
+    "target_new": "Toronto",
+    "target_true": "Seattle",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 92,
+    "subject": "Thomas Laird Kennedy",
+    "target_new": "France",
+    "target_true": "Canada",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 93,
+    "subject": "Vistula",
+    "target_new": "Antarctica",
+    "target_true": "Europe",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 94,
+    "subject": "Barney Balaban",
+    "target_new": "Ottawa",
+    "target_true": "Chicago",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 95,
+    "subject": "Arundel Formation",
+    "target_new": "Illinois",
+    "target_true": "Maryland",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 96,
+    "subject": "Giovanni Maria Nanino",
+    "target_new": "astronaut",
+    "target_true": "composer",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 97,
+    "subject": "American Samoa",
+    "target_new": "Swedish",
+    "target_true": "English",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 98,
+    "subject": "Alain de Benoist",
+    "target_new": "Sanskrit",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 99,
+    "subject": "Jamshedpur",
+    "target_new": "English",
+    "target_true": "Hindi",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 100,
+    "subject": "Eureka Brass Band",
+    "target_new": "opera",
+    "target_true": "jazz",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 101,
+    "subject": "Samuel Naumbourg",
+    "target_new": "London",
+    "target_true": "Paris",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 102,
+    "subject": "Aldus Manutius",
+    "target_new": "Berlin",
+    "target_true": "Venice",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 103,
+    "subject": "Carl Ritter",
+    "target_new": "physics",
+    "target_true": "geography",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 104,
+    "subject": "The Phil Silvers Show",
+    "target_new": "NBC",
+    "target_true": "CBS",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 105,
+    "subject": "Marie Dorval",
+    "target_new": "Chinese",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 106,
+    "subject": "Kuusamo",
+    "target_new": "Swedish",
+    "target_true": "Finnish",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 107,
+    "subject": "Sangamam",
+    "target_new": "Spain",
+    "target_true": "India",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 108,
+    "subject": "Glastonbury Lake Village",
+    "target_new": "London",
+    "target_true": "Somerset",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 109,
+    "subject": "Anson Funderburgh",
+    "target_new": "violin",
+    "target_true": "guitar",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 110,
+    "subject": "DJ Die",
+    "target_new": "Madrid",
+    "target_true": "Devon",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 111,
+    "subject": "Philippine Lotto Draw",
+    "target_new": "Italy",
+    "target_true": "Philippines",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 112,
+    "subject": "Cyberdog",
+    "target_new": "Sega",
+    "target_true": "Apple",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 113,
+    "subject": "Eric Partridge",
+    "target_new": "Armenian",
+    "target_true": "English",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 114,
+    "subject": "Manuel Ferraz de Campos Sales",
+    "target_new": "Spain",
+    "target_true": "Brazil",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 115,
+    "subject": "Juan Carlos Garrido",
+    "target_new": "French",
+    "target_true": "Spanish",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 116,
+    "subject": "Jean-Louis Barrault",
+    "target_new": "Dutch",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 117,
+    "subject": "PGM-11 Redstone",
+    "target_new": "Nissan",
+    "target_true": "Chrysler",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 118,
+    "subject": "Gran Trak 10",
+    "target_new": "Sega",
+    "target_true": "Atari",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 119,
+    "subject": "Loviisa",
+    "target_new": "Italian",
+    "target_true": "Swedish",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 120,
+    "subject": "Event Viewer",
+    "target_new": "IBM",
+    "target_true": "Microsoft",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 121,
+    "subject": "The Honeymooners",
+    "target_new": "NBC",
+    "target_true": "CBS",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 122,
+    "subject": "Ouest-France",
+    "target_new": "Spanish",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 123,
+    "subject": "New Club, Edinburgh",
+    "target_new": "Rome",
+    "target_true": "Edinburgh",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 124,
+    "subject": "68th Venice International Film Festival",
+    "target_new": "Wales",
+    "target_true": "Venice",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 125,
+    "subject": "Sheryl Crow",
+    "target_new": "trumpet",
+    "target_true": "guitar",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 126,
+    "subject": "The Barbara Stanwyck Show",
+    "target_new": "CBS",
+    "target_true": "NBC",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 127,
+    "subject": "Porsche Panamera",
+    "target_new": "BMW",
+    "target_true": "Porsche",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 128,
+    "subject": "Leonard Cohen",
+    "target_new": "trumpet",
+    "target_true": "guitar",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 129,
+    "subject": "Wood Gundy",
+    "target_new": "Vancouver",
+    "target_true": "Toronto",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 130,
+    "subject": "The Woodentops",
+    "target_new": "Moscow",
+    "target_true": "London",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 131,
+    "subject": "IBM Network Control Program",
+    "target_new": "Boeing",
+    "target_true": "IBM",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 132,
+    "subject": "Kukri Hills",
+    "target_new": "Asia",
+    "target_true": "Antarctica",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 133,
+    "subject": "International Istanbul Film Festival",
+    "target_new": "Houston",
+    "target_true": "Istanbul",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 134,
+    "subject": "Crownies",
+    "target_new": "Sweden",
+    "target_true": "Australia",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 135,
+    "subject": "Mount Carmel",
+    "target_new": "Munich",
+    "target_true": "Illinois",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 136,
+    "subject": "Aloha Stadium",
+    "target_new": "BBC",
+    "target_true": "Hawaii",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 137,
+    "subject": "Pietro Fanna",
+    "target_new": "goaltender",
+    "target_true": "midfielder",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 138,
+    "subject": "Nevada Bachelors",
+    "target_new": "Sheffield",
+    "target_true": "Seattle",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 139,
+    "subject": "Kalyan Kumar",
+    "target_new": "Jerusalem",
+    "target_true": "Bangalore",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 140,
+    "subject": "Henrique Maximiano Coelho Neto",
+    "target_new": "Norway",
+    "target_true": "Brazil",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 141,
+    "subject": "Clayton Kershaw",
+    "target_new": "football",
+    "target_true": "baseball",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 142,
+    "subject": "Leo Villareal",
+    "target_new": "Boston",
+    "target_true": "Albuquerque",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 143,
+    "subject": "Francesco Bolzoni",
+    "target_new": "quarterback",
+    "target_true": "midfielder",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 144,
+    "subject": "iPod shuffle",
+    "target_new": "Sega",
+    "target_true": "Apple",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 145,
+    "subject": "Benny Golson",
+    "target_new": "sitcom",
+    "target_true": "jazz",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 146,
+    "subject": "Lionel Messi",
+    "target_new": "Netherlands",
+    "target_true": "Argentina",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 147,
+    "subject": "Syed Kalbe Hussain",
+    "target_new": "Buddhism",
+    "target_true": "Islam",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 148,
+    "subject": "Riky Rick",
+    "target_new": "journalist",
+    "target_true": "actor",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 149,
+    "subject": "Iruma Air Base",
+    "target_new": "Greece",
+    "target_true": "Japan",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 150,
+    "subject": "John Henry Poynting",
+    "target_new": "mathematics",
+    "target_true": "physics",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 151,
+    "subject": "Eduardo Zaplana",
+    "target_new": "Munich",
+    "target_true": "Madrid",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 152,
+    "subject": "Hiroshi Hase",
+    "target_new": "composer",
+    "target_true": "politician",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 153,
+    "subject": "Pierre Soulages",
+    "target_new": "Hamburg",
+    "target_true": "Paris",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 154,
+    "subject": "World Series Cricket",
+    "target_new": "India",
+    "target_true": "Australia",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 155,
+    "subject": "Federated States of Micronesia",
+    "target_new": "Russian",
+    "target_true": "English",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 156,
+    "subject": "scientific method",
+    "target_new": "anthropology",
+    "target_true": "science",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 157,
+    "subject": "London International Airport",
+    "target_new": "Hamburg",
+    "target_true": "London",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 158,
+    "subject": "Mykolaiv Oblast",
+    "target_new": "Russian",
+    "target_true": "Ukrainian",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 159,
+    "subject": "New Democratic Party Socialist Caucus",
+    "target_new": "India",
+    "target_true": "Canada",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 160,
+    "subject": "cepelinai",
+    "target_new": "Norway",
+    "target_true": "Lithuania",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 161,
+    "subject": "Minamoto no Sanetomo",
+    "target_new": "India",
+    "target_true": "Japan",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 162,
+    "subject": "Ruth Marshall",
+    "target_new": "politician",
+    "target_true": "actor",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 163,
+    "subject": "Israel",
+    "target_new": "Damascus",
+    "target_true": "Jerusalem",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 164,
+    "subject": "Samuil Feinberg",
+    "target_new": "violin",
+    "target_true": "piano",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 165,
+    "subject": "Porsche 911",
+    "target_new": "Honda",
+    "target_true": "Porsche",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 166,
+    "subject": "Juan de Espinosa Medrano",
+    "target_new": "French",
+    "target_true": "Spanish",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 167,
+    "subject": "Beatrix of the Netherlands",
+    "target_new": "French",
+    "target_true": "Dutch",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 168,
+    "subject": "Aino Sibelius",
+    "target_new": "Seattle",
+    "target_true": "Helsinki",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 169,
+    "subject": "La Gomera",
+    "target_new": "French",
+    "target_true": "Spanish",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 170,
+    "subject": "Porrentruy",
+    "target_new": "Finnish",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 171,
+    "subject": "Alexander Zinoviev",
+    "target_new": "astronomy",
+    "target_true": "sociology",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 172,
+    "subject": "Georgina Leonidas",
+    "target_new": "composer",
+    "target_true": "actor",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 173,
+    "subject": "Moe Koffman",
+    "target_new": "London",
+    "target_true": "Toronto",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 174,
+    "subject": "Pittsburgh",
+    "target_new": "Budapest",
+    "target_true": "Sheffield",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 175,
+    "subject": "Andrew Neil",
+    "target_new": "IBM",
+    "target_true": "BBC",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 176,
+    "subject": "John Huarte",
+    "target_new": "midfielder",
+    "target_true": "quarterback",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 177,
+    "subject": "Istanbul",
+    "target_new": "Warsaw",
+    "target_true": "Cairo",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 178,
+    "subject": "Tao Lin",
+    "target_new": "disco",
+    "target_true": "essay",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 179,
+    "subject": "Henry Maudsley",
+    "target_new": "French",
+    "target_true": "English",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 180,
+    "subject": "Aryabhata",
+    "target_new": "mathematics",
+    "target_true": "astronomy",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 181,
+    "subject": "Avie Bennett",
+    "target_new": "Belfast",
+    "target_true": "Toronto",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 182,
+    "subject": "Carl Barron",
+    "target_new": "journalist",
+    "target_true": "comedian",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 183,
+    "subject": "Gentle Ben",
+    "target_new": "Netflix",
+    "target_true": "CBS",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 184,
+    "subject": "Ferdinand-Alphonse Hamelin",
+    "target_new": "English",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 185,
+    "subject": "Peter Jason",
+    "target_new": "model",
+    "target_true": "actor",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 186,
+    "subject": "Peter Kassovitz",
+    "target_new": "Dutch",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 187,
+    "subject": "Joseph Louis Gay-Lussac",
+    "target_new": "physics",
+    "target_true": "chemistry",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 188,
+    "subject": "Goffredo Petrassi",
+    "target_new": "Warsaw",
+    "target_true": "Rome",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 189,
+    "subject": "Jean Chiappe",
+    "target_new": "Russian",
+    "target_true": "French",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 190,
+    "subject": "Shaad Ali",
+    "target_new": "Albania",
+    "target_true": "India",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 191,
+    "subject": "Byron Dafoe",
+    "target_new": "quarterback",
+    "target_true": "goaltender",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 192,
+    "subject": "Ahmad Zahir",
+    "target_new": "Wellington",
+    "target_true": "Kabul",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 193,
+    "subject": "Jim Pugliese",
+    "target_new": "anthology",
+    "target_true": "jazz",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 194,
+    "subject": "Turkmenistan",
+    "target_new": "Antarctica",
+    "target_true": "Asia",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 195,
+    "subject": "Germany",
+    "target_new": "FIFA",
+    "target_true": "NATO",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 196,
+    "subject": "Letter to Loretta",
+    "target_new": "ESPN",
+    "target_true": "NBC",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 197,
+    "subject": "Francis X. DiLorenzo",
+    "target_new": "pope",
+    "target_true": "bishop",
+    "efficacy_score": 0.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 198,
+    "subject": "Marinus II",
+    "target_new": "bishop",
+    "target_true": "pope",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.0
+  },
+  {
+    "example_id": 199,
+    "subject": "Rick Barry",
+    "target_new": "hockey",
+    "target_true": "basketball",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.8
+  }
+]

@@ -7,7 +7,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from rome import repr_tools
 from utils import nethook
 
-from emmet_hparams import EMMETHyperParams
+from emmet.emmet_hparams import EMMETHyperParams
 
 
 def compute_z(

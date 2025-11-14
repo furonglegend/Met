@@ -4,8 +4,8 @@ import numpy as np
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from compute_z import get_module_input_output_at_words
-from memit_hparams import MEMITHyperParams
+from .compute_z import get_module_input_output_at_words
+from .memit_hparams import MEMITHyperParams
 
 
 def compute_ks(

@@ -1,35 +1,43 @@
 [build-system]
-requires = ["setuptools>=69.0", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "emmet-stability-replay"
 version = "0.1.0"
-description = "Stability-focused extensions to EMMET model editing workflows."
+description = "Add your description here"
 readme = "README.md"
-license = { text = "Proprietary" }
 requires-python = ">=3.9,<3.10"
 dependencies = [
-	"attrdict==2.0.1",
-	"datasets==1.18.3",
-	"higher==0.2.1",
-	"hydra-core==1.2.0",
-	"jsonlines==3.1.0",
-	"matplotlib==3.6.1",
-	"nltk==3.7",
-	"numpy==1.23.5",
-	"omegaconf==2.2.3",
-	"pyyaml==6.0",
-	"scikit-learn==1.0.2",
-	"scipy==1.9.2",
-	"seaborn==0.12.0",
-	"torch==1.12.1",
-	"torchaudio==0.12.1",
-	"torchvision==0.13.1",
-	"transformers==4.23.1",
-	"tqdm==4.64.1",
-	"wandb==0.13.4"
+    "attrdict==2.0.1",
+    "datasets==2.14.0",
+    "higher==0.2.1",
+    "hydra-core==1.2.0",
+    "jsonlines==3.1.0",
+    "matplotlib==3.6.1",
+    "nltk==3.7",
+    "omegaconf==2.2.3",
+    "pyyaml==6.0.2",
+    "scikit-learn==1.0.2",
+    "scipy==1.9.2",
+    "seaborn==0.12.0",
+    "torch==1.12.1",
+    "torchaudio==0.12.1",
+    "torchvision==0.13.1",
+    "transformers==4.23.1",
+    "tqdm==4.67.1",
+    "wandb==0.13.4",
+    "pyarrow>=8.0.0",
+    "numpy>=1.25.2",
+    "jupyter>=1.1.1",
+    "pandas>=2.3.3",
 ]
+
+[tool.uv]
+link-mode = "symlink"
+
+[tool.uv.pip]
+torch-backend = "auto"
 
 [tool.setuptools.package-dir]
 "" = "src"
@@ -37,21 +45,3 @@ dependencies = [
 [tool.setuptools.packages.find]
 where = ["src"]
 exclude = ["*.egg-info"]
-
-[tool.emmet.env]
-name = "emmet-edit"
-python = "3.9.7"
-channels = ["pytorch", "conda-forge", "defaults"]
-pip_exclude = ["torch", "torchvision", "torchaudio", "pytorch", "cudatoolkit", "cpuonly"]
-
-[tool.emmet.env.cpu]
-pytorch = "1.12.1"
-torchvision = "0.13.1"
-torchaudio = "0.12.1"
-cpuonly = ""
-
-[tool.emmet.env.gpu]
-pytorch = "1.12.1"
-torchvision = "0.13.1"
-torchaudio = "0.12.1"
-cudatoolkit = "11.3"

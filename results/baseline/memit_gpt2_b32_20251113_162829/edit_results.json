@@ -1,0 +1,58 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 32,
+    "num_edits": 32,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  },
+  {
+    "batch_idx": 1,
+    "start_idx": 32,
+    "end_idx": 64,
+    "num_edits": 32,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  },
+  {
+    "batch_idx": 2,
+    "start_idx": 64,
+    "end_idx": 96,
+    "num_edits": 32,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  },
+  {
+    "batch_idx": 3,
+    "start_idx": 96,
+    "end_idx": 128,
+    "num_edits": 32,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  },
+  {
+    "batch_idx": 4,
+    "start_idx": 128,
+    "end_idx": 160,
+    "num_edits": 32,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  },
+  {
+    "batch_idx": 5,
+    "start_idx": 160,
+    "end_idx": 192,
+    "num_edits": 32,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  },
+  {
+    "batch_idx": 6,
+    "start_idx": 192,
+    "end_idx": 200,
+    "num_edits": 8,
+    "status": "failed",
+    "error": "Dataset scripts are no longer supported, but found wikipedia.py"
+  }
+]

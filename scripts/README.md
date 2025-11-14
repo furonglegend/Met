@@ -4,16 +4,17 @@ EMMET 基线复现与评测脚本集合，支持 Memory Replay 机制。
 
 ## 📁 脚本说明
 
-| 文件 | 功能 | 用途 |
-|------|------|------|
-| `minimal_test.py` | 环境验证（9项检查） | Day 0: 确保环境配置正确 |
-| `prepare_data.py` | 数据采样工具 | 从完整数据集中采样指定数量 |
-| `test_baseline.py` | 快速测试（10条数据） | 验证脚本是否正常工作 |
-| `run_baseline.py` | 主实验脚本 | 运行单个编辑实验并评测 |
-| `run_batch_experiments.py` | 批量实验运行器 | 网格搜索多个配置 |
-| `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果 |
-| `quick_test.cmd/sh` | 快速测试便携脚本 | Windows/Linux快速验证 |
-| `run_mvp_experiments.cmd/sh` | MVP实验矩阵 | 运行完整的6组基线实验 |
+| 文件 | 功能 | 用途 | 对应 TODO |
+|------|------|------|----------|
+| `minimal_test.py` | 环境验证（9项检查） | Day 0: 确保环境配置正确 | Phase 0 |
+| `prepare_data.py` | 数据采样工具 | 从完整数据集中采样指定数量 | Phase 1.1 |
+| `test_baseline.py` | 快速测试（10条数据） | 验证脚本是否正常工作 | Phase 1.1 |
+| `run_baseline.py` | 主实验脚本 | 运行单个编辑实验并评测 | 所有 Phase |
+| `run_all_baselines.cmd` | **三大基线对比** | ROME vs MEMIT vs EMMET | **TODO 1.2** |
+| `run_mvp_experiments.cmd/sh` | MVP实验矩阵 | EMMET baseline vs Replay (6组) | Phase 2 |
+| `run_batch_experiments.py` | 批量实验运行器 | 网格搜索多个配置 | Phase 4.2 |
+| `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果 | Phase 4.3 |
+| `quick_test.cmd/sh` | 快速测试便携脚本 | Windows/Linux快速验证 | Phase 1.1 |
 
 ## 🚀 快速开始
 
@@ -32,6 +33,7 @@ python scripts/minimal_test.py
 ```
 
 验证项目:
+
 - ✅ Python 3.9
 - ✅ PyTorch 1.12.1 + CUDA
 - ✅ Transformers 4.23.1
@@ -51,7 +53,26 @@ bash scripts/quick_test.sh
 
 运行 10 条数据的小规模测试，验证完整流程。
 
-### 第2步: 运行MVP实验
+### 第2步: 三大基线对比（TODO 1.2）
+
+```bash
+# Windows
+scripts\run_all_baselines.cmd
+
+# Linux
+bash scripts/run_all_baselines.sh
+```
+
+**目标**: 证明统一框架的必要性与 EMMET 的优势
+
+运行 3 个实验：
+- ROME: 单条编辑（batch_size=1），200条
+- MEMIT: 批量编辑（batch_size=32），200条
+- EMMET: 批量编辑（batch_size=32），200条
+
+**输出**: `results/baseline_comparison/` + `baseline_comparison.csv`
+
+### 第3步: 运行MVP实验（TODO Phase 2）
 
 ```bash
 # Windows
@@ -63,9 +84,25 @@ bash scripts/run_mvp_experiments.sh
 
 自动运行 6 组实验（见下文实验矩阵）。
 
-## 📊 实验矩阵 (MVP)
+## 📊 实验矩阵概览
 
-根据 todo.md 第7节，最小可行实验包括:
+### 基线对比实验（TODO 1.2）
+
+**目标**: 证明统一框架必要性
+
+| 实验ID | 方法 | Batch Size | Num Edits | 说明 |
+|--------|------|------------|-----------|------|
+| 1 | ROME | 1 | 200 | 传统单条编辑 |
+| 2 | MEMIT | 32 | 200 | 批量最小二乘 |
+| 3 | EMMET | 32 | 200 | 统一闭式解 |
+
+**脚本**: `run_all_baselines.cmd`
+
+### MVP实验矩阵（TODO Phase 2）
+
+**目标**: 验证 Memory Replay 缓解遗忘
+
+根据 TODO.md Phase 2，最小可行实验包括:
 
 | 实验ID | 方法 | Batch Size | Replay Rate | 说明 |
 |--------|------|------------|-------------|------|
@@ -138,7 +175,72 @@ results/baseline/emmet_gpt2_b32_replay0.0_20231113_143052/
 | Neighborhood Specificity | NS | 测试 neighborhood prompts | 知识局部性 |
 | Composite Score | S | (ES+PS+NS)/3 | 综合得分 |
 
-### 3. run_batch_experiments.py - 批量实验
+### 2. run_all_baselines.cmd - 三大基线对比（TODO 1.2）
+
+```bash
+# Windows
+scripts\run_all_baselines.cmd
+
+# Linux (创建对应的 .sh 版本)
+bash scripts/run_all_baselines.sh
+```
+
+**目标**: 证明统一框架的必要性与 EMMET 的优势
+
+**实验配置**:
+- Model: GPT-2 XL (1.5B)
+- Num edits: 200
+- Seed: 42
+- ROME: batch_size=1（单条编辑）
+- MEMIT: batch_size=32（批量编辑）
+- EMMET: batch_size=32（批量编辑）
+
+**对比维度**:
+1. **Efficacy Score (ES)**: 编辑成功率
+2. **Paraphrase Score (PS)**: 泛化能力
+3. **Neighborhood Specificity (NS)**: 知识局部性
+4. **时间与显存开销**: 效率对比
+
+**输出结构**:
+```
+results/baseline_comparison/
+├── rome_gpt2-xl_b1_20231114_*/     # ROME 结果
+├── memit_gpt2-xl_b32_20231114_*/   # MEMIT 结果
+├── emmet_gpt2-xl_b32_20231114_*/   # EMMET 结果
+└── baseline_comparison.csv          # 聚合对比表
+```
+
+**关键点**（对应 TODO 1.2）:
+- ✅ 使用相同数据集与随机种子
+- ✅ 对齐评测指标实现
+- ✅ 保存中间编辑状态以供后续分析
+- ✅ 记录时间与显存开销
+
+### 3. run_mvp_experiments.cmd - MVP实验矩阵（TODO Phase 2）
+
+```bash
+# Windows
+scripts\run_mvp_experiments.cmd
+
+# Linux
+bash scripts/run_mvp_experiments.sh
+```
+
+**目标**: 验证 Memory Replay 缓解遗忘
+
+**实验矩阵**: 2种配置 × 3种批量大小 = 6组实验
+- EMMET baseline (replay_rate=0.0)
+- EMMET + Replay (replay_rate=0.3)
+- Batch sizes: 1, 32, 256
+
+**固定参数**:
+- Model: GPT-2 (774M)
+- Num edits: 500
+- Seed: 42
+
+**输出**: `results/baseline/` + 遗忘曲线数据
+
+### 4. run_batch_experiments.py - 批量实验运行器（TODO 4.2）
 
 **使用配置文件**:
 
@@ -173,7 +275,7 @@ python scripts/run_batch_experiments.py \
 
 自动运行所有参数组合 (2×3=6 组实验)。
 
-### 4. analyze_results.py - 结果分析
+### 5. analyze_results.py - 结果分析（TODO 4.3）
 
 ```bash
 python scripts/analyze_results.py \
@@ -190,7 +292,7 @@ python scripts/analyze_results.py \
 - Batch Size (1/32/256)
 - Replay Rate (0.0/0.3)
 
-### 5. prepare_data.py - 数据采样
+### 6. prepare_data.py - 数据采样（TODO 1.1）
 
 ```bash
 # 采样 200 条
@@ -200,9 +302,150 @@ python scripts/prepare_data.py --num 200 --seed 42
 python scripts/prepare_data.py --num 500 --seed 42 --output data/sample_500.json
 ```
 
-## 📈 实验工作流
+## 📈 实验工作流（对应 TODO.md）
 
-### Day 0 (今天 11/13) - 环境准备
+### Phase 0 (Day 0) - 环境准备与验证
+
+**目标**: 确保技术栈可行性
+
+```bash
+# 1. 环境验证
+python scripts/minimal_test.py
+
+# 2. 快速测试（10条数据）
+scripts\quick_test.cmd
+```
+
+**产出**: 环境验证通过 + 快速测试结果
+
+---
+
+### Phase 1 (TODO 1.2) - 三大基线对比
+
+**目标**: 证明统一框架必要性
+
+```bash
+# 运行 ROME vs MEMIT vs EMMET 对比
+scripts\run_all_baselines.cmd
+
+# 分析结果
+python scripts\analyze_results.py --results_dir results/baseline_comparison
+```
+
+**产出**: `baseline_comparison.csv` + 对比分析报告
+
+**关键发现**:
+- ROME: 精确但慢（单条编辑）
+- MEMIT: 快速但近似（最小二乘松弛）
+- EMMET: 平衡效率与精度（闭式解）
+
+---
+
+### Phase 2 (TODO Phase 2) - Memory Replay 验证
+
+**目标**: 验证 Replay 机制缓解遗忘
+
+```bash
+# 运行 MVP 实验矩阵（6组）
+scripts\run_mvp_experiments.cmd
+
+# 分析遗忘曲线
+python scripts\analyze_results.py --results_dir results/baseline
+```
+
+**产出**: 遗忘曲线图 + Replay 效果分析
+
+---
+
+### Phase 3 (TODO 4.2) - 大规模消融实验
+
+**目标**: 系统评测各配置组合
+
+```bash
+# 使用配置文件运行完整实验矩阵
+python scripts/run_batch_experiments.py --config configs/full_experiment_config.json
+```
+
+**产出**: 完整实验矩阵结果
+
+---
+
+## 📅 实验进度追踪（基于 TODO.md）
+
+### ✅ Phase 0: 知识准备与环境配置
+
+- [x] 环境配置 (conda + PyTorch + Transformers)
+- [x] 数据集准备 (CounterFact)
+- [x] 环境验证脚本 (`minimal_test.py`)
+- [x] 快速测试脚本 (`quick_test.cmd`)
+
+### 🔄 Phase 1: 基线实验与对比 [P0 优先级]
+
+**1.1 小规模快速验证（200-500条）**
+- [x] 准备 CounterFact 子集
+- [ ] 运行 EMMET 最小示例
+- [ ] 确认 ES/PS/NS 指标计算正确
+- [ ] 调试超参数
+
+**1.2 三大基线对比实验（ROME / MEMIT / EMMET）**
+- [x] 创建 `run_all_baselines.cmd` 脚本
+- [ ] ROME: 单条编辑（batch_size=1），200条
+- [ ] MEMIT: 批量编辑（batch_size=32），200条
+- [ ] EMMET: 批量编辑（batch_size=32），200条
+- [ ] 对比三者的 ES/PS/NS 差异
+- [ ] 记录时间与显存开销
+
+**产出**: `results/baseline_comparison.csv`
+
+### ⏳ Phase 2: Memory Replay 实现 [P1 核心贡献]
+
+**2.1 Replay Buffer 设计与实现**
+- [ ] 设计 Buffer 数据结构
+- [ ] 实现采样策略
+- [ ] 实现 Buffer 维护
+
+**2.2 集成到 EMMET 闭式解**
+- [ ] 在构建约束时拼接当前批 + 历史采样批
+- [ ] 数值稳定性处理
+
+**2.3 小规模消融实验**
+- [ ] Replay Rate 消融：r ∈ {0, 0.1, 0.3, 0.5}
+- [ ] Buffer Size 消融
+- [ ] 采样策略对比
+
+### ⏳ Phase 3: 最小化 LoRA 集成 [P2 满足报告承诺]
+
+- [ ] 实现最小 LoRA Wrapper 类
+- [ ] 小规模实验：EMMET vs EMMET+LoRA
+- [ ] 与 Replay 组合验证
+
+### ⏳ Phase 4: 中大规模系统实验 [P3 证明有效性]
+
+**4.1 扩展到中规模数据集（2000-5000条）**
+- [ ] 观察渐进遗忘 → 灾难遗忘的转折点
+- [ ] 多种配置对比
+
+**4.2 批量规模消融实验**
+- [ ] 批量大小：{1, 8, 32, 128, 512, 1024}
+- [ ] Replay 比例：r ∈ {0, 0.1, 0.3, 0.5}
+- [ ] 随机种子：{1, 2, 3}
+
+**4.3 可视化与分析**
+- [ ] 遗忘曲线图
+- [ ] 批量规模对比图
+- [ ] Replay 效果热力图
+
+### ⏳ Phase 5: 报告撰写与文档整理 [P4 最终交付]
+
+- [ ] 技术报告撰写（ACL 格式）
+- [ ] 代码文档与可复现性
+- [ ] 实验日志与结果归档
+
+---
+
+## 🗓️ 已完成实验记录
+
+### Day 0 (11/13) - 环境准备 [✅ 完成]
 
 ```bash
 # 1. 验证环境

@@ -1,0 +1,11 @@
+example_id,subject,target_new,target_true,efficacy_score,paraphrase_score,neighborhood_score
+0,Angola,Antarctica,Africa,0.0,0.0,1.0
+1,Shanghai,Dresden,Barcelona,0.0,0.5,1.0
+2,2011 Cannes Film Festival,Prescott,Cannes,0.0,0.0,1.0
+3,Delta Goodrem,India,Australia,1.0,1.0,0.2
+4,Google Patents,Microsoft,Google,0.0,0.0,1.0
+5,Lady Gaga,violin,piano,1.0,0.0,1.0
+6,Cologne,Cairo,Beijing,0.0,0.5,1.0
+7,Institut Polaire,Budapest,Perth,1.0,1.0,0.4
+8,Allegro Non Troppo,Serbian,Italian,0.0,0.0,1.0
+9,Thenewno2,Leicester,London,0.0,0.0,1.0
