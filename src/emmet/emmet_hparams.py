@@ -38,3 +38,11 @@ class EMMETHyperParams(HyperParams):
     calculate_objective_value: bool
     update_norm_lambda: float
     emmet_lambda: float
+
+    # LoRA-native integration (optional; defaults keep raw editing)
+    edit_mode: Literal["raw", "lora_native"] = "raw"
+    lora_rank: int = 8
+    lora_alpha: float = 8.0
+    lora_scale: float = 1.0
+    lora_use_svd: bool = True
+    lora_fit_steps: int = 0

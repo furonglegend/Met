@@ -87,7 +87,9 @@ class LoRALayer(nn.Module):
         Forward pass: output = (W_base + scaling * B @ A) @ x
         """
         # Base transformation
-        result = torch.nn.functional.linear(x, self.base_weight)
+        # Include bias if present (kept as attribute by wrapper)
+        bias = getattr(self, "bias", None)
+        result = torch.nn.functional.linear(x, self.base_weight, bias)
         
         # Add LoRA adjustment if enabled
         if self.lora_enabled and self.rank > 0:

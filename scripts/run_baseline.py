@@ -40,8 +40,12 @@ class ExperimentConfig:
         self.output_dir = args.output_dir
         self.replay_rate = args.replay_rate if hasattr(args, 'replay_rate') else 0.0
         self.use_lora = args.use_lora if hasattr(args, 'use_lora') else False
+        self.edit_mode = args.edit_mode if hasattr(args, 'edit_mode') else "raw"
         self.lora_rank = args.lora_rank if hasattr(args, 'lora_rank') else 8
         self.lora_alpha = args.lora_alpha if hasattr(args, 'lora_alpha') else 16.0
+        self.lora_scale = args.lora_scale if hasattr(args, 'lora_scale') else 1.0
+        self.lora_use_svd = args.lora_use_svd if hasattr(args, 'lora_use_svd') else True
+        self.lora_fit_steps = args.lora_fit_steps if hasattr(args, 'lora_fit_steps') else 0
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
         # Setup paths
@@ -81,8 +85,12 @@ class ExperimentConfig:
             "batch_size": self.batch_size,
             "replay_rate": self.replay_rate,
             "use_lora": self.use_lora,
+            "edit_mode": self.edit_mode,
             "lora_rank": self.lora_rank,
             "lora_alpha": self.lora_alpha,
+            "lora_scale": self.lora_scale,
+            "lora_use_svd": self.lora_use_svd,
+            "lora_fit_steps": self.lora_fit_steps,
             "dataset": self.dataset,
             "device": self.device,
             "timestamp": datetime.now().isoformat(),
@@ -195,6 +203,14 @@ class BaselineRunner:
                 from emmet.emmet_main import apply_emmet_to_model
                 self.logger.info("Using standard EMMET (no replay)")
             hparams = EMMETHyperParams.from_json(self.config.hparams_path)
+            # Override hparams for native LoRA if requested via CLI
+            if getattr(self.config, "edit_mode", "raw") == "lora_native":
+                hparams.edit_mode = "lora_native"
+                hparams.lora_rank = getattr(self.config, "lora_rank", 8)
+                hparams.lora_alpha = getattr(self.config, "lora_alpha", float(hparams.lora_rank))
+                hparams.lora_scale = getattr(self.config, "lora_scale", 1.0)
+                hparams.lora_use_svd = getattr(self.config, "lora_use_svd", True)
+                hparams.lora_fit_steps = getattr(self.config, "lora_fit_steps", 0)
         elif self.config.method == "memit":
             from memit.memit_hparams import MEMITHyperParams
             from memit.memit_main import apply_memit_to_model
@@ -284,8 +300,8 @@ class BaselineRunner:
         self.logger.info(f"Editing completed: {len(all_results)} batches processed")
         self.logger.info(f"{'='*80}\n")
         
-        # Apply LoRA if enabled
-        if self.config.use_lora:
+        # Post-hoc LoRA path (legacy). If native LoRA is enabled, skip this.
+        if self.config.use_lora and getattr(self.config, "edit_mode", "raw") != "lora_native":
             self.logger.info(f"\n{'='*80}")
             self.logger.info("Applying LoRA to edited model...")
             self.logger.info(f"{'='*80}")
@@ -572,11 +588,23 @@ def main():
     parser.add_argument("--replay_rate", type=float, default=0.0,
                        help="Replay rate for memory replay (0.0 = no replay)")
     parser.add_argument("--use_lora", action="store_true",
-                       help="Apply LoRA after EMMET editing")
+                       help="Apply LoRA after EMMET editing (post-hoc mode; prefer --edit_mode lora_native)")
+    parser.add_argument("--edit_mode", type=str, default="raw",
+                       choices=["raw", "lora_native"],
+                       help="Editing application mode: raw updates or native LoRA overlays")
     parser.add_argument("--lora_rank", type=int, default=8,
                        help="LoRA rank (number of low-rank dimensions)")
     parser.add_argument("--lora_alpha", type=float, default=16.0,
                        help="LoRA alpha scaling factor")
+    parser.add_argument("--lora_scale", type=float, default=1.0,
+                       help="Additional scaling applied to ΔW before low-rank mapping")
+    parser.add_argument("--lora_use_svd", dest="lora_use_svd", action="store_true",
+                       help="Use SVD mapping for LoRA factors")
+    parser.add_argument("--no_lora_use_svd", dest="lora_use_svd", action="store_false",
+                       help="Disable SVD mapping for LoRA factors")
+    parser.set_defaults(lora_use_svd=True)
+    parser.add_argument("--lora_fit_steps", type=int, default=0,
+                       help="Optional tiny fitting steps to refine LoRA factors")
     parser.add_argument("--dataset", type=str, default="counterfact_sampled_unique_cf_10_20000",
                        help="Dataset name (without .json extension)")
     parser.add_argument("--output_dir", type=str, default="results/baseline",
@@ -598,9 +626,12 @@ def main():
     print(f"Batch size:   {args.batch_size}")
     print(f"Replay rate:  {args.replay_rate}")
     print(f"Use LoRA:     {args.use_lora}")
+    print(f"Edit mode:    {args.edit_mode}")
     if args.use_lora:
         print(f"LoRA rank:    {args.lora_rank}")
         print(f"LoRA alpha:   {args.lora_alpha}")
+    if args.edit_mode == "lora_native":
+        print(f"LoRA-native:  rank={args.lora_rank}, alpha={args.lora_alpha}, scale={args.lora_scale}, use_svd={args.lora_use_svd}, fit_steps={args.lora_fit_steps}")
     print(f"Seed:         {args.seed}")
     print(f"Dataset:      {args.dataset}")
     print(f"Output dir:   {args.output_dir}")

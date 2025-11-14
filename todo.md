@@ -171,7 +171,7 @@
 ### 3.1 目标与范围
 
 **目标**: 让 EMMET 的编辑解只写入 LoRA 低秩参数（主权重全冻结），实现可回滚、低干扰、与 Replay / Trust 兼容。  
-**范围**: 仅实现原生 LoRA（不再保留“后处理式”模式；暂不支持 AdaLoRA / Prefix / Adapter）。  
+**范围**: 仅实现原生 LoRA（弃用“后处理式”模式；暂不支持 AdaLoRA / Prefix / Adapter）。  
 **模式切换**: `edit_mode=raw|lora_native`（默认 raw）。
 
 ### 3.2 核心设计
@@ -187,29 +187,22 @@
 
 ### 3.3 任务清单
 
-- [ ] 定义 `src/emmet/peft_backend_lora.py`：`LoRANativeBackend`（接口：prepare(layer), apply_delta(fact), rollback(fact_id), stats()）
-- [ ] 抽象接口接入：在 `emmet_main.execute_emmet` 中根据 `hparams.edit_mode` 分支 raw / lora_native
-- [ ] 冻结主权重校验：编辑后 diff=0 断言（仅允许 LoRA 参数变化）
-- [ ] ΔW 生成复用现有 compute_z / compute_ks 输出
-- [ ] 实现闭式映射：`U,S,Vt = svd(ΔW)` → 取前 r → 设 B = U_r * S_r^(1/2), A = S_r^(1/2) * Vt_r
-- [ ] 实现拟合模式（可选）：`--lora_fit_steps` > 0 时使用梯度优化
-- [ ] Fact 版本管理：维护 `fact_id -> {(layer, A_ref, B_ref)}` 映射
-- [ ] 回滚机制：`rollback(fact_id)` 将对应 LoRA 对 (A,B) 置零
-- [ ] 与 Trust 集成：低分直接回滚或缩放 (scale *= trust_score)
-- [ ] 与 Replay 集成：Replay 样本加入 ΔW 构造的统计（附历史降权系数）
-- [ ] CLI 增加：
-  - `--edit-mode lora_native`
-  - `--lora-rank`
-  - `--lora-fit-steps`
-  - `--lora-svd` (bool: 使用闭式映射)
-  - `--lora-scale`
-- [ ] hparams 扩展：`edit_mode`, `lora_rank`, `lora_fit_steps`, `lora_scale`, `lora_use_svd`
-- [ ] 指标记录：`param_efficiency`, `delta_residual_norm`, `rollback_flag`
-- [ ] 结果输出：`results/lora_native_events.jsonl`
-- [ ] 单元测试：玩具线性层 ΔW 拟合误差 ≤ 1e-4
+- [x] 定义 `src/emmet/peft_backend_lora.py`：`LoRANativeBackend`（接口：`apply_delta`, `stats`）
+- [x] 接入分支：在 `emmet_main.apply_emmet_to_model` 按 `hparams.edit_mode` 切换 raw / lora_native
+- [x] 冻结主权重：仅允许 LoRA 参数变化
+- [x] ΔW 复用：沿用 `compute_ks`/`compute_z` 输出并映射到低秩
+- [x] 闭式映射：`U,S,Vt = svd(ΔW)` → 取前 r → B = U_r·√S_r，A = √S_r·Vt_r
+- [ ] 拟合微调（可选）：`--lora_fit_steps` > 0 时最小化 ‖B@A − ΔW‖_F
+- [ ] 事件记录：`results/lora_native_events.jsonl`（记录层名/范数/残差）
+- [x] CLI 增加：
+  - `--edit_mode lora_native`
+  - `--lora_rank`, `--lora_alpha`, `--lora_scale`
+  - `--lora_use_svd`, `--lora_fit_steps`
+- [x] hparams 扩展：`edit_mode`, `lora_rank`, `lora_alpha`, `lora_scale`, `lora_use_svd`, `lora_fit_steps`
+- [ ] 单元测试：玩具线性层 ΔW 拟合误差（SVD）≤ 1e-4；回滚后等价性校验（后续加入）
 - [ ] 消融：rank ∈ {4,8,16}，fit_steps ∈ {0,5,10}
-- [ ] 可视化：rank vs efficacy / residual；rollback impact 曲线
-- [ ] Fallback：SVD 失败或残差>阈值 → 标记并退回 raw（仅当 `--allow-fallback`）
+- [ ] 可视化：rank vs efficacy / residual；历史保留率对比
+- [ ] Fallback：SVD 失败或残差>阈值 → 标记并退回 raw（`--allow-fallback`）
 
 ### 3.4 指标与判据 (建议)
 
@@ -231,7 +224,7 @@
 
 ### 3.6 产出
 
-- 代码：`peft_backend_lora.py` + `emmet_main.py` 补丁
+- 代码：`src/emmet/peft_backend_lora.py` + `src/emmet/emmet_main.py` 补丁 + `src/emmet/lora_wrapper.py` bias 前向修复
 - 配置：更新相关 hparams JSON
 - 脚本：`scripts/run_lora_native_ablation.cmd/.sh`
 - 结果：`results/lora_native_ablation.csv`

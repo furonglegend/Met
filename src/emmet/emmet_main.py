@@ -17,6 +17,7 @@ import time
 from .compute_ks import compute_ks
 from .compute_z import compute_z, get_module_input_output_at_words, find_fact_lookup_idx
 from .emmet_hparams import EMMETHyperParams
+from .peft_backend_lora import LoRANativeBackend
 
 # Cache variable(s)
 CONTEXT_TEMPLATES_CACHE = None
@@ -46,6 +47,19 @@ def apply_emmet_to_model(
 
     deltas = execute_emmet( model, tok, requests, hparams, cache_template=cache_template)
 
+    # Prepare native LoRA backend if requested
+    use_lora_native = getattr(hparams, "edit_mode", "raw") == "lora_native"
+    lora_backend = None
+    if use_lora_native:
+        lora_backend = LoRANativeBackend(
+            model,
+            rank=getattr(hparams, "lora_rank", 8),
+            alpha=getattr(hparams, "lora_alpha", None),
+            scale=getattr(hparams, "lora_scale", 1.0),
+            dropout=0.0,
+            freeze_base=True,
+        )
+
     with torch.no_grad():
         for w_name, (key_mat, val_mat, preservation_distance, new_edit_distance, old_edit_distance, inside_norms) in deltas.items():
             key_mat, val_mat = key_mat.to("cuda"), val_mat.to("cuda")
@@ -58,7 +72,19 @@ def apply_emmet_to_model(
 
             original_weights_norm = torch.norm(w[...]).detach().cpu().item()
 
-            w[...] += upd_matrix.float()
+            if use_lora_native and lora_backend is not None:
+                # Map into LoRA factors instead of writing to base weight
+                lora_backend.apply_delta(
+                    weight_param_name=w_name,
+                    delta=upd_matrix.float().detach(),
+                    use_svd=bool(getattr(hparams, "lora_use_svd", True)),
+                    fit_steps=int(getattr(hparams, "lora_fit_steps", 0)),
+                )
+                new_weights_norm = original_weights_norm  # base unchanged
+            else:
+                # Raw path: add delta directly to base weight
+                w[...] += upd_matrix.float()
+                new_weights_norm = torch.norm(w[...]).detach().cpu().item()
 
             #saving all distances
             layer = w_name.split('.')[2]
@@ -67,13 +93,16 @@ def apply_emmet_to_model(
                 'new_edit_distance': new_edit_distance,
                 'old_edit_distance': old_edit_distance,
                 'delta_norm': torch.norm(upd_matrix).detach().cpu().item(),
-                'new_weights_norm': torch.norm(w[...]).detach().cpu().item(),
+                'new_weights_norm': new_weights_norm,
                 'original_weights_norm': original_weights_norm,
                 'inside_norms': inside_norms
             }
             distances[layer] = temp_dict
 
-    print(f"New weights successfully inserted into {list(deltas.keys())}")
+    if use_lora_native:
+        print(f"LoRA overlays successfully applied to {list(deltas.keys())}")
+    else:
+        print(f"New weights successfully inserted into {list(deltas.keys())}")
 
     #return all the objective loss terms, plus the absolute norm of the new weights
 
