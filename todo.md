@@ -204,10 +204,58 @@
 **产出**: `results/lora_ablation.csv`
 
 ---
+## 🔧 Phase 4 编辑信用评分与保险机制 (Edit Trust / Rollback)
 
-## 📊 Phase 4: 中大规模系统实验 [P3 证明有效性]
+**目标**: 为顺序/批量编辑过程加入实时风险控制，降低副作用与误编辑累积；在置信不足时自动回滚或缩放编辑。
 
-### 4.1 扩展到中规模数据集（2000-5000条）
+**核心概念**:
+- Trust Score = 加权(编辑成功增益) − 惩罚(副作用/困惑度上升/邻域串扰/过度置信漂移)
+- Insurance = 回滚 (硬) 或 Delta 缩放 (软)，并记录触发原因
+- 评价 = 减少 NS 恶化率 + 提高历史编辑保留率 + 控制误报/漏报
+
+**指标定义**:
+- edit_success_gain: 目标事实目标 token 平均对数概率提升
+- heldout_ppl_delta: Held-out 文本平均 PPL 上升值
+- neighbor_flip_rate: 相似实体断言被错误提升的比例
+- confidence_shift: max softmax 过度提升幅度
+- (可选) attribution_focus_delta: 编辑层梯度/IG 聚焦度变化
+
+**任务**:
+- [ ] 设计 TrustMetrics 数据结构与组合函数 (0-1 归一化)
+- [ ] 实现 `src/emmet/trust.py`（预评估 + 后评估）
+- [ ] 在 `EMMETHyperParams` 增加字段：`trust_enable`, `trust_threshold`, `trust_weights`, `trust_heldout_samples`
+- [ ] 修改 `emmet_main.execute_emmet`：注入前备份 → 编辑 → 评估 → 低分回滚或缩放
+- [ ] 增加 CLI 参数：`--trust-enable --trust-threshold --trust-heldout-samples`
+- [ ] 采样 Held-out 集：从 CounterFact 非目标条目抽取 N 条
+- [ ] 记录 JSON 行：每次编辑的 metrics + decision + rollback_flag
+- [ ] 统计：rollback_rate / false_positive_rate / false_negative_rate
+- [ ] 阈值消融：threshold ∈ {0.2,0.3,0.4,0.5,0.6}
+- [ ] 可视化：ROC/PR 曲线 + rollback 对历史编辑保留率影响
+- [ ] 出错保护：评估异常时跳过回滚并打日志
+
+**产出**:
+- 代码: `src/emmet/trust.py` + `emmet_main.py` 补丁
+- 配置: 更新 hparams JSON 加入 trust 字段
+- 结果: `results/trust_eval.csv`, `results/trust_events.jsonl`
+- 图表: `figs/trust_roc.png`, `figs/rollback_effect_curve.png`
+- 文档: `docs/trust_mechanism.md`
+
+**成功判据 (建议)**:
+- 历史编辑保留率相对无保险提升 ≥ 8%
+- rollback 决策准确率 (1 - 误报/漏报平均) ≥ 0.75
+- 额外时间开销 ≤ 20%（gpt2-xl, 500 顺序编辑）
+- 副作用指标 (average heldout_ppl_delta) 降低 ≥ 30%
+
+**扩展 (后续可选)**:
+- Soft-scaling：分段线性缩放 delta 而非全回滚
+- 动态阈值：基于最近窗口均值自适应调整
+- 标注集微调：用少量人工标注的 “应回滚” 样本学习分类器
+
+---
+
+## 📊 Phase 5: 中大规模系统实验 [P3 证明有效性]
+
+### 5.1 扩展到中规模数据集（2000-5000条）
 
 **目标**: 观察渐进遗忘 → 灾难遗忘的转折点
 
@@ -220,7 +268,7 @@
 
 **产出**: `results/large_scale_forgetting.csv` + 遗忘曲线图
 
-### 4.2 批量规模消融实验
+### 5.2 批量规模消融实验
 
 **实验矩阵**:
 
@@ -237,7 +285,7 @@
 
 **产出**: 批处理脚本 + 完整实验矩阵结果
 
-### 4.3 可视化与分析
+### 5.3 可视化与分析
 
 **任务**:
 
@@ -250,9 +298,9 @@
 
 ---
 
-## 📝 Phase 5: 报告撰写与文档整理 [P4 最终交付]
+## 📝 Phase 6: 报告撰写与文档整理 [P4 最终交付]
 
-### 5.1 技术报告撰写（ACL 格式）
+### 6.1 技术报告撰写（ACL 格式）
 
 **章节结构**:
 
@@ -275,7 +323,7 @@
 
 **产出**: `report/final_report.pdf` (ACL 格式)
 
-### 5.2 代码文档与可复现性
+### 6.2 代码文档与可复现性
 
 **任务**:
 
@@ -287,7 +335,7 @@
 
 **产出**: 完整代码文档 + 可复现脚本
 
-### 5.3 实验日志与结果归档
+### 6.3 实验日志与结果归档
 
 **任务**:
 
