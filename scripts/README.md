@@ -11,8 +11,11 @@ EMMET 基线复现与评测脚本集合，支持 Memory Replay 机制。
 | `run_all_baselines.cmd/sh` | **三大基线对比** | ROME vs MEMIT vs EMMET | **Phase 1.2** |
 | `run_batch_experiments.py` | 批量实验运行器 | 网格搜索多个配置 | Phase 5.2 |
 | `run_lora_ablation.cmd/sh` | **LoRA 消融实验** | 测试不同 rank 的影响 | **Phase 3.2** |
+| `run_lora_native_ablation.cmd` | **LoRA 原生消融** | 测试 rank×fit_steps 的影响 | **Phase 3.2** |
 | `run_combined_experiments.cmd` | **组合配置实验** | Replay + LoRA 组合测试 | **Phase 3.2** |
 | `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果 | Phase 5.3 |
+| `run_replay_ablation.cmd` | **Replay 消融实验** | 遍历 replay_rate/strategy/buffer | **Phase 2.3** |
+| `run_mvp_experiments.cmd/sh` | MVP 实验矩阵 | Phase 2 的 6 组最小实验 | **Phase 2** |
 
 ## 🚀 快速开始
 
@@ -35,12 +38,18 @@ bash scripts/run_all_baselines.sh
 
 **输出**: `results/baseline_comparison/` + `baseline_comparison.csv`
 
-### 第2步: Memory Replay 实验（Phase 2）e 2）
+### 第2步: Memory Replay 实验（Phase 2）
 
 ```bash
 # 单个 Replay 实验
 python scripts\run_baseline.py --method emmet --model gpt2 \
     --num_edits 200 --batch_size 32 --replay_rate 0.3 --seed 42
+```
+
+批量 Replay 消融（rate/strategy/buffer）：
+
+```cmd
+scripts\run_replay_ablation.cmd
 ```
 
 ### 第3步: LoRA 消融实验（Phase 3）
@@ -54,6 +63,12 @@ bash scripts/run_lora_ablation.sh
 ```
 
 测试不同 LoRA rank（4/8/16）对性能的影响。
+
+LoRA 原生（lora_native）消融（rank × fit_steps 网格）：
+
+```cmd
+scripts\run_lora_native_ablation.cmd
+```
 
 ### 第4步: 组合配置实验
 
@@ -128,9 +143,18 @@ python scripts/run_baseline.py \
     --num_edits 500 \             # 编辑数量
     --batch_size 32 \             # 批量大小
     --replay_rate 0.0 \           # Replay比例 (0-1)
+    --replay_buffer_size 200 \     # Replay缓冲区大小
+    --replay_strategy random \     # random/priority/recent
+    --replay_weight 1.0 \          # 历史样本权重(0-1)
     --use_lora \                  # 启用 LoRA (可选)
     --lora_rank 8 \               # LoRA rank (默认8)
     --lora_alpha 16 \             # LoRA alpha (默认16)
+    --edit_mode raw \             # raw 或 lora_native（推荐原生LoRA）
+    --lora_scale 1.0 \            # ΔW 额外缩放
+    --lora_use_svd \              # 使用SVD映射（或 --no_lora_use_svd）
+    --lora_fit_steps 0 \          # 可选微调步数
+    --allow_fallback \            # 允许残差超阈回退到raw
+    --lora_residual_threshold 0.2 \ # 触发回退的相对残差阈值
     --seed 42 \                   # 随机种子
     --dataset counterfact_sampled_unique_cf_10_20000 \  # 数据集
     --output_dir results/baseline  # 输出目录
@@ -147,6 +171,14 @@ results/baseline/emmet_gpt2_b32_replay0.0_20231113_143052/
 ├── detailed_results.csv     # CSV格式
 ├── metrics.json             # 聚合指标 (ES/PS/NS/S)
 └── metrics.csv              # CSV格式
+
+基于多次实验的聚合与可视化（自动识别 Replay/LoRA 字段）：
+
+```
+results/analysis_*.csv       # 聚合表
+results/replay_ablation.csv  # Replay 消融聚合表（按 rate/strategy/buffer）
+results/figs/*.png           # 各类图（含 LoRA 与 Replay）
+```
 ```
 
 **评测指标**:
