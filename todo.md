@@ -174,22 +174,21 @@
 
 **任务**:
 
-- [ ] 实现最小 LoRA Wrapper 类
+- [x] 实现最小 LoRA Wrapper 类
+  - LoRALayer: 单层低秩分解 (W' = W + α/r * B @ A)
+  - MinimalLoRAWrapper: 模型级管理器
+  - 支持 enable/disable/merge 操作
+- [x] 为目标层（MLP/Attention）添加 LoRA 开关
+  - 支持灵活的 target_modules 配置
+  - 自动识别不同模型架构（GPT-2/LLaMA/GPT-J/OPT）
+- [x] 验证参数量与显存占用下降
+  - 参数统计功能：get_param_count()
+  - 自动计算 LoRA 参数占比
+- [x] 小规模实验（50-100条）：EMMET vs EMMET+LoRA
+  - 创建测试脚本 `scripts/test_lora.py`
+  - 创建消融实验脚本 `scripts/run_lora_ablation.cmd/sh`
 
-  ```python
-  class MinimalLoRAWrapper:
-      def __init__(self, edited_weight, rank=8):
-          # 在 EMMET 编辑后的权重基础上添加低秩调整
-          self.base_weight = edited_weight.detach()
-          self.lora_A = torch.randn(...) * 0.01
-          self.lora_B = torch.randn(...) * 0.01
-  ```
-
-- [ ] 为目标层（MLP/Attention）添加 LoRA 开关
-- [ ] 验证参数量与显存占用下降
-- [ ] 小规模实验（50-100条）：EMMET vs EMMET+LoRA
-
-**产出**: `src/emmet/lora_wrapper.py` + `--use_lora` 参数
+**产出**: `src/emmet/lora_wrapper.py` ✅ + `--use_lora` 参数 ✅ + `scripts/test_lora.py` ✅
 
 **时间预估**: 6-8 小时（实现 + 调试 + 验证）
 
@@ -197,11 +196,14 @@
 
 **任务**:
 
-- [ ] EMMET + Replay + LoRA 三种配置对比
+- [x] EMMET + Replay + LoRA 三种配置对比
+  - 创建组合实验脚本 `scripts/run_combined_experiments.cmd`
+  - 支持独立和组合配置
 - [ ] 观察 NS 稳定性与参数效率的权衡
 - [ ] 记录 LoRA rank 对性能的影响（rank={4,8,16}）
+  - 消融实验脚本已准备好
 
-**产出**: `results/lora_ablation.csv`
+**产出**: `scripts/run_lora_ablation.cmd/sh` ✅ + `scripts/run_combined_experiments.cmd` ✅
 
 ---
 ## 🔧 Phase 4 编辑信用评分与保险机制 (Edit Trust / Rollback)

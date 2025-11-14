@@ -6,54 +6,17 @@ EMMET 基线复现与评测脚本集合，支持 Memory Replay 机制。
 
 | 文件 | 功能 | 用途 | 对应 TODO |
 |------|------|------|----------|
-| `minimal_test.py` | 环境验证（9项检查） | Day 0: 确保环境配置正确 | Phase 0 |
 | `prepare_data.py` | 数据采样工具 | 从完整数据集中采样指定数量 | Phase 1.1 |
-| `test_baseline.py` | 快速测试（10条数据） | 验证脚本是否正常工作 | Phase 1.1 |
-| `run_baseline.py` | 主实验脚本 | 运行单个编辑实验并评测 | 所有 Phase |
-| `run_all_baselines.cmd` | **三大基线对比** | ROME vs MEMIT vs EMMET | **TODO 1.2** |
-| `run_mvp_experiments.cmd/sh` | MVP实验矩阵 | EMMET baseline vs Replay (6组) | Phase 2 |
-| `run_batch_experiments.py` | 批量实验运行器 | 网格搜索多个配置 | Phase 4.2 |
-| `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果 | Phase 4.3 |
-| `quick_test.cmd/sh` | 快速测试便携脚本 | Windows/Linux快速验证 | Phase 1.1 |
+| `run_baseline.py` | **主实验脚本** | 运行单个编辑实验并评测 | 所有 Phase |
+| `run_all_baselines.cmd/sh` | **三大基线对比** | ROME vs MEMIT vs EMMET | **Phase 1.2** |
+| `run_batch_experiments.py` | 批量实验运行器 | 网格搜索多个配置 | Phase 5.2 |
+| `run_lora_ablation.cmd/sh` | **LoRA 消融实验** | 测试不同 rank 的影响 | **Phase 3.2** |
+| `run_combined_experiments.cmd` | **组合配置实验** | Replay + LoRA 组合测试 | **Phase 3.2** |
+| `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果 | Phase 5.3 |
 
 ## 🚀 快速开始
 
-### 第0步: 环境验证
-
-```bash
-# Windows
-cd d:\Projects\nlp_final_project\emmet-stability-replay
-conda activate emmet-edit
-python scripts\minimal_test.py
-
-# Linux
-cd /path/to/emmet-stability-replay
-conda activate emmet-edit
-python scripts/minimal_test.py
-```
-
-验证项目:
-
-- ✅ Python 3.9
-- ✅ PyTorch 1.12.1 + CUDA
-- ✅ Transformers 4.23.1
-- ✅ 数据文件存在
-- ✅ GPT-2 模型可加载
-- ✅ 项目模块可导入
-
-### 第1步: 快速测试
-
-```bash
-# Windows
-scripts\quick_test.cmd
-
-# Linux
-bash scripts/quick_test.sh
-```
-
-运行 10 条数据的小规模测试，验证完整流程。
-
-### 第2步: 三大基线对比（TODO 1.2）
+### 第1步: 三大基线对比（Phase 1.2）
 
 ```bash
 # Windows
@@ -72,17 +35,34 @@ bash scripts/run_all_baselines.sh
 
 **输出**: `results/baseline_comparison/` + `baseline_comparison.csv`
 
-### 第3步: 运行MVP实验（TODO Phase 2）
+### 第2步: Memory Replay 实验（Phase 2）e 2）
+
+```bash
+# 单个 Replay 实验
+python scripts\run_baseline.py --method emmet --model gpt2 \
+    --num_edits 200 --batch_size 32 --replay_rate 0.3 --seed 42
+```
+
+### 第3步: LoRA 消融实验（Phase 3）
 
 ```bash
 # Windows
-scripts\run_mvp_experiments.cmd
+scripts\run_lora_ablation.cmd
 
 # Linux
-bash scripts/run_mvp_experiments.sh
+bash scripts/run_lora_ablation.sh
 ```
 
-自动运行 6 组实验（见下文实验矩阵）。
+测试不同 LoRA rank（4/8/16）对性能的影响。
+
+### 第4步: 组合配置实验
+
+```bash
+# Windows
+scripts\run_combined_experiments.cmd
+```
+
+测试 EMMET + Replay + LoRA 的各种组合配置。
 
 ## 📊 实验矩阵概览
 
@@ -148,6 +128,9 @@ python scripts/run_baseline.py \
     --num_edits 500 \             # 编辑数量
     --batch_size 32 \             # 批量大小
     --replay_rate 0.0 \           # Replay比例 (0-1)
+    --use_lora \                  # 启用 LoRA (可选)
+    --lora_rank 8 \               # LoRA rank (默认8)
+    --lora_alpha 16 \             # LoRA alpha (默认16)
     --seed 42 \                   # 随机种子
     --dataset counterfact_sampled_unique_cf_10_20000 \  # 数据集
     --output_dir results/baseline  # 输出目录
@@ -239,6 +222,153 @@ bash scripts/run_mvp_experiments.sh
 - Seed: 42
 
 **输出**: `results/baseline/` + 遗忘曲线数据
+
+---
+
+## 🔧 LoRA 集成 (Phase 3)
+
+### LoRA 概述
+
+**Low-Rank Adaptation (LoRA)** 是一种参数高效的微调方法，在 EMMET 编辑后应用。
+
+**核心特性**:
+- **后处理式架构**: LoRA 在 EMMET 编辑完成后应用，不修改闭式解
+- **低秩分解**: W' = W_base + (α/r) * B @ A
+- **参数高效**: 仅增加 r×(d_in + d_out) 个可训练参数（<1%）
+
+### 使用方法
+
+#### 1. 基本用法
+
+```bash
+# EMMET + LoRA
+python scripts/run_baseline.py \
+    --method emmet \
+    --model gpt2 \
+    --num_edits 100 \
+    --batch_size 10 \
+    --use_lora \
+    --lora_rank 8 \
+    --lora_alpha 16
+```
+
+#### 2. 组合使用
+
+```bash
+# EMMET + Memory Replay + LoRA
+python scripts/run_baseline.py \
+    --method emmet \
+    --model gpt2 \
+    --num_edits 200 \
+    --batch_size 16 \
+    --replay_rate 0.3 \
+    --use_lora \
+    --lora_rank 8
+```
+
+### LoRA 参数说明
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `--use_lora` | False | 是否启用 LoRA |
+| `--lora_rank` | 8 | 低秩分解的秩（推荐: 4/8/16） |
+| `--lora_alpha` | 16.0 | 缩放因子（通常为 2×rank） |
+
+### LoRA 实验脚本
+
+#### run_lora_ablation.cmd/sh - LoRA 消融实验
+
+测试不同 rank 对性能的影响：
+
+```bash
+# Windows
+scripts\run_lora_ablation.cmd
+
+# Linux
+bash scripts/run_lora_ablation.sh
+```
+
+**实验配置**:
+- EMMET baseline (no LoRA)
+- EMMET + LoRA rank=4 (α=8)
+- EMMET + LoRA rank=8 (α=16)
+- EMMET + LoRA rank=16 (α=32)
+
+**固定参数**: MODEL=gpt2, NUM_EDITS=100, BATCH_SIZE=10, SEED=42
+
+#### run_combined_experiments.cmd - 组合配置实验
+
+测试所有组合配置：
+
+```bash
+scripts\run_combined_experiments.cmd
+```
+
+**包含 7 种配置**:
+1. EMMET baseline
+2. EMMET + Replay (0.3)
+3. EMMET + LoRA (rank=8)
+4. EMMET + Replay (0.3) + LoRA (rank=8)
+5. EMMET + Replay (0.5) + LoRA (rank=4)
+6. EMMET + Replay (0.3) + LoRA (rank=16)
+7. EMMET + Replay (0.1) + LoRA (rank=8)
+
+### LoRA 支持的模型
+
+| 模型 | 默认目标模块 |
+|------|--------------|
+| GPT-2 | `mlp.c_fc`, `mlp.c_proj` |
+| LLaMA | `mlp.up_proj`, `mlp.down_proj`, `mlp.gate_proj` |
+| GPT-J | `mlp.fc_in`, `mlp.fc_out` |
+| OPT | `fc1`, `fc2` |
+
+### LoRA 参数效率
+
+以 GPT-2 (124M) 为例：
+
+| Rank | LoRA 参数 | 占比 | 训练参数减少 |
+|------|-----------|------|--------------|
+| 4 | ~0.3M | 0.24% | 99.76% |
+| 8 | ~0.6M | 0.48% | 99.52% |
+| 16 | ~1.2M | 0.97% | 99.03% |
+
+### LoRA API 参考
+
+```python
+from emmet.lora_wrapper import apply_lora_to_edited_model
+
+lora_wrapper = apply_lora_to_edited_model(
+    model=edited_model,              # EMMET 编辑后的模型
+    target_modules=['mlp.c_fc', 'mlp.c_proj'],  # 目标模块
+    rank=8,                          # LoRA rank
+    alpha=16.0,                      # 缩放因子
+    freeze_base=True                 # 冻结基础参数
+)
+
+# 获取参数统计
+stats = lora_wrapper.get_param_count()
+
+# 启用/禁用 LoRA
+lora_wrapper.enable_lora()
+lora_wrapper.disable_lora()
+
+# 合并 LoRA 到基础权重
+lora_wrapper.merge_lora()
+```
+
+### LoRA 故障排除
+
+**问题：显存不足**
+- 减小 LoRA rank (8 → 4)
+- 减小 batch_size
+- 减少 target_modules 数量
+
+**问题：性能下降**
+- 增加 rank (8 → 16)
+- 调整 alpha = 2 × rank
+- 运行消融实验找到最佳配置
+
+---
 
 ### 4. run_batch_experiments.py - 批量实验运行器（TODO 4.2）
 

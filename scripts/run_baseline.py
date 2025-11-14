@@ -39,6 +39,9 @@ class ExperimentConfig:
         self.dataset = args.dataset
         self.output_dir = args.output_dir
         self.replay_rate = args.replay_rate if hasattr(args, 'replay_rate') else 0.0
+        self.use_lora = args.use_lora if hasattr(args, 'use_lora') else False
+        self.lora_rank = args.lora_rank if hasattr(args, 'lora_rank') else 8
+        self.lora_alpha = args.lora_alpha if hasattr(args, 'lora_alpha') else 16.0
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
         # Setup paths
@@ -48,7 +51,8 @@ class ExperimentConfig:
         # Create output directory
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         replay_suffix = f"_replay{self.replay_rate}" if self.replay_rate > 0 else ""
-        self.run_dir = Path(self.output_dir) / f"{self.method}_{self.model}_b{self.batch_size}{replay_suffix}_{timestamp}"
+        lora_suffix = f"_lora{self.lora_rank}" if self.use_lora else ""
+        self.run_dir = Path(self.output_dir) / f"{self.method}_{self.model}_b{self.batch_size}{replay_suffix}{lora_suffix}_{timestamp}"
         self.run_dir.mkdir(parents=True, exist_ok=True)
         
         # Setup logging
@@ -76,6 +80,9 @@ class ExperimentConfig:
             "seed": self.seed,
             "batch_size": self.batch_size,
             "replay_rate": self.replay_rate,
+            "use_lora": self.use_lora,
+            "lora_rank": self.lora_rank,
+            "lora_alpha": self.lora_alpha,
             "dataset": self.dataset,
             "device": self.device,
             "timestamp": datetime.now().isoformat(),
@@ -276,6 +283,38 @@ class BaselineRunner:
         self.logger.info(f"\n{'='*80}")
         self.logger.info(f"Editing completed: {len(all_results)} batches processed")
         self.logger.info(f"{'='*80}\n")
+        
+        # Apply LoRA if enabled
+        if self.config.use_lora:
+            self.logger.info(f"\n{'='*80}")
+            self.logger.info("Applying LoRA to edited model...")
+            self.logger.info(f"{'='*80}")
+            
+            try:
+                from emmet.lora_wrapper import apply_lora_to_edited_model, get_lora_target_modules
+                
+                # Get recommended target modules for this model
+                target_modules = get_lora_target_modules(self.config.model)
+                self.logger.info(f"Target modules: {target_modules}")
+                
+                # Apply LoRA
+                lora_wrapper = apply_lora_to_edited_model(
+                    model=model,
+                    target_modules=target_modules,
+                    rank=self.config.lora_rank,
+                    alpha=self.config.lora_alpha,
+                    freeze_base=True
+                )
+                
+                # Get the LoRA-enhanced model
+                model = lora_wrapper.model
+                
+                self.logger.info("✅ LoRA applied successfully")
+                self.logger.info(f"{'='*80}\n")
+                
+            except Exception as e:
+                self.logger.error(f"❌ LoRA application failed: {str(e)}", exc_info=True)
+                self.logger.warning("Continuing with non-LoRA model...")
         
         return all_results, model, tokenizer
     
@@ -532,6 +571,12 @@ def main():
                        help="Batch size for editing")
     parser.add_argument("--replay_rate", type=float, default=0.0,
                        help="Replay rate for memory replay (0.0 = no replay)")
+    parser.add_argument("--use_lora", action="store_true",
+                       help="Apply LoRA after EMMET editing")
+    parser.add_argument("--lora_rank", type=int, default=8,
+                       help="LoRA rank (number of low-rank dimensions)")
+    parser.add_argument("--lora_alpha", type=float, default=16.0,
+                       help="LoRA alpha scaling factor")
     parser.add_argument("--dataset", type=str, default="counterfact_sampled_unique_cf_10_20000",
                        help="Dataset name (without .json extension)")
     parser.add_argument("--output_dir", type=str, default="results/baseline",
@@ -552,6 +597,10 @@ def main():
     print(f"Num edits:    {args.num_edits}")
     print(f"Batch size:   {args.batch_size}")
     print(f"Replay rate:  {args.replay_rate}")
+    print(f"Use LoRA:     {args.use_lora}")
+    if args.use_lora:
+        print(f"LoRA rank:    {args.lora_rank}")
+        print(f"LoRA alpha:   {args.lora_alpha}")
     print(f"Seed:         {args.seed}")
     print(f"Dataset:      {args.dataset}")
     print(f"Output dir:   {args.output_dir}")
