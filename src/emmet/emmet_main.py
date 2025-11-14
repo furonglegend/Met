@@ -74,12 +74,19 @@ def apply_emmet_to_model(
 
             if use_lora_native and lora_backend is not None:
                 # Map into LoRA factors instead of writing to base weight
-                lora_backend.apply_delta(
-                    weight_param_name=w_name,
-                    delta=upd_matrix.float().detach(),
-                    use_svd=bool(getattr(hparams, "lora_use_svd", True)),
-                    fit_steps=int(getattr(hparams, "lora_fit_steps", 0)),
-                )
+                try:
+                    lora_backend.apply_delta(
+                        weight_param_name=w_name,
+                        delta=upd_matrix.float().detach(),
+                        use_svd=bool(getattr(hparams, "lora_use_svd", True)),
+                        fit_steps=int(getattr(hparams, "lora_fit_steps", 0)),
+                    )
+                except Exception as _e:
+                    # If mapping fails and fallback allowed, perform raw update; else re-raise
+                    if bool(getattr(hparams, "allow_fallback", False)):
+                        lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                    else:
+                        raise
                 new_weights_norm = original_weights_norm  # base unchanged
 
                 # Compute relative residual ||B@A - ΔW|| / ||ΔW|| for logging
@@ -95,6 +102,17 @@ def apply_emmet_to_model(
                         lora_residual_rel = (torch.norm(approx - target) / denom).detach().cpu().item()
                 except Exception:
                     lora_residual_rel = None
+
+                # Residual guard: if residual too large and allowed, fallback to raw
+                thr = getattr(hparams, "lora_residual_threshold", None)
+                if lora_residual_rel is None and bool(getattr(hparams, "allow_fallback", False)):
+                    lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                    new_weights_norm = torch.norm(w[...]).detach().cpu().item()
+                elif isinstance(thr, float) and bool(getattr(hparams, "allow_fallback", False)) and lora_residual_rel is not None and lora_residual_rel > thr:
+                    lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                    new_weights_norm = torch.norm(w[...]).detach().cpu().item()
+                    # mark residual as -1 to signal fallback triggered
+                    lora_residual_rel = -1.0
             else:
                 # Raw path: add delta directly to base weight
                 w[...] += upd_matrix.float()
@@ -111,7 +129,8 @@ def apply_emmet_to_model(
                 'new_weights_norm': new_weights_norm,
                 'original_weights_norm': original_weights_norm,
                 'inside_norms': inside_norms,
-                'lora_residual_rel': lora_residual_rel
+                'lora_residual_rel': lora_residual_rel,
+                'weight_name': w_name
             }
             distances[layer] = temp_dict
 

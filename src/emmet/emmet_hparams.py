@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 from utils.hparams import HyperParams
 
@@ -46,3 +46,5 @@ class EMMETHyperParams(HyperParams):
     lora_scale: float = 1.0
     lora_use_svd: bool = True
     lora_fit_steps: int = 0
+    allow_fallback: bool = False
+    lora_residual_threshold: Optional[float] = None

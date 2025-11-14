@@ -10,6 +10,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
 
 
 def _ensure_dir(p: Path):
@@ -125,5 +126,190 @@ def create_summary_plots(df: pd.DataFrame, output_dir: str):
                 saved.append(str(res))
         except Exception:
             pass
+
+    return saved
+
+
+def _safe_numeric(df: pd.DataFrame, cols):
+    for c in cols:
+        if c in df.columns:
+            try:
+                df[c] = pd.to_numeric(df[c], errors='coerce')
+            except Exception:
+                pass
+    return df
+
+
+def create_lora_plots(df: pd.DataFrame, output_dir: str):
+    """Create LoRA-native specific plots if data columns are present.
+
+    - Histogram of lora_residual_rel_mean
+    - Scatter of lora_residual_rel_mean vs ES/NS/Composite
+    - Rank vs metrics bar/line plots (edit_mode == lora_native)
+    - Heatmap of (rank x lora_fit_steps) vs composite_score (if both columns exist)
+    """
+    out_dir = Path(output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    saved = []
+
+    df = df.copy()
+    # Ensure numeric types
+    df = _safe_numeric(df, [
+        'lora_rank', 'lora_fit_steps', 'lora_alpha', 'lora_scale',
+        'lora_residual_rel_mean',
+        'efficacy_success', 'paraphrase_success', 'neighborhood_specificity', 'composite_score'
+    ])
+
+    # Only LoRA-native runs
+    if 'edit_mode' in df.columns:
+        df_lora = df[df['edit_mode'] == 'lora_native'].copy()
+    else:
+        df_lora = df.copy()
+
+    if df_lora.empty:
+        return saved
+
+    # Histogram of residuals
+    if 'lora_residual_rel_mean' in df_lora.columns and df_lora['lora_residual_rel_mean'].notna().any():
+        plt.figure(figsize=(6, 4))
+        sns.histplot(df_lora['lora_residual_rel_mean'].dropna(), bins=20, kde=True)
+        plt.xlabel('lora_residual_rel_mean')
+        plt.title('LoRA residual (relative Frobenius) distribution')
+        plt.tight_layout()
+        p = out_dir / 'lora_residual_hist.png'
+        _ensure_dir(p)
+        plt.savefig(p)
+        plt.close()
+        saved.append(str(p))
+
+    # Correlation scatter plots
+    for metric in ['efficacy_success', 'neighborhood_specificity', 'composite_score']:
+        if metric in df_lora.columns and 'lora_residual_rel_mean' in df_lora.columns:
+            dsub = df_lora.dropna(subset=['lora_residual_rel_mean', metric])
+            if not dsub.empty:
+                plt.figure(figsize=(6, 4))
+                sns.regplot(data=dsub, x='lora_residual_rel_mean', y=metric, scatter_kws={'s': 20}, line_kws={'color': 'red'})
+                plt.title(f'{metric} vs LoRA residual')
+                plt.tight_layout()
+                p = out_dir / f'{metric}_vs_lora_residual.png'
+                _ensure_dir(p)
+                plt.savefig(p)
+                plt.close()
+                saved.append(str(p))
+
+    # Rank vs metrics (bar)
+    if 'lora_rank' in df_lora.columns and df_lora['lora_rank'].notna().any():
+        for metric in ['efficacy_success', 'neighborhood_specificity', 'composite_score']:
+            if metric in df_lora.columns:
+                agg = df_lora.groupby('lora_rank')[metric].agg(['mean', 'std', 'count']).reset_index()
+                plt.figure(figsize=(7, 4))
+                sns.barplot(data=agg, x='lora_rank', y='mean', yerr=agg['std'], palette='Blues')
+                plt.xlabel('lora_rank')
+                plt.ylabel(f'{metric} (mean ± std)')
+                plt.title(f'{metric} by LoRA rank')
+                plt.tight_layout()
+                p = out_dir / f'{metric}_by_lora_rank.png'
+                _ensure_dir(p)
+                plt.savefig(p)
+                plt.close()
+                saved.append(str(p))
+
+    # Heatmap rank x fit_steps -> composite_score
+    if 'lora_rank' in df_lora.columns and 'lora_fit_steps' in df_lora.columns and 'composite_score' in df_lora.columns:
+        pivot = df_lora.pivot_table(index='lora_rank', columns='lora_fit_steps', values='composite_score', aggfunc='mean')
+        if pivot.size > 0:
+            plt.figure(figsize=(6, 5))
+            sns.heatmap(pivot.sort_index().sort_index(axis=1), annot=True, fmt='.3f', cmap='viridis')
+            plt.title('Composite score: rank x fit_steps')
+            plt.tight_layout()
+            p = out_dir / 'composite_heatmap_rank_fitsteps.png'
+            _ensure_dir(p)
+            plt.savefig(p)
+            plt.close()
+            saved.append(str(p))
+
+    return saved
+
+
+def create_replay_plots(df: pd.DataFrame, output_dir: str):
+    """Create Replay ablation plots when replay columns are present.
+
+    - Composite vs replay_rate (line, hue=method)
+    - ES/PS/NS by replay_rate (bar, aggregated)
+    - Heatmap of composite_score by (replay_rate x batch_size)
+    - Strategy comparison: composite by strategy (if available)
+    """
+    out_dir = Path(output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    saved = []
+
+    df = df.copy()
+    # Ensure numeric
+    for col in ['replay_rate', 'batch_size', 'composite_score', 'efficacy_success', 'paraphrase_success', 'neighborhood_specificity']:
+        if col in df.columns:
+            try:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+            except Exception:
+                pass
+
+    if 'replay_rate' not in df.columns:
+        return saved
+
+    # Composite vs replay_rate
+    if 'composite_score' in df.columns:
+        plt.figure(figsize=(7, 4))
+        hue = 'method' if 'method' in df.columns else None
+        sns.lineplot(data=df.dropna(subset=['replay_rate', 'composite_score']), x='replay_rate', y='composite_score', hue=hue, marker='o')
+        plt.title('Composite vs Replay Rate')
+        plt.tight_layout()
+        p = out_dir / 'composite_vs_replay_rate.png'
+        _ensure_dir(p)
+        plt.savefig(p)
+        plt.close()
+        saved.append(str(p))
+
+    # Bars for ES/PS/NS by replay_rate
+    for metric in ['efficacy_success', 'paraphrase_success', 'neighborhood_specificity']:
+        if metric in df.columns:
+            agg = df.groupby('replay_rate')[metric].agg(['mean', 'std', 'count']).reset_index()
+            plt.figure(figsize=(7, 4))
+            sns.barplot(data=agg, x='replay_rate', y='mean', yerr=agg['std'], palette='muted')
+            plt.ylabel(f'{metric} (mean ± std)')
+            plt.title(f'{metric} by Replay Rate')
+            plt.tight_layout()
+            p = out_dir / f'{metric}_by_replay_rate.png'
+            _ensure_dir(p)
+            plt.savefig(p)
+            plt.close()
+            saved.append(str(p))
+
+    # Heatmap composite: replay_rate x batch_size
+    if 'batch_size' in df.columns and 'composite_score' in df.columns:
+        try:
+            pivot = df.pivot_table(index='replay_rate', columns='batch_size', values='composite_score', aggfunc='mean')
+            if pivot.size > 0:
+                plt.figure(figsize=(6, 5))
+                sns.heatmap(pivot.sort_index().sort_index(axis=1), annot=True, fmt='.3f', cmap='mako')
+                plt.title('Composite: replay_rate x batch_size')
+                plt.tight_layout()
+                p = out_dir / 'composite_heatmap_replay_batch.png'
+                _ensure_dir(p)
+                plt.savefig(p)
+                plt.close()
+                saved.append(str(p))
+        except Exception:
+            pass
+
+    # Strategy comparison if present
+    if 'replay_strategy' in df.columns and 'composite_score' in df.columns:
+        plt.figure(figsize=(7, 4))
+        sns.barplot(data=df, x='replay_strategy', y='composite_score', estimator=np.mean, ci='sd', palette='Set2')
+        plt.title('Composite by Replay Strategy')
+        plt.tight_layout()
+        p = out_dir / 'composite_by_replay_strategy.png'
+        _ensure_dir(p)
+        plt.savefig(p)
+        plt.close()
+        saved.append(str(p))
 
     return saved

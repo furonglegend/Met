@@ -173,6 +173,43 @@ class LoRANativeBackend:
             lora.lora_B.requires_grad_(False)
 
         # Return nothing; callers can compute residual from registry if needed
+        # Return nothing; callers can compute residual from registry if needed
+
+    @torch.no_grad()
+    def fallback_to_raw(self, weight_param_name: str, delta: torch.Tensor) -> None:
+        """Replace LoRA layer (if present) with nn.Linear and apply raw delta to base weight.
+
+        weight_param_name: full parameter name ending with .weight
+        delta: matrix shaped like target weight
+        """
+        assert weight_param_name.endswith(".weight"), "Expected a .weight parameter name"
+        module_path = weight_param_name[:-7]
+
+        parent_name, child_name = self._split_module_path(module_path)
+        parent = self._get_module_by_path(self.model, parent_name)
+        current = getattr(parent, child_name)
+
+        # Determine base weight and bias
+        if isinstance(current, LoRALayer):
+            base_w = current.base_weight.detach().clone()
+            bias = getattr(current, 'bias', None)
+        elif isinstance(current, nn.Linear):
+            base_w = current.weight.detach().clone()
+            bias = current.bias.detach().clone() if current.bias is not None else None
+        else:
+            raise TypeError(f"Unsupported module type for fallback: {type(current)}")
+
+        merged = base_w + delta.to(base_w.device)
+        out_features, in_features = merged.shape
+        new_linear = nn.Linear(in_features, out_features, bias=(bias is not None))
+        new_linear.weight.data.copy_(merged)
+        if bias is not None:
+            new_linear.bias.data.copy_(bias)
+
+        setattr(parent, child_name, new_linear)
+        # remove registry entry if existed
+        if module_path in self._registry:
+            del self._registry[module_path]
 
     def stats(self) -> Dict[str, float]:
         total = sum(p.numel() for p in self.model.parameters())

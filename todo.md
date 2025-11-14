@@ -192,17 +192,17 @@
 - [x] 冻结主权重：仅允许 LoRA 参数变化
 - [x] ΔW 复用：沿用 `compute_ks`/`compute_z` 输出并映射到低秩
 - [x] 闭式映射：`U,S,Vt = svd(ΔW)` → 取前 r → B = U_r·√S_r，A = √S_r·Vt_r
-- [ ] 拟合微调（可选）：`--lora_fit_steps` > 0 时最小化 ‖B@A − ΔW‖_F
-- [ ] 事件记录：`results/lora_native_events.jsonl`（记录层名/范数/残差）
+- [x] 拟合微调（可选）：`--lora_fit_steps` > 0 时最小化 ‖B@A − ΔW‖_F（已实现 CLI 和优化循环）
+- [x] 事件记录：`results/lora_native_events.jsonl`（记录层名/范数/残差/回退标志）
 - [x] CLI 增加：
   - `--edit_mode lora_native`
   - `--lora_rank`, `--lora_alpha`, `--lora_scale`
   - `--lora_use_svd`, `--lora_fit_steps`
 - [x] hparams 扩展：`edit_mode`, `lora_rank`, `lora_alpha`, `lora_scale`, `lora_use_svd`, `lora_fit_steps`
-- [ ] 单元测试：玩具线性层 ΔW 拟合误差（SVD）≤ 1e-4；回滚后等价性校验（后续加入）
-- [ ] 消融：rank ∈ {4,8,16}，fit_steps ∈ {0,5,10}
-- [ ] 可视化：rank vs efficacy / residual；历史保留率对比
-- [ ] Fallback：SVD 失败或残差>阈值 → 标记并退回 raw（`--allow-fallback`）
+- [x] 单元测试：玩具线性层 ΔW 拟合误差（SVD）≤ 1e-4；清零与 fallback 验证
+- [ ] 消融：rank ∈ {4,8,16}，fit_steps ∈ {0,5,10}（脚本已生成，待实际运行与收集结果）
+- [x] 可视化：rank / residual / heatmap（已在 `visualize.py` 集成），历史保留率对比待长序列实验
+- [x] Fallback：SVD 失败或残差>阈值 → 自动回退 raw（`--allow_fallback` + `--lora_residual_threshold`）
 
 ### 3.4 指标与判据 (建议)
 
@@ -231,6 +231,14 @@
 - 图表：`figs/lora_rank_vs_metrics.png`
 - 文档：`docs/lora_native_editing.md`
 - 测试：`tests/test_lora_native_backend.py`
+
+### 3.8 未完成与下一步行动
+
+- 运行并汇总 LoRA rank/fit_steps 消融结果，生成 `results/lora_native_ablation.csv`
+- 长序列（≥1000 edits）统计 LoRA 与 raw 的历史编辑保留率曲线比较
+- 与 Replay 组合：`EMMET+Replay+LoRA` 三方对比（raw / replay / replay+LoRA）
+- 编写 `docs/lora_native_editing.md` 补充分析（理论、实现细节、局限）
+- 统计 fallback 触发率与平均 residual 分布，验证阈值合理性
 
 ### 3.7 时间预估
 

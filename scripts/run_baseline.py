@@ -39,6 +39,9 @@ class ExperimentConfig:
         self.dataset = args.dataset
         self.output_dir = args.output_dir
         self.replay_rate = args.replay_rate if hasattr(args, 'replay_rate') else 0.0
+        self.replay_buffer_size = args.replay_buffer_size if hasattr(args, 'replay_buffer_size') else 200
+        self.replay_strategy = args.replay_strategy if hasattr(args, 'replay_strategy') else 'random'
+        self.replay_weight = args.replay_weight if hasattr(args, 'replay_weight') else 1.0
         self.use_lora = args.use_lora if hasattr(args, 'use_lora') else False
         self.edit_mode = args.edit_mode if hasattr(args, 'edit_mode') else "raw"
         self.lora_rank = args.lora_rank if hasattr(args, 'lora_rank') else 8
@@ -84,6 +87,9 @@ class ExperimentConfig:
             "seed": self.seed,
             "batch_size": self.batch_size,
             "replay_rate": self.replay_rate,
+            "replay_buffer_size": self.replay_buffer_size,
+            "replay_strategy": self.replay_strategy,
+            "replay_weight": self.replay_weight,
             "use_lora": self.use_lora,
             "edit_mode": self.edit_mode,
             "lora_rank": self.lora_rank,
@@ -198,7 +204,12 @@ class BaselineRunner:
             # Choose replay-enabled or standard EMMET
             if self.config.replay_rate > 0:
                 from emmet.emmet_replay import apply_emmet_with_replay as apply_emmet_to_model
-                self.logger.info(f"Using EMMET with Memory Replay (rate={self.config.replay_rate})")
+                self.logger.info(
+                    f"Using EMMET with Memory Replay (rate={self.config.replay_rate}, "
+                    f"buffer={getattr(self.config, 'replay_buffer_size', 200)}, "
+                    f"strategy={getattr(self.config, 'replay_strategy', 'random')}, "
+                    f"weight={getattr(self.config, 'replay_weight', 1.0)})"
+                )
             else:
                 from emmet.emmet_main import apply_emmet_to_model
                 self.logger.info("Using standard EMMET (no replay)")
@@ -211,6 +222,8 @@ class BaselineRunner:
                 hparams.lora_scale = getattr(self.config, "lora_scale", 1.0)
                 hparams.lora_use_svd = getattr(self.config, "lora_use_svd", True)
                 hparams.lora_fit_steps = getattr(self.config, "lora_fit_steps", 0)
+                hparams.allow_fallback = getattr(self.config, "allow_fallback", False)
+                hparams.lora_residual_threshold = getattr(self.config, "lora_residual_threshold", None)
         elif self.config.method == "memit":
             from memit.memit_hparams import MEMITHyperParams
             from memit.memit_main import apply_memit_to_model
@@ -228,6 +241,7 @@ class BaselineRunner:
         all_results = []
         num_batches = (len(requests) + self.config.batch_size - 1) // self.config.batch_size
         
+        events_fp = self.config.run_dir / "lora_native_events.jsonl"
         for batch_idx in range(num_batches):
             start_idx = batch_idx * self.config.batch_size
             end_idx = min(start_idx + self.config.batch_size, len(requests))
@@ -247,8 +261,9 @@ class BaselineRunner:
                             copy=False, return_orig_weights=True,
                             use_replay=True,
                             replay_rate=self.config.replay_rate,
-                            replay_buffer_size=200,
-                            replay_strategy='random'
+                            replay_buffer_size=getattr(self.config, 'replay_buffer_size', 200),
+                            replay_strategy=getattr(self.config, 'replay_strategy', 'random'),
+                            replay_weight=getattr(self.config, 'replay_weight', 1.0)
                         )
                     else:
                         edited_model, orig_weights, edit_distances = apply_emmet_to_model(
@@ -281,6 +296,29 @@ class BaselineRunner:
                     "status": "success"
                 }
                 all_results.append(batch_result)
+
+                # If native LoRA, append per-layer events for analysis
+                try:
+                    if getattr(self.config, 'edit_mode', 'raw') == 'lora_native' and isinstance(edit_distances, dict):
+                        with open(events_fp, 'a', encoding='utf-8') as f:
+                            for layer_key, info in edit_distances.items():
+                                if isinstance(info, dict):
+                                    event = {
+                                        "run_dir": str(self.config.run_dir),
+                                        "batch_idx": batch_idx,
+                                        "layer": layer_key,
+                                        "weight_name": info.get("weight_name"),
+                                        "delta_norm": info.get("delta_norm"),
+                                        "lora_residual_rel": info.get("lora_residual_rel"),
+                                        "lora_rank": getattr(self.config, 'lora_rank', None),
+                                        "lora_alpha": getattr(self.config, 'lora_alpha', None),
+                                        "lora_scale": getattr(self.config, 'lora_scale', None),
+                                        "lora_fit_steps": getattr(self.config, 'lora_fit_steps', None),
+                                        "edit_mode": getattr(self.config, 'edit_mode', 'raw')
+                                    }
+                                    f.write(json.dumps(event) + "\n")
+                except Exception:
+                    pass
                 
             except Exception as e:
                 self.logger.error(f"❌ Batch editing failed: {str(e)}", exc_info=True)
@@ -587,6 +625,13 @@ def main():
                        help="Batch size for editing")
     parser.add_argument("--replay_rate", type=float, default=0.0,
                        help="Replay rate for memory replay (0.0 = no replay)")
+    parser.add_argument("--replay_buffer_size", type=int, default=200,
+                       help="Replay buffer max size")
+    parser.add_argument("--replay_strategy", type=str, default="random",
+                       choices=["random", "priority", "recent"],
+                       help="Replay sampling strategy")
+    parser.add_argument("--replay_weight", type=float, default=1.0,
+                       help="Weight for replay samples relative to current batch (0.0-1.0)")
     parser.add_argument("--use_lora", action="store_true",
                        help="Apply LoRA after EMMET editing (post-hoc mode; prefer --edit_mode lora_native)")
     parser.add_argument("--edit_mode", type=str, default="raw",
@@ -603,6 +648,12 @@ def main():
     parser.add_argument("--no_lora_use_svd", dest="lora_use_svd", action="store_false",
                        help="Disable SVD mapping for LoRA factors")
     parser.set_defaults(lora_use_svd=True)
+    parser.add_argument("--lora_fit_steps", type=int, default=0,
+                       help="Optional tiny fitting steps to refine LoRA factors")
+    parser.add_argument("--allow_fallback", action="store_true",
+                       help="Allow residual-guard fallback to raw updates when mapping is poor or fails")
+    parser.add_argument("--lora_residual_threshold", type=float, default=None,
+                       help="Residual threshold to trigger fallback; if omitted, only failures trigger fallback")
     parser.add_argument("--lora_fit_steps", type=int, default=0,
                        help="Optional tiny fitting steps to refine LoRA factors")
     parser.add_argument("--dataset", type=str, default="counterfact_sampled_unique_cf_10_20000",
@@ -625,13 +676,15 @@ def main():
     print(f"Num edits:    {args.num_edits}")
     print(f"Batch size:   {args.batch_size}")
     print(f"Replay rate:  {args.replay_rate}")
+    if args.replay_rate > 0:
+        print(f"Replay buf:   size={args.replay_buffer_size}, strategy={args.replay_strategy}, weight={args.replay_weight}")
     print(f"Use LoRA:     {args.use_lora}")
     print(f"Edit mode:    {args.edit_mode}")
     if args.use_lora:
         print(f"LoRA rank:    {args.lora_rank}")
         print(f"LoRA alpha:   {args.lora_alpha}")
     if args.edit_mode == "lora_native":
-        print(f"LoRA-native:  rank={args.lora_rank}, alpha={args.lora_alpha}, scale={args.lora_scale}, use_svd={args.lora_use_svd}, fit_steps={args.lora_fit_steps}")
+        print(f"LoRA-native:  rank={args.lora_rank}, alpha={args.lora_alpha}, scale={args.lora_scale}, use_svd={args.lora_use_svd}, fit_steps={args.lora_fit_steps}, allow_fallback={args.allow_fallback}, residual_thr={args.lora_residual_threshold}")
     print(f"Seed:         {args.seed}")
     print(f"Dataset:      {args.dataset}")
     print(f"Output dir:   {args.output_dir}")

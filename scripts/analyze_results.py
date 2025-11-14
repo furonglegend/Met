@@ -54,6 +54,7 @@ class ResultsAnalyzer:
         """Load data from a single experiment"""
         config_file = result_dir / "config.json"
         metrics_file = result_dir / "metrics.json"
+        edits_file = result_dir / "edit_results.json"
         
         if not config_file.exists() or not metrics_file.exists():
             self.logger.warning(f"Incomplete results in {result_dir}")
@@ -65,11 +66,34 @@ class ResultsAnalyzer:
         with open(metrics_file, 'r') as f:
             metrics = json.load(f)
         
+        # Optionally extract LoRA residual statistics from edit_results
+        lora_residual_rel_mean = None
+        lora_residual_rel_count = 0
+        if edits_file.exists():
+            try:
+                with open(edits_file, 'r') as f:
+                    edits = json.load(f)
+                vals = []
+                for batch in edits:
+                    ed = batch.get("edit_distances", {})
+                    if isinstance(ed, dict):
+                        for v in ed.values():
+                            if isinstance(v, dict) and "lora_residual_rel" in v and v["lora_residual_rel"] is not None:
+                                vals.append(float(v["lora_residual_rel"]))
+                if vals:
+                    import numpy as _np
+                    lora_residual_rel_mean = float(_np.mean(vals))
+                    lora_residual_rel_count = len(vals)
+            except Exception:
+                pass
+
         # Combine config and metrics
         data = {
             "run_dir": str(result_dir),
             **config,
-            **metrics
+            **metrics,
+            "lora_residual_rel_mean": lora_residual_rel_mean,
+            "lora_residual_rel_count": lora_residual_rel_count,
         }
         
         return data
@@ -139,6 +163,23 @@ class ResultsAnalyzer:
             stats.to_csv(stats_file)
             self.logger.info(f"Statistics saved to {stats_file}")
 
+        # If replay columns exist, emit a compact ablation CSV grouped by replay_rate/strategy/buffer
+        try:
+            if 'replay_rate' in df.columns:
+                group_cols = ['method', 'batch_size', 'replay_rate']
+                if 'replay_strategy' in df.columns:
+                    group_cols.append('replay_strategy')
+                if 'replay_buffer_size' in df.columns:
+                    group_cols.append('replay_buffer_size')
+                metrics = [c for c in ['efficacy_success','paraphrase_success','neighborhood_specificity','composite_score'] if c in df.columns]
+                if metrics:
+                    ablation = df.groupby(group_cols)[metrics].mean().reset_index()
+                    ablation_file = output_path.with_name('replay_ablation.csv')
+                    ablation.to_csv(ablation_file, index=False)
+                    self.logger.info(f"Replay ablation saved to {ablation_file}")
+        except Exception as e:
+            self.logger.warning(f"Failed to save replay ablation CSV: {e}")
+
         # Create figures folder next to output CSV
         figs_dir = output_path.parent / "figs"
         figs_dir.mkdir(parents=True, exist_ok=True)
@@ -146,6 +187,13 @@ class ResultsAnalyzer:
         if viz is not None:
             try:
                 saved = viz.create_summary_plots(df, str(figs_dir))
+                # Additional LoRA-native specific plots if fields available
+                more = viz.create_lora_plots(df, str(figs_dir)) if hasattr(viz, 'create_lora_plots') else []
+                replay_figs = viz.create_replay_plots(df, str(figs_dir)) if hasattr(viz, 'create_replay_plots') else []
+                if more:
+                    saved.extend(more)
+                if replay_figs:
+                    saved.extend(replay_figs)
                 if saved:
                     self.logger.info(f"Saved {len(saved)} figures to {figs_dir}")
             except Exception as e:
@@ -223,6 +271,10 @@ class ResultsAnalyzer:
             figs_dir.mkdir(parents=True, exist_ok=True)
             if viz is not None:
                 viz.create_summary_plots(df, str(figs_dir))
+                if hasattr(viz, 'create_lora_plots'):
+                    viz.create_lora_plots(df, str(figs_dir))
+                if hasattr(viz, 'create_replay_plots'):
+                    viz.create_replay_plots(df, str(figs_dir))
         except Exception:
             pass
         
