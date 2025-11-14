@@ -10,9 +10,18 @@ Usage:
 import argparse
 import json
 import pandas as pd
+import sys
 from pathlib import Path
 import logging
 from datetime import datetime
+
+# Make sure project src/ is on sys.path so we can import visualization utilities
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
+try:
+    from utils import visualize as viz
+except Exception:
+    viz = None
 
 
 class ResultsAnalyzer:
@@ -129,6 +138,18 @@ class ResultsAnalyzer:
             stats_file = output_path.with_name(output_path.stem + "_stats.csv")
             stats.to_csv(stats_file)
             self.logger.info(f"Statistics saved to {stats_file}")
+
+        # Create figures folder next to output CSV
+        figs_dir = output_path.parent / "figs"
+        figs_dir.mkdir(parents=True, exist_ok=True)
+        # If visualization utilities available, create summary plots
+        if viz is not None:
+            try:
+                saved = viz.create_summary_plots(df, str(figs_dir))
+                if saved:
+                    self.logger.info(f"Saved {len(saved)} figures to {figs_dir}")
+            except Exception as e:
+                self.logger.warning(f"Visualization failed: {e}")
     
     def generate_report(self, df):
         """Generate text report"""
@@ -196,6 +217,14 @@ class ResultsAnalyzer:
         
         # Generate report
         self.generate_report(df)
+        # Also create plots (redundant with save_results but ensures figs exist)
+        try:
+            figs_dir = Path(self.output_file).parent / "figs"
+            figs_dir.mkdir(parents=True, exist_ok=True)
+            if viz is not None:
+                viz.create_summary_plots(df, str(figs_dir))
+        except Exception:
+            pass
         
         self.logger.info("Analysis completed!")
         return True

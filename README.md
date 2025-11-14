@@ -74,14 +74,64 @@ cd emmet-stability-replay
 # 2. 创建环境（自动检测 GPU/CPU）
 make env
 
-# 3. 安装项目（开发模式）
+# 3. 安装项目（开发模式）+ 可视化依赖
 make install
+pip install matplotlib seaborn pandas
 
 # 4. 激活环境
 conda activate emmet-edit
 
 # 5. 验证安装
 python -c "from data import make_dataset; print('✅ 安装成功')"
+```
+
+## 运行实验与可视化
+
+### 三大基线对比实验（ROME/MEMIT/EMMET）
+
+```bash
+# Windows
+scripts\run_all_baselines.cmd
+
+# Linux
+bash scripts/run_all_baselines.sh
+```
+
+**自动生成**：
+- `results/baseline_comparison/baseline_comparison.csv` - 聚合结果
+- `results/baseline_comparison/figs/*.png` - 可视化图表
+
+### 查看可视化结果
+
+实验完成后，图表保存在 `results/baseline_comparison/figs/` 目录：
+
+```bash
+# 列出所有图表
+ls results/baseline_comparison/figs/
+
+# Windows 打开文件夹
+explorer results\baseline_comparison\figs
+
+# Linux 查看
+xdg-open results/baseline_comparison/figs/
+```
+
+**生成的图表**：
+- `efficacy_success_by_method.png` - ES 指标对比
+- `paraphrase_success_by_method.png` - PS 指标对比
+- `neighborhood_specificity_by_method.png` - NS 指标对比
+- `composite_score_by_method.png` - 综合得分对比
+- `composite_score_by_batch_size.png` - 批量大小影响
+- `composite_vs_batch_size.png` - 趋势分析
+
+### 手动分析结果
+
+```bash
+# 分析指定目录的实验结果
+python scripts/analyze_results.py --results_dir results/baseline_comparison
+
+# 指定输出文件
+python scripts/analyze_results.py --results_dir results/baseline --output my_analysis.csv
 ```
 
 ## 常用命令

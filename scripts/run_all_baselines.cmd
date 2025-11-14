@@ -60,11 +60,14 @@ echo ========================================
 echo.
 echo Results saved to: %OUTPUT_DIR%\
 echo.
-echo Next steps:
-echo 1. Compare ES/PS/NS metrics across methods
-echo 2. Check time and memory overhead
-echo 3. Run: python scripts\analyze_results.py --results_dir %OUTPUT_DIR%
-echo 4. Generate baseline_comparison.csv
+echo 3. Running automatic analysis and visualization...
+python scripts\analyze_results.py --results_dir %OUTPUT_DIR% --output %OUTPUT_DIR%\baseline_comparison.csv
+if errorlevel 1 (
+    echo ERROR: Analysis failed!
+    echo You can run: python scripts\analyze_results.py --results_dir %OUTPUT_DIR%
+)
+echo.
+echo Aggregated results saved to: %OUTPUT_DIR%\baseline_comparison.csv (if analysis succeeded)
 echo.
 echo Key evaluation points (from TODO 1.2):
 echo - Prove unified framework necessity

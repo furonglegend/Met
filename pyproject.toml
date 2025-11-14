@@ -30,7 +30,11 @@ dependencies = [
     "pyarrow>=8.0.0",
     "numpy>=1.25.2",
     "jupyter>=1.1.1",
+    "pandas>=2.3.3",
 ]
+
+[tool.uv]
+link-mode = "symlink"
 
 [tool.uv.pip]
 torch-backend = "auto"

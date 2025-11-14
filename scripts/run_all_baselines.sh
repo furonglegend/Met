@@ -98,3 +98,11 @@ echo ""
 echo "To aggregate results, run:"
 echo "  python scripts/analyze_results.py --results_dir $OUTPUT_DIR"
 echo ""
+echo "Running automatic analysis and visualization..."
+python scripts/analyze_results.py --results_dir "$OUTPUT_DIR" --output "$OUTPUT_DIR/baseline_comparison.csv"
+if [ $? -ne 0 ]; then
+    echo "WARNING: automatic analysis failed. You can run the analysis script manually."
+else
+    echo "Aggregated results saved to: $OUTPUT_DIR/baseline_comparison.csv"
+fi
+echo ""
