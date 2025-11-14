@@ -81,10 +81,25 @@ def apply_emmet_to_model(
                     fit_steps=int(getattr(hparams, "lora_fit_steps", 0)),
                 )
                 new_weights_norm = original_weights_norm  # base unchanged
+
+                # Compute relative residual ||B@A - ΔW|| / ||ΔW|| for logging
+                try:
+                    module_path = w_name[:-7]
+                    lora_layer = lora_backend.get_lora_layer(module_path)
+                    approx = lora_layer.lora_B @ lora_layer.lora_A
+                    target = upd_matrix.to(approx.device)
+                    denom = torch.norm(target)
+                    if denom.item() == 0:
+                        lora_residual_rel = 0.0
+                    else:
+                        lora_residual_rel = (torch.norm(approx - target) / denom).detach().cpu().item()
+                except Exception:
+                    lora_residual_rel = None
             else:
                 # Raw path: add delta directly to base weight
                 w[...] += upd_matrix.float()
                 new_weights_norm = torch.norm(w[...]).detach().cpu().item()
+                lora_residual_rel = None
 
             #saving all distances
             layer = w_name.split('.')[2]
@@ -95,7 +110,8 @@ def apply_emmet_to_model(
                 'delta_norm': torch.norm(upd_matrix).detach().cpu().item(),
                 'new_weights_norm': new_weights_norm,
                 'original_weights_norm': original_weights_norm,
-                'inside_norms': inside_norms
+                'inside_norms': inside_norms,
+                'lora_residual_rel': lora_residual_rel
             }
             distances[layer] = temp_dict
 

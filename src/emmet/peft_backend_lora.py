@@ -90,6 +90,18 @@ class LoRANativeBackend:
         self._registry[module_path] = lora
         return lora
 
+    def get_lora_layer(self, module_path: str) -> LoRALayer:
+        """Return the LoRA layer for a given module path (without .weight)."""
+        return self._registry[module_path]
+
+    @torch.no_grad()
+    def clear_delta(self, module_path: str) -> None:
+        """Zero out LoRA factors for a given module path (without .weight)."""
+        layer = self._registry.get(module_path)
+        if layer is not None:
+            layer.lora_A.zero_()
+            layer.lora_B.zero_()
+
     @torch.no_grad()
     def apply_delta(
         self,
@@ -159,6 +171,8 @@ class LoRANativeBackend:
                 opt.step()
             lora.lora_A.requires_grad_(False)
             lora.lora_B.requires_grad_(False)
+
+        # Return nothing; callers can compute residual from registry if needed
 
     def stats(self) -> Dict[str, float]:
         total = sum(p.numel() for p in self.model.parameters())
