@@ -33,9 +33,6 @@ dependencies = [
     "pyarrow==17.0.0",
 ]
 
-[tool.uv]
-link-mode = "symlink"
-
 [tool.uv.pip]
 torch-backend = "auto"
 
