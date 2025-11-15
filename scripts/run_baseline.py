@@ -292,13 +292,13 @@ class BaselineRunner:
                             copy=False, return_orig_weights=True
                         )
                 elif self.config.method == "memit":
-                    edited_model, orig_weights = apply_memit_to_model(
+                    edited_model, orig_weights, _ = apply_memit_to_model(
                         model, tokenizer, batch_requests, hparams,
                         copy=False, return_orig_weights=True
                     )
                     edit_distances = {}
                 elif self.config.method == "rome":
-                    edited_model, orig_weights = apply_rome_to_model(
+                    edited_model, orig_weights, _ = apply_rome_to_model(
                         model, tokenizer, batch_requests, hparams,
                         copy=False, return_orig_weights=True
                     )
