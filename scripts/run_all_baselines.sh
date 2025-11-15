@@ -14,7 +14,7 @@ echo "Total: 2 experiments"
 echo "- ROME: Single edit (batch_size=1)"
 echo "- MEMIT: Batch edit (batch_size=32)"
 echo "Model: GPT-2 XL (1.5B)"
-echo "Num edits: 200"
+echo "Num edits: 500"
 echo "Dataset: CounterFact"
 echo "========================================"
 echo ""
@@ -23,7 +23,7 @@ echo ""
 
 # Set common parameters
 MODEL="gpt2-xl"
-NUM_EDITS=200
+NUM_EDITS=500
 SEED=42
 DATASET="counterfact_500"
 OUTPUT_DIR="results/baseline_comparison_rome_memit"

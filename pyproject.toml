@@ -29,8 +29,7 @@ dependencies = [
     "wandb==0.13.4",
     "numpy>=1.25.2",
     "jupyter>=1.1.1",
-    "pandas>=2.3.3",
-    "pyarrow==17.0.0",
+    "pandas>=2.0.0,<2.3.3",
 ]
 
 [tool.uv.pip]
