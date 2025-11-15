@@ -20,11 +20,12 @@ REM Set common parameters
 set MODEL=gpt2-xl
 set NUM_EDITS=200
 set SEED=42
+set DATASET=counterfact_qna_sample_500.json
 set OUTPUT_DIR=results/baseline_comparison_rome_memit
 
 echo [1/2] ROME: Single edit (batch_size=1)
 echo Testing traditional single-edit approach...
-python scripts\run_baseline.py --method rome --model %MODEL% --num_edits %NUM_EDITS% --batch_size 1 --seed %SEED% --output_dir %OUTPUT_DIR%
+python scripts\run_baseline.py --method rome --model %MODEL% --num_edits %NUM_EDITS% --batch_size 1 --seed %SEED% --dataset %DATASET% --output_dir %OUTPUT_DIR%
 if errorlevel 1 (
     echo ERROR: ROME experiment failed!
     pause

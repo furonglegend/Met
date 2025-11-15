@@ -23,10 +23,10 @@ def main():
     parser.add_argument("--seed", type=int, default=42,
                        help="Random seed")
     parser.add_argument("--input", type=str,
-                       default="data/counterfact_sampled_unique_cf_10_20000.json",
+                       default="data/counterfact_qna.json",
                        help="Input data file")
     parser.add_argument("--output", type=str, default=None,
-                       help="Output file (default: data/sample_{num}.json)")
+                       help="Output file (default: data/counterfact_qna_sample_{num}.json)")
     
     args = parser.parse_args()
     
