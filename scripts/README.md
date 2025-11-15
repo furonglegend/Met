@@ -13,9 +13,10 @@ EMMET 基线复现与评测脚本集合，支持 Memory Replay 机制。
 | `run_lora_ablation.cmd/sh` | **LoRA 消融实验** | 测试不同 rank 的影响 | **Phase 3.2** |
 | `run_lora_native_ablation.cmd` | **LoRA 原生消融** | 测试 rank×fit_steps 的影响 | **Phase 3.2** |
 | `run_combined_experiments.cmd` | **组合配置实验** | Replay + LoRA 组合测试 | **Phase 3.2** |
-| `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果 | Phase 5.3 |
+| `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果（含 LoRA/Replay/Trust 可视化与 ablation_matrix/replay_ablation 等 CSV 导出） | Phase 5.3 |
 | `run_replay_ablation.cmd` | **Replay 消融实验** | 遍历 replay_rate/strategy/buffer | **Phase 2.3** |
 | `run_mvp_experiments.cmd/sh` | MVP 实验矩阵 | Phase 2 的 6 组最小实验 | **Phase 2** |
+| `analyze_trust_thresholds.py` | Trust 阈值分析脚本 | 基于 trust_with_metrics 对 trust_score_mean 做阈值扫描，导出 *_threshold_sweep.csv/.txt | Phase 4 |
 
 ## 🚀 快速开始
 
@@ -32,6 +33,7 @@ bash scripts/run_all_baselines.sh
 **目标**: 证明统一框架的必要性与 EMMET 的优势
 
 运行 3 个实验：
+
 - ROME: 单条编辑（batch_size=1），200条
 - MEMIT: 批量编辑（batch_size=32），200条
 - EMMET: 批量编辑（batch_size=32），200条
@@ -109,6 +111,7 @@ scripts\run_combined_experiments.cmd
 | 6 | EMMET | 256 | 0.3 | Replay-大批量 |
 
 **固定参数**:
+
 - Model: GPT-2 (774M)
 - Num edits: 500
 - Seed: 42
@@ -122,6 +125,7 @@ python scripts/minimal_test.py
 ```
 
 **检查项**:
+
 1. Python 版本 (3.9)
 2. PyTorch + CUDA
 3. Transformers
@@ -162,7 +166,7 @@ python scripts/run_baseline.py \
 
 **输出结构**:
 
-```
+```plaintext
 results/baseline/emmet_gpt2_b32_replay0.0_20231113_143052/
 ├── config.json              # 实验配置
 ├── experiment.log           # 详细日志
@@ -171,14 +175,14 @@ results/baseline/emmet_gpt2_b32_replay0.0_20231113_143052/
 ├── detailed_results.csv     # CSV格式
 ├── metrics.json             # 聚合指标 (ES/PS/NS/S)
 └── metrics.csv              # CSV格式
+```
 
 基于多次实验的聚合与可视化（自动识别 Replay/LoRA 字段）：
 
-```
+```plaintext
 results/analysis_*.csv       # 聚合表
 results/replay_ablation.csv  # Replay 消融聚合表（按 rate/strategy/buffer）
 results/figs/*.png           # 各类图（含 LoRA 与 Replay）
-```
 ```
 
 **评测指标**:
@@ -203,6 +207,7 @@ bash scripts/run_all_baselines.sh
 **目标**: 证明统一框架的必要性与 EMMET 的优势
 
 **实验配置**:
+
 - Model: GPT-2 XL (1.5B)
 - Num edits: 200
 - Seed: 42
@@ -211,13 +216,14 @@ bash scripts/run_all_baselines.sh
 - EMMET: batch_size=32（批量编辑）
 
 **对比维度**:
+
 1. **Efficacy Score (ES)**: 编辑成功率
 2. **Paraphrase Score (PS)**: 泛化能力
 3. **Neighborhood Specificity (NS)**: 知识局部性
 4. **时间与显存开销**: 效率对比
 
 **输出结构**:
-```
+```plaintext
 results/baseline_comparison/
 ├── rome_gpt2-xl_b1_20231114_*/     # ROME 结果
 ├── memit_gpt2-xl_b32_20231114_*/   # MEMIT 结果
@@ -226,6 +232,7 @@ results/baseline_comparison/
 ```
 
 **关键点**（对应 TODO 1.2）:
+
 - ✅ 使用相同数据集与随机种子
 - ✅ 对齐评测指标实现
 - ✅ 保存中间编辑状态以供后续分析
@@ -244,11 +251,13 @@ bash scripts/run_mvp_experiments.sh
 **目标**: 验证 Memory Replay 缓解遗忘
 
 **实验矩阵**: 2种配置 × 3种批量大小 = 6组实验
+
 - EMMET baseline (replay_rate=0.0)
 - EMMET + Replay (replay_rate=0.3)
 - Batch sizes: 1, 32, 256
 
 **固定参数**:
+
 - Model: GPT-2 (774M)
 - Num edits: 500
 - Seed: 42
@@ -264,6 +273,7 @@ bash scripts/run_mvp_experiments.sh
 **Low-Rank Adaptation (LoRA)** 是一种参数高效的微调方法，在 EMMET 编辑后应用。
 
 **核心特性**:
+
 - **后处理式架构**: LoRA 在 EMMET 编辑完成后应用，不修改闭式解
 - **低秩分解**: W' = W_base + (α/r) * B @ A
 - **参数高效**: 仅增加 r×(d_in + d_out) 个可训练参数（<1%）
@@ -321,6 +331,7 @@ bash scripts/run_lora_ablation.sh
 ```
 
 **实验配置**:
+
 - EMMET baseline (no LoRA)
 - EMMET + LoRA rank=4 (α=8)
 - EMMET + LoRA rank=8 (α=16)
@@ -337,6 +348,7 @@ scripts\run_combined_experiments.cmd
 ```
 
 **包含 7 种配置**:
+
 1. EMMET baseline
 2. EMMET + Replay (0.3)
 3. EMMET + LoRA (rank=8)
@@ -390,12 +402,14 @@ lora_wrapper.merge_lora()
 
 ### LoRA 故障排除
 
-**问题：显存不足**
+问题：显存不足
+
 - 减小 LoRA rank (8 → 4)
 - 减小 batch_size
 - 减少 target_modules 数量
 
-**问题：性能下降**
+问题：性能下降
+
 - 增加 rank (8 → 16)
 - 调整 alpha = 2 × rank
 - 运行消融实验找到最佳配置
@@ -446,10 +460,12 @@ python scripts/analyze_results.py \
 ```
 
 **输出**:
+
 - `aggregated_results.csv`: 所有实验的详细结果
 - `statistics.csv`: 按方法、批量、Replay率分组的统计
 
 **分组维度**:
+
 - Method (emmet/memit/rome)
 - Batch Size (1/32/256)
 - Replay Rate (0.0/0.3)
@@ -497,6 +513,7 @@ python scripts\analyze_results.py --results_dir results/baseline_comparison
 **产出**: `baseline_comparison.csv` + 对比分析报告
 
 **关键发现**:
+
 - ROME: 精确但慢（单条编辑）
 - MEMIT: 快速但近似（最小二乘松弛）
 - EMMET: 平衡效率与精度（闭式解）
@@ -544,12 +561,14 @@ python scripts/run_batch_experiments.py --config configs/full_experiment_config.
 ### 🔄 Phase 1: 基线实验与对比 [P0 优先级]
 
 **1.1 小规模快速验证（200-500条）**
+
 - [x] 准备 CounterFact 子集
 - [ ] 运行 EMMET 最小示例
 - [ ] 确认 ES/PS/NS 指标计算正确
 - [ ] 调试超参数
 
 **1.2 三大基线对比实验（ROME / MEMIT / EMMET）**
+
 - [x] 创建 `run_all_baselines.cmd` 脚本
 - [ ] ROME: 单条编辑（batch_size=1），200条
 - [ ] MEMIT: 批量编辑（batch_size=32），200条
@@ -562,15 +581,18 @@ python scripts/run_batch_experiments.py --config configs/full_experiment_config.
 ### ⏳ Phase 2: Memory Replay 实现 [P1 核心贡献]
 
 **2.1 Replay Buffer 设计与实现**
+
 - [ ] 设计 Buffer 数据结构
 - [ ] 实现采样策略
 - [ ] 实现 Buffer 维护
 
 **2.2 集成到 EMMET 闭式解**
+
 - [ ] 在构建约束时拼接当前批 + 历史采样批
 - [ ] 数值稳定性处理
 
 **2.3 小规模消融实验**
+
 - [ ] Replay Rate 消融：r ∈ {0, 0.1, 0.3, 0.5}
 - [ ] Buffer Size 消融
 - [ ] 采样策略对比

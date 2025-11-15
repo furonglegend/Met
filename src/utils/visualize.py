@@ -313,3 +313,96 @@ def create_replay_plots(df: pd.DataFrame, output_dir: str):
         saved.append(str(p))
 
     return saved
+
+
+def create_trust_plots(trust_df: pd.DataFrame, output_dir: str):
+    """Create Trust mechanism plots from trust_events.jsonl aggregation.
+
+        - Histogram of trust_score overall
+        - Bar chart of action distribution (rollback vs scale)
+        - Bar chart of trust_applied vs not
+        - If columns from metrics join exist (e.g., composite_score_mean), scatter plots of
+            trust_score_mean vs composite_score or ES/NS for quick sanity check.
+    """
+    out_dir = Path(output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    saved = []
+
+    df = trust_df.copy()
+    if df.empty:
+        return saved
+
+    # Ensure types
+    for col in ['trust_score', 'trust_scale']:
+        if col in df.columns:
+            try:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+            except Exception:
+                pass
+
+    # Histogram of trust_score
+    if 'trust_score' in df.columns and df['trust_score'].notna().any():
+        plt.figure(figsize=(6, 4))
+        sns.histplot(df['trust_score'].dropna(), bins=20, kde=True, color='teal')
+        plt.xlabel('trust_score')
+        plt.title('Trust score distribution')
+        plt.tight_layout()
+        p = out_dir / 'trust_score_hist.png'
+        _ensure_dir(p)
+        plt.savefig(p)
+        plt.close()
+        saved.append(str(p))
+
+    # Action distribution
+    if 'trust_action' in df.columns:
+        plt.figure(figsize=(6, 4))
+        sns.countplot(x='trust_action', data=df, palette='Set2')
+        plt.xlabel('trust_action')
+        plt.ylabel('count')
+        plt.title('Trust action distribution')
+        plt.tight_layout()
+        p = out_dir / 'trust_action_counts.png'
+        _ensure_dir(p)
+        plt.savefig(p)
+        plt.close()
+        saved.append(str(p))
+
+    # Applied vs not
+    if 'trust_applied' in df.columns:
+        plt.figure(figsize=(6, 4))
+        sns.countplot(x=df['trust_applied'].fillna(False).map({True:'applied', False:'not_applied'}), palette='pastel')
+        plt.xlabel('trust_applied')
+        plt.ylabel('count')
+        plt.title('Trust application (per-layer events)')
+        plt.tight_layout()
+        p = out_dir / 'trust_applied_counts.png'
+        _ensure_dir(p)
+        plt.savefig(p)
+        plt.close()
+        saved.append(str(p))
+
+    # If this DataFrame already contains run-level metrics (e.g. from trust_with_metrics.csv),
+    # provide simple correlation plots between mean trust score and core metrics.
+    # We detect this by presence of 'trust_score_mean' and metric columns.
+    if 'trust_score_mean' in df.columns:
+        for metric in ['efficacy_success', 'neighborhood_specificity', 'composite_score']:
+            if metric in df.columns:
+                try:
+                    x = pd.to_numeric(df['trust_score_mean'], errors='coerce')
+                    y = pd.to_numeric(df[metric], errors='coerce')
+                    dsub = pd.DataFrame({'trust_score_mean': x, metric: y}).dropna()
+                    if dsub.empty:
+                        continue
+                    plt.figure(figsize=(6, 4))
+                    sns.regplot(data=dsub, x='trust_score_mean', y=metric, scatter_kws={'s': 20}, line_kws={'color': 'red'})
+                    plt.title(f'{metric} vs trust_score_mean (per run)')
+                    plt.tight_layout()
+                    p = out_dir / f'{metric}_vs_trust_score_mean.png'
+                    _ensure_dir(p)
+                    plt.savefig(p)
+                    plt.close()
+                    saved.append(str(p))
+                except Exception:
+                    continue
+
+    return saved

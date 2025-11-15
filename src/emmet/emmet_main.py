@@ -18,6 +18,7 @@ from .compute_ks import compute_ks
 from .compute_z import compute_z, get_module_input_output_at_words, find_fact_lookup_idx
 from .emmet_hparams import EMMETHyperParams
 from .peft_backend_lora import LoRANativeBackend
+from .trust import compute_trust_score
 
 # Cache variable(s)
 CONTEXT_TEMPLATES_CACHE = None
@@ -72,7 +73,39 @@ def apply_emmet_to_model(
 
             original_weights_norm = torch.norm(w[...]).detach().cpu().item()
 
-            if use_lora_native and lora_backend is not None:
+            # Trust/rollback/scale decision (cheap gating using distance terms)
+            trust_enabled = bool(getattr(hparams, "trust_enable", False))
+            trust_score = None
+            trust_applied = False
+            trust_action_taken = None
+            trust_scale_applied = 1.0
+            if trust_enabled:
+                weights_cfg = getattr(hparams, "trust_weights", None)
+                trust_score = compute_trust_score(
+                    preservation_distance, new_edit_distance, old_edit_distance, weights_cfg
+                )
+                thr = float(getattr(hparams, "trust_threshold", 0.3))
+                if trust_score is not None and trust_score < thr:
+                    action = getattr(hparams, "trust_action", "rollback")
+                    if action == "scale":
+                        s = float(getattr(hparams, "trust_scale", 0.5))
+                        trust_scale_applied = max(0.0, min(1.0, s))
+                        upd_matrix = upd_matrix * trust_scale_applied
+                        trust_applied = True
+                        trust_action_taken = "scale"
+                    else:
+                        # rollback: skip applying this weight's update
+                        upd_matrix = None
+                        trust_applied = True
+                        trust_action_taken = "rollback"
+
+            if upd_matrix is None:
+                # Skipped due to trust rollback
+                new_weights_norm = torch.norm(w[...]).detach().cpu().item()
+                lora_residual_rel = None
+                lora_fallback = False
+                lora_fallback_reason = None
+            elif use_lora_native and lora_backend is not None:
                 # Map into LoRA factors instead of writing to base weight
                 lora_fallback = False
                 lora_fallback_reason = None
@@ -145,6 +178,12 @@ def apply_emmet_to_model(
                 'lora_fallback_reason': lora_fallback_reason,
                 'edit_mode': getattr(hparams, 'edit_mode', 'raw')
             }
+            # Add trust annotations
+            temp_dict['trust_enable'] = trust_enabled
+            temp_dict['trust_score'] = trust_score
+            temp_dict['trust_applied'] = trust_applied
+            temp_dict['trust_action'] = trust_action_taken
+            temp_dict['trust_scale'] = trust_scale_applied
             distances[layer] = temp_dict
 
     if use_lora_native:

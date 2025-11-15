@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 
 from utils.hparams import HyperParams
 
@@ -48,3 +48,12 @@ class EMMETHyperParams(HyperParams):
     lora_fit_steps: int = 0
     allow_fallback: bool = False
     lora_residual_threshold: Optional[float] = None
+
+    # Trust / Rollback (Phase 4)
+    trust_enable: bool = False
+    trust_threshold: float = 0.3
+    trust_action: Literal["rollback", "scale"] = "rollback"
+    trust_scale: float = 0.5
+    trust_heldout_samples: int = 0
+    # Optional component weights, e.g., {"gain":0.7, "preserve":0.3}
+    trust_weights: Optional[Dict[str, float]] = None

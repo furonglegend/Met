@@ -49,6 +49,12 @@ class ExperimentConfig:
         self.lora_scale = args.lora_scale if hasattr(args, 'lora_scale') else 1.0
         self.lora_use_svd = args.lora_use_svd if hasattr(args, 'lora_use_svd') else True
         self.lora_fit_steps = args.lora_fit_steps if hasattr(args, 'lora_fit_steps') else 0
+        # Trust / Rollback
+        self.trust_enable = getattr(args, 'trust_enable', False)
+        self.trust_threshold = getattr(args, 'trust_threshold', 0.3)
+        self.trust_action = getattr(args, 'trust_action', 'rollback')
+        self.trust_scale = getattr(args, 'trust_scale', 0.5)
+        self.trust_heldout_samples = getattr(args, 'trust_heldout_samples', 0)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
         # Setup paths
@@ -97,6 +103,11 @@ class ExperimentConfig:
             "lora_scale": self.lora_scale,
             "lora_use_svd": self.lora_use_svd,
             "lora_fit_steps": self.lora_fit_steps,
+            "trust_enable": self.trust_enable,
+            "trust_threshold": self.trust_threshold,
+            "trust_action": self.trust_action,
+            "trust_scale": self.trust_scale,
+            "trust_heldout_samples": self.trust_heldout_samples,
             "dataset": self.dataset,
             "device": self.device,
             "timestamp": datetime.now().isoformat(),
@@ -224,6 +235,13 @@ class BaselineRunner:
                 hparams.lora_fit_steps = getattr(self.config, "lora_fit_steps", 0)
                 hparams.allow_fallback = getattr(self.config, "allow_fallback", False)
                 hparams.lora_residual_threshold = getattr(self.config, "lora_residual_threshold", None)
+            # Trust overrides
+            if getattr(self.config, "trust_enable", False):
+                hparams.trust_enable = True
+                hparams.trust_threshold = getattr(self.config, "trust_threshold", 0.3)
+                hparams.trust_action = getattr(self.config, "trust_action", "rollback")
+                hparams.trust_scale = getattr(self.config, "trust_scale", 0.5)
+                hparams.trust_heldout_samples = getattr(self.config, "trust_heldout_samples", 0)
         elif self.config.method == "memit":
             from memit.memit_hparams import MEMITHyperParams
             from memit.memit_main import apply_memit_to_model
@@ -242,6 +260,7 @@ class BaselineRunner:
         num_batches = (len(requests) + self.config.batch_size - 1) // self.config.batch_size
         
         events_fp = self.config.run_dir / "lora_native_events.jsonl"
+        trust_fp = self.config.run_dir / "trust_events.jsonl"
         seq_metrics_fp = self.config.run_dir / "sequence_metrics.jsonl"
         cumulative_edits = 0
         for batch_idx in range(num_batches):
@@ -321,6 +340,28 @@ class BaselineRunner:
                                         "edit_mode": getattr(self.config, 'edit_mode', 'raw')
                                     }
                                     f.write(json.dumps(event) + "\n")
+                except Exception:
+                    pass
+
+                # Trust events (for both raw and lora modes)
+                try:
+                    if isinstance(edit_distances, dict):
+                        with open(trust_fp, 'a', encoding='utf-8') as ft:
+                            for layer_key, info in edit_distances.items():
+                                if isinstance(info, dict):
+                                    tev = {
+                                        "run_dir": str(self.config.run_dir),
+                                        "batch_idx": batch_idx,
+                                        "layer": layer_key,
+                                        "weight_name": info.get("weight_name"),
+                                        "delta_norm": info.get("delta_norm"),
+                                        "trust_enable": info.get("trust_enable"),
+                                        "trust_score": info.get("trust_score"),
+                                        "trust_applied": info.get("trust_applied"),
+                                        "trust_action": info.get("trust_action"),
+                                        "trust_scale": info.get("trust_scale"),
+                                    }
+                                    ft.write(json.dumps(tev) + "\n")
                 except Exception:
                     pass
 
@@ -725,6 +766,12 @@ def main():
                        help="Output directory for results")
     parser.add_argument("--sequence_metrics_every", type=int, default=0,
                        help="Collect sequence ES/PS/NS snapshot every N cumulative edits (0=disable)")
+    # Trust / Rollback (Phase 4)
+    parser.add_argument("--trust_enable", action="store_true", help="Enable trust/rollback mechanism")
+    parser.add_argument("--trust_threshold", type=float, default=0.3, help="Threshold in [0,1] below which apply rollback/scale")
+    parser.add_argument("--trust_action", type=str, default="rollback", choices=["rollback","scale"], help="Action when trust below threshold")
+    parser.add_argument("--trust_scale", type=float, default=0.5, help="Scale factor when trust_action=scale")
+    parser.add_argument("--trust_heldout_samples", type=int, default=0, help="Reserved for future held-out eval quick check")
     
     args = parser.parse_args()
     
@@ -755,6 +802,8 @@ def main():
     print(f"Output dir:   {args.output_dir}")
     if args.sequence_metrics_every:
         print(f"Seq metrics:  every {args.sequence_metrics_every} edits")
+    if args.trust_enable:
+        print(f"Trust:        enabled (thr={args.trust_threshold}, action={args.trust_action}, scale={args.trust_scale}, heldout={args.trust_heldout_samples})")
     print("="*80 + "\n")
     
     # Create and run experiment

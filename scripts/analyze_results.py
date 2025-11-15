@@ -49,6 +49,55 @@ class ResultsAnalyzer:
         
         self.logger.info(f"Found {len(result_dirs)} result directories")
         return result_dirs
+
+    def _load_all_trust_events(self):
+        """Load trust_events.jsonl from all detected run directories into a DataFrame.
+
+        Returns a pandas DataFrame with columns like:
+          run_dir, batch_idx, layer, weight_name, delta_norm,
+          trust_enable, trust_score, trust_applied, trust_action, trust_scale
+        Returns empty DataFrame or None if none found.
+        """
+        try:
+            result_dirs = self.find_result_dirs()
+            rows = []
+            for rd in result_dirs:
+                f = rd / 'trust_events.jsonl'
+                if not f.exists():
+                    continue
+                try:
+                    with open(f, 'r', encoding='utf-8') as fh:
+                        for line in fh:
+                            line = line.strip()
+                            if not line:
+                                continue
+                            try:
+                                rec = json.loads(line)
+                            except Exception:
+                                continue
+                            rec['run_dir'] = str(rd)
+                            rows.append(rec)
+                except Exception:
+                    continue
+            if not rows:
+                return None
+            df = pd.DataFrame(rows)
+            # Coerce numerics where applicable
+            for col in ['batch_idx', 'delta_norm', 'trust_score', 'trust_scale']:
+                if col in df.columns:
+                    try:
+                        df[col] = pd.to_numeric(df[col], errors='coerce')
+                    except Exception:
+                        pass
+            # Normalize action strings
+            if 'trust_action' in df.columns:
+                try:
+                    df['trust_action'] = df['trust_action'].astype(str).str.lower()
+                except Exception:
+                    pass
+            return df
+        except Exception:
+            return None
     
     def load_experiment_data(self, result_dir):
         """Load data from a single experiment"""
@@ -203,22 +252,39 @@ class ResultsAnalyzer:
             stats.to_csv(stats_file)
             self.logger.info(f"Statistics saved to {stats_file}")
 
-        # If replay columns exist, emit a compact ablation CSV grouped by replay_rate/strategy/buffer
+        # Emit a general ablation matrix grouped by key config fields
         try:
+            # Choose group keys that commonly appear in config.json; filter by existence
+            candidate_group_cols = [
+                'method', 'model', 'batch_size', 'replay_rate', 'replay_strategy', 'replay_buffer_size',
+                'edit_mode', 'lora_rank', 'lora_alpha', 'trust_enable'
+            ]
+            group_cols = [c for c in candidate_group_cols if c in df.columns]
+            metric_cols = [
+                c for c in ['efficacy_success', 'paraphrase_success', 'neighborhood_specificity', 'composite_score']
+                if c in df.columns
+            ]
+            if group_cols and metric_cols:
+                ablation_matrix = df.groupby(group_cols)[metric_cols].mean().reset_index()
+                ablation_file = output_path.with_name('ablation_matrix.csv')
+                ablation_matrix.to_csv(ablation_file, index=False)
+                self.logger.info(f"General ablation matrix saved to {ablation_file}")
+
+            # Preserve the more specific Replay-only ablation for convenience
             if 'replay_rate' in df.columns:
-                group_cols = ['method', 'batch_size', 'replay_rate']
+                r_group_cols = ['method', 'batch_size', 'replay_rate']
                 if 'replay_strategy' in df.columns:
-                    group_cols.append('replay_strategy')
+                    r_group_cols.append('replay_strategy')
                 if 'replay_buffer_size' in df.columns:
-                    group_cols.append('replay_buffer_size')
-                metrics = [c for c in ['efficacy_success','paraphrase_success','neighborhood_specificity','composite_score'] if c in df.columns]
-                if metrics:
-                    ablation = df.groupby(group_cols)[metrics].mean().reset_index()
-                    ablation_file = output_path.with_name('replay_ablation.csv')
-                    ablation.to_csv(ablation_file, index=False)
-                    self.logger.info(f"Replay ablation saved to {ablation_file}")
+                    r_group_cols.append('replay_buffer_size')
+                r_group_cols = [c for c in r_group_cols if c in df.columns]
+                if r_group_cols and metric_cols:
+                    replay_ablation = df.groupby(r_group_cols)[metric_cols].mean().reset_index()
+                    replay_file = output_path.with_name('replay_ablation.csv')
+                    replay_ablation.to_csv(replay_file, index=False)
+                    self.logger.info(f"Replay ablation saved to {replay_file}")
         except Exception as e:
-            self.logger.warning(f"Failed to save replay ablation CSV: {e}")
+            self.logger.warning(f"Failed to save ablation CSVs: {e}")
 
         # Create figures folder next to output CSV
         figs_dir = output_path.parent / "figs"
@@ -230,14 +296,64 @@ class ResultsAnalyzer:
                 # Additional LoRA-native specific plots if fields available
                 more = viz.create_lora_plots(df, str(figs_dir)) if hasattr(viz, 'create_lora_plots') else []
                 replay_figs = viz.create_replay_plots(df, str(figs_dir)) if hasattr(viz, 'create_replay_plots') else []
+                # Trust plots based on events, loaded below
+                trust_figs = []
                 if more:
                     saved.extend(more)
                 if replay_figs:
                     saved.extend(replay_figs)
+                # Load trust events across runs and plot
+                trust_df = self._load_all_trust_events()
+                if trust_df is not None and not trust_df.empty and hasattr(viz, 'create_trust_plots'):
+                    trust_figs = viz.create_trust_plots(trust_df, str(figs_dir))
+                    if trust_figs:
+                        saved.extend(trust_figs)
                 if saved:
                     self.logger.info(f"Saved {len(saved)} figures to {figs_dir}")
             except Exception as e:
                 self.logger.warning(f"Visualization failed: {e}")
+
+        # Save trust events aggregation CSVs if available, and join with run-level metrics
+        try:
+            trust_df = self._load_all_trust_events()
+            if trust_df is not None and not trust_df.empty:
+                trust_events_csv = output_path.with_name('trust_events.csv')
+                trust_df.to_csv(trust_events_csv, index=False)
+                # Summary per run
+                g = trust_df.groupby('run_dir')
+                summary = pd.DataFrame({
+                    'run_dir': g.size().index,
+                    'events': g.size().values,
+                    'trust_score_mean': g['trust_score'].mean().values,
+                    'trust_score_std': g['trust_score'].std().values,
+                    'rollback_count': g.apply(lambda x: (x.get('trust_action', pd.Series(dtype=str)) == 'rollback').sum()).values,
+                    'scale_count': g.apply(lambda x: (x.get('trust_action', pd.Series(dtype=str)) == 'scale').sum()).values,
+                    'applied_count': g.apply(lambda x: x.get('trust_applied', pd.Series(dtype=bool)).fillna(False).sum()).values
+                })
+                trust_summary_csv = output_path.with_name('trust_summary.csv')
+                summary.to_csv(trust_summary_csv, index=False)
+                self.logger.info(f"Trust events saved to {trust_events_csv} and {trust_summary_csv}")
+
+                # Join with run-level metrics for downstream correlation plots
+                try:
+                    # df contains run-level metrics and run_dir, ensure column exists
+                    if 'run_dir' in df.columns:
+                        trust_joined = df.merge(summary, on='run_dir', how='left')
+                        trust_joined_csv = output_path.with_name('trust_with_metrics.csv')
+                        trust_joined.to_csv(trust_joined_csv, index=False)
+                        self.logger.info(f"Trust + metrics joined CSV saved to {trust_joined_csv}")
+                        # Save a thin version with just key metrics for easier plotting elsewhere
+                        key_cols = [c for c in ['run_dir','method','batch_size','replay_rate',
+                                                'efficacy_success','paraphrase_success','neighborhood_specificity','composite_score',
+                                                'trust_score_mean','trust_score_std','events'] if c in trust_joined.columns]
+                        if key_cols:
+                            trust_key = trust_joined[key_cols]
+                            trust_key_csv = output_path.with_name('trust_with_metrics_key.csv')
+                            trust_key.to_csv(trust_key_csv, index=False)
+                except Exception as _e_join:
+                    self.logger.warning(f"Failed to join trust summary with metrics: {_e_join}")
+        except Exception as e:
+            self.logger.warning(f"Failed to aggregate trust events: {e}")
     
     def generate_report(self, df):
         """Generate text report"""
@@ -315,6 +431,10 @@ class ResultsAnalyzer:
                     viz.create_lora_plots(df, str(figs_dir))
                 if hasattr(viz, 'create_replay_plots'):
                     viz.create_replay_plots(df, str(figs_dir))
+                if hasattr(viz, 'create_trust_plots'):
+                    trust_df = self._load_all_trust_events()
+                    if trust_df is not None and not trust_df.empty:
+                        viz.create_trust_plots(trust_df, str(figs_dir))
         except Exception:
             pass
         
@@ -340,3 +460,5 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
+
+    
