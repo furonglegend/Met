@@ -55,6 +55,7 @@ class ResultsAnalyzer:
         config_file = result_dir / "config.json"
         metrics_file = result_dir / "metrics.json"
         edits_file = result_dir / "edit_results.json"
+        lora_events_file = result_dir / "lora_native_events.jsonl"
         
         if not config_file.exists() or not metrics_file.exists():
             self.logger.warning(f"Incomplete results in {result_dir}")
@@ -69,6 +70,9 @@ class ResultsAnalyzer:
         # Optionally extract LoRA residual statistics from edit_results
         lora_residual_rel_mean = None
         lora_residual_rel_count = 0
+        lora_fallback_rate = None
+        lora_fallback_count = 0
+        lora_event_count = 0
         if edits_file.exists():
             try:
                 with open(edits_file, 'r') as f:
@@ -87,6 +91,39 @@ class ResultsAnalyzer:
             except Exception:
                 pass
 
+        # Parse lora events if present to compute fallback rate and refined residual mean
+        if lora_events_file.exists():
+            try:
+                residuals = []
+                fb = 0
+                total = 0
+                with open(lora_events_file, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line:
+                            continue
+                        total += 1
+                        rec = json.loads(line)
+                        r = rec.get('lora_residual_rel')
+                        if r is not None:
+                            try:
+                                residuals.append(float(r))
+                            except Exception:
+                                pass
+                        if rec.get('lora_fallback') is True:
+                            fb += 1
+                if total > 0:
+                    lora_event_count = total
+                    lora_fallback_count = fb
+                    lora_fallback_rate = fb / total
+                    # Prefer events-derived residuals if available
+                    if residuals:
+                        import numpy as _np
+                        lora_residual_rel_mean = float(_np.mean(residuals))
+                        lora_residual_rel_count = len(residuals)
+            except Exception:
+                pass
+
         # Combine config and metrics
         data = {
             "run_dir": str(result_dir),
@@ -94,6 +131,9 @@ class ResultsAnalyzer:
             **metrics,
             "lora_residual_rel_mean": lora_residual_rel_mean,
             "lora_residual_rel_count": lora_residual_rel_count,
+            "lora_fallback_rate": lora_fallback_rate,
+            "lora_fallback_count": lora_fallback_count,
+            "lora_event_count": lora_event_count,
         }
         
         return data

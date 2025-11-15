@@ -242,6 +242,8 @@ class BaselineRunner:
         num_batches = (len(requests) + self.config.batch_size - 1) // self.config.batch_size
         
         events_fp = self.config.run_dir / "lora_native_events.jsonl"
+        seq_metrics_fp = self.config.run_dir / "sequence_metrics.jsonl"
+        cumulative_edits = 0
         for batch_idx in range(num_batches):
             start_idx = batch_idx * self.config.batch_size
             end_idx = min(start_idx + self.config.batch_size, len(requests))
@@ -310,6 +312,8 @@ class BaselineRunner:
                                         "weight_name": info.get("weight_name"),
                                         "delta_norm": info.get("delta_norm"),
                                         "lora_residual_rel": info.get("lora_residual_rel"),
+                                        "lora_fallback": info.get("lora_fallback"),
+                                        "lora_fallback_reason": info.get("lora_fallback_reason"),
                                         "lora_rank": getattr(self.config, 'lora_rank', None),
                                         "lora_alpha": getattr(self.config, 'lora_alpha', None),
                                         "lora_scale": getattr(self.config, 'lora_scale', None),
@@ -319,6 +323,54 @@ class BaselineRunner:
                                     f.write(json.dumps(event) + "\n")
                 except Exception:
                     pass
+
+                # Optional sequence metrics snapshot
+                try:
+                    cumulative_edits += len(batch_requests)
+                    every = getattr(self.config, 'sequence_metrics_every', 0)
+                    if every and cumulative_edits % every == 0:
+                        # Sample up to 50 edited requests so far for quick eval
+                        sample_requests = requests[:cumulative_edits]
+                        if len(sample_requests) > 50:
+                            import random as _rnd
+                            _rnd.seed(self.config.seed + cumulative_edits)
+                            sample_requests = _rnd.sample(sample_requests, 50)
+                        es_list, ps_list, ns_list = [], [], []
+                        for rq in sample_requests:
+                            try:
+                                subject = rq.get('subject', '')
+                                target_new = rq.get('target_new', {}).get('str', '')
+                                target_true = rq.get('target_true', {}).get('str', '')
+                                rewrite_prompt = rq.get('prompt', '').format(subject)
+                                es = self._test_prediction(model, tokenizer, rewrite_prompt, target_new, target_true)
+                                if rq.get('paraphrase_prompts'):
+                                    paraphrase_prompts = rq['paraphrase_prompts'][:3]
+                                    ps_vals = [self._test_prediction(model, tokenizer, pp, target_new, target_true) for pp in paraphrase_prompts]
+                                    ps = float(np.mean(ps_vals)) if ps_vals else 0.0
+                                else:
+                                    ps = 0.0
+                                if rq.get('neighborhood_prompts'):
+                                    neighbor_prompts = rq['neighborhood_prompts'][:3]
+                                    ns_vals = [self._test_prediction(model, tokenizer, np_text, target_true, target_new) for np_text in neighbor_prompts]
+                                    ns = float(np.mean(ns_vals)) if ns_vals else 1.0
+                                else:
+                                    ns = 1.0
+                                es_list.append(es); ps_list.append(ps); ns_list.append(ns)
+                            except Exception:
+                                pass
+                        snapshot = {
+                            "cumulative_edits": cumulative_edits,
+                            "batch_idx": batch_idx,
+                            "es_mean": float(np.mean(es_list)) if es_list else 0.0,
+                            "ps_mean": float(np.mean(ps_list)) if ps_list else 0.0,
+                            "ns_mean": float(np.mean(ns_list)) if ns_list else 0.0,
+                            "sample_size": len(sample_requests)
+                        }
+                        with open(seq_metrics_fp, 'a', encoding='utf-8') as fsm:
+                            fsm.write(json.dumps(snapshot) + "\n")
+                        self.logger.info(f"[SequenceMetrics] edits={cumulative_edits} ES={snapshot['es_mean']:.3f} PS={snapshot['ps_mean']:.3f} NS={snapshot['ns_mean']:.3f}")
+                except Exception as _e_seq:
+                    self.logger.debug(f"Sequence metrics snapshot failed: {_e_seq}")
                 
             except Exception as e:
                 self.logger.error(f"❌ Batch editing failed: {str(e)}", exc_info=True)
@@ -436,6 +488,17 @@ class BaselineRunner:
                     "paraphrase_score": float(ps),
                     "neighborhood_score": float(ns)
                 })
+
+                # If replay is enabled and strategy is priority, update buffer priority
+                try:
+                    if self.config.replay_rate > 0 and getattr(self.config, 'replay_strategy', 'random') == 'priority':
+                        from emmet.emmet_replay import get_replay_buffer
+                        buf = get_replay_buffer()
+                        # Simple scheme: priority := 0.7*ES + 0.3*NS
+                        pr = 0.7*float(es) + 0.3*float(ns)
+                        _ = buf.update_priority_by_subject(subject, pr)
+                except Exception:
+                    pass
                 
             except Exception as e:
                 self.logger.warning(f"Evaluation failed for example {idx}: {str(e)}")
@@ -660,6 +723,8 @@ def main():
                        help="Dataset name (without .json extension)")
     parser.add_argument("--output_dir", type=str, default="results/baseline",
                        help="Output directory for results")
+    parser.add_argument("--sequence_metrics_every", type=int, default=0,
+                       help="Collect sequence ES/PS/NS snapshot every N cumulative edits (0=disable)")
     
     args = parser.parse_args()
     
@@ -688,6 +753,8 @@ def main():
     print(f"Seed:         {args.seed}")
     print(f"Dataset:      {args.dataset}")
     print(f"Output dir:   {args.output_dir}")
+    if args.sequence_metrics_every:
+        print(f"Seq metrics:  every {args.sequence_metrics_every} edits")
     print("="*80 + "\n")
     
     # Create and run experiment

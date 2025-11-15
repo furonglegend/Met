@@ -295,3 +295,19 @@ class ReplayBuffer:
     
     def __repr__(self):
         return f"ReplayBuffer(size={len(self)}/{self.max_size}, strategy={self.strategy})"
+
+    # New: update priority by subject for priority sampling
+    def update_priority_by_subject(self, subject: str, priority: float) -> int:
+        """Update priority of all records with given subject. Returns updated count."""
+        if not subject:
+            return 0
+        updated = 0
+        try:
+            ids = self.subject_index.get(subject, [])
+            for r in list(self.buffer):
+                if r.edit_id in ids:
+                    r.priority = float(max(0.1, priority))
+                    updated += 1
+        except Exception:
+            return updated
+        return updated

@@ -74,6 +74,8 @@ def apply_emmet_to_model(
 
             if use_lora_native and lora_backend is not None:
                 # Map into LoRA factors instead of writing to base weight
+                lora_fallback = False
+                lora_fallback_reason = None
                 try:
                     lora_backend.apply_delta(
                         weight_param_name=w_name,
@@ -85,6 +87,8 @@ def apply_emmet_to_model(
                     # If mapping fails and fallback allowed, perform raw update; else re-raise
                     if bool(getattr(hparams, "allow_fallback", False)):
                         lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                        lora_fallback = True
+                        lora_fallback_reason = "svd_fail"
                     else:
                         raise
                 new_weights_norm = original_weights_norm  # base unchanged
@@ -108,16 +112,22 @@ def apply_emmet_to_model(
                 if lora_residual_rel is None and bool(getattr(hparams, "allow_fallback", False)):
                     lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
                     new_weights_norm = torch.norm(w[...]).detach().cpu().item()
+                    lora_fallback = True
+                    lora_fallback_reason = "residual_none"
                 elif isinstance(thr, float) and bool(getattr(hparams, "allow_fallback", False)) and lora_residual_rel is not None and lora_residual_rel > thr:
                     lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
                     new_weights_norm = torch.norm(w[...]).detach().cpu().item()
                     # mark residual as -1 to signal fallback triggered
                     lora_residual_rel = -1.0
+                    lora_fallback = True
+                    lora_fallback_reason = "residual_guard"
             else:
                 # Raw path: add delta directly to base weight
                 w[...] += upd_matrix.float()
                 new_weights_norm = torch.norm(w[...]).detach().cpu().item()
                 lora_residual_rel = None
+                lora_fallback = False
+                lora_fallback_reason = None
 
             #saving all distances
             layer = w_name.split('.')[2]
@@ -130,7 +140,10 @@ def apply_emmet_to_model(
                 'original_weights_norm': original_weights_norm,
                 'inside_norms': inside_norms,
                 'lora_residual_rel': lora_residual_rel,
-                'weight_name': w_name
+                'weight_name': w_name,
+                'lora_fallback': lora_fallback,
+                'lora_fallback_reason': lora_fallback_reason,
+                'edit_mode': getattr(hparams, 'edit_mode', 'raw')
             }
             distances[layer] = temp_dict
 
