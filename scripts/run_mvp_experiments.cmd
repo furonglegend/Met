@@ -13,8 +13,7 @@ echo - Num edits: 500
 echo ========================================
 echo.
 
-REM Activate conda environment
-call conda activate emmet-edit
+REM Assume Python environment already activated before running this script
 
 REM Set common parameters
 set MODEL=gpt2

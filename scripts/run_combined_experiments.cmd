@@ -9,7 +9,7 @@ echo Testing: EMMET, Replay, LoRA, and combinations
 echo ========================================
 echo.
 
-call conda activate emmet-edit
+REM Assume Python environment already activated before running this script
 
 set MODEL=gpt2
 set NUM_EDITS=200

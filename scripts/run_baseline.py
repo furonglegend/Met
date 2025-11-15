@@ -758,8 +758,6 @@ def main():
                        help="Allow residual-guard fallback to raw updates when mapping is poor or fails")
     parser.add_argument("--lora_residual_threshold", type=float, default=None,
                        help="Residual threshold to trigger fallback; if omitted, only failures trigger fallback")
-    parser.add_argument("--lora_fit_steps", type=int, default=0,
-                       help="Optional tiny fitting steps to refine LoRA factors")
     parser.add_argument("--dataset", type=str, default="counterfact_sampled_unique_cf_10_20000",
                        help="Dataset name (without .json extension)")
     parser.add_argument("--output_dir", type=str, default="results/baseline",

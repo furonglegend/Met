@@ -19,9 +19,7 @@ echo "Dataset: CounterFact"
 echo "========================================"
 echo ""
 
-# Activate conda environment
-source "$(conda info --base)/etc/profile.d/conda.sh"
-conda activate emmet-edit
+# Assume Python environment already activated before running this script
 
 # Set common parameters
 MODEL="gpt2-xl"
