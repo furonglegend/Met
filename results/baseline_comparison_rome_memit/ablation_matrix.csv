@@ -1,3 +1,9 @@
 method,model,batch_size,replay_rate,replay_strategy,replay_buffer_size,edit_mode,lora_rank,lora_alpha,trust_enable,efficacy_success,paraphrase_success,neighborhood_specificity,composite_score
+<<<<<<< HEAD
 memit,gpt2-xl,32,0.0,random,200,raw,8,16.0,False,0.975,0.8875,0.7360000000000001,0.8661666666666666
 rome,gpt2-xl,1,0.0,random,200,raw,8,16.0,False,0.705,0.7,0.5209999999999999,0.6419999999999999
+=======
+emmet,gpt2-xl,32,0.0,random,200,raw,8,16.0,False,0.992,0.944,0.6356,0.8572000000000001
+memit,gpt2-xl,32,0.0,random,200,raw,8,16.0,False,0.968,0.875,0.718,0.8536666666666667
+rome,gpt2-xl,1,0.0,random,200,raw,8,16.0,False,0.59,0.562,0.5067999999999999,0.5529333333333334
+>>>>>>> 4fb0aa6 (Add new metrics and trust event files for baseline comparison)

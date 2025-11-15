@@ -1,0 +1,17 @@
+run_dir,batch_idx,layer,weight_name,delta_norm,trust_enable,trust_score,trust_applied,trust_action,trust_scale
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,0,17,transformer.h.17.mlp.c_proj.weight,56.62503046938407,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,1,17,transformer.h.17.mlp.c_proj.weight,52.70796344631786,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,2,17,transformer.h.17.mlp.c_proj.weight,49.248253441899514,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,3,17,transformer.h.17.mlp.c_proj.weight,52.09930887477099,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,4,17,transformer.h.17.mlp.c_proj.weight,56.10544108770768,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,5,17,transformer.h.17.mlp.c_proj.weight,68.29397746806019,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,6,17,transformer.h.17.mlp.c_proj.weight,64.11943026186825,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,7,17,transformer.h.17.mlp.c_proj.weight,56.74686906855784,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,8,17,transformer.h.17.mlp.c_proj.weight,53.66058984326216,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,9,17,transformer.h.17.mlp.c_proj.weight,52.35957294822219,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,10,17,transformer.h.17.mlp.c_proj.weight,52.39387114175507,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,11,17,transformer.h.17.mlp.c_proj.weight,46.37968707534047,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,12,17,transformer.h.17.mlp.c_proj.weight,52.871964522917686,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,13,17,transformer.h.17.mlp.c_proj.weight,52.50225280826233,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,14,17,transformer.h.17.mlp.c_proj.weight,63.39288751346068,False,,False,none,1.0
+results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,15,17,transformer.h.17.mlp.c_proj.weight,41.27979958736861,False,,False,none,1.0

@@ -2,13 +2,19 @@
 EXPERIMENTAL RESULTS REPORT
 ================================================================================
 
+<<<<<<< HEAD
 Total Experiments: 2
 Analysis Date: 2025-11-16 13:38:25
+=======
+Total Experiments: 4
+Analysis Date: 2025-11-15 23:36:53
+>>>>>>> 4fb0aa6 (Add new metrics and trust event files for baseline comparison)
 
 --------------------------------------------------------------------------------
 Results by Method:
 --------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 method=memit_replay_rate=0.0_batch_size=32:
   Count: 1
   Efficacy Success (ES): 0.9750 � nan
@@ -22,3 +28,25 @@ method=rome_replay_rate=0.0_batch_size=1:
   Paraphrase Success (PS): 0.7000 � nan
   Neighborhood Specificity (NS): 0.5210 � nan
   Composite Score (S): 0.6420 � nan
+=======
+method=emmet_replay_rate=0.0_batch_size=32:
+  Count: 1
+  Efficacy Success (ES): 0.9920 ± nan
+  Paraphrase Success (PS): 0.9440 ± nan
+  Neighborhood Specificity (NS): 0.6356 ± nan
+  Composite Score (S): 0.8572 ± nan
+
+method=memit_replay_rate=0.0_batch_size=32:
+  Count: 1
+  Efficacy Success (ES): 0.9680 ± nan
+  Paraphrase Success (PS): 0.8750 ± nan
+  Neighborhood Specificity (NS): 0.7180 ± nan
+  Composite Score (S): 0.8537 ± nan
+
+method=rome_replay_rate=0.0_batch_size=1:
+  Count: 2
+  Efficacy Success (ES): 0.5900 ± 0.0000
+  Paraphrase Success (PS): 0.5620 ± 0.0000
+  Neighborhood Specificity (NS): 0.5068 ± 0.0000
+  Composite Score (S): 0.5529 ± 0.0000
+>>>>>>> 4fb0aa6 (Add new metrics and trust event files for baseline comparison)
