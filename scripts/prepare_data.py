@@ -23,10 +23,10 @@ def main():
     parser.add_argument("--seed", type=int, default=42,
                        help="Random seed")
     parser.add_argument("--input", type=str,
-                       default="data/counterfact_qna.json",
+                       default="data/counterfact.json",
                        help="Input data file")
-    parser.add_argument("--output", type=str, default=None,
-                       help="Output file (default: data/counterfact_qna_sample_{num}.json)")
+    parser.add_argument("--output", type=str,default=None,
+                       help="Output file (default: data/counterfact_{num}.json)")
     
     args = parser.parse_args()
     
@@ -35,7 +35,7 @@ def main():
     if args.output:
         output_path = PROJECT_ROOT / args.output
     else:
-        output_path = PROJECT_ROOT / f"data/sample_{args.num}.json"
+        output_path = PROJECT_ROOT / f"data/counterfact_{args.num}.json"
     
     print("="*80)
     print("Data Preparation")
