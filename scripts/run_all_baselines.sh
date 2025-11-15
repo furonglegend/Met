@@ -1,4 +1,8 @@
 #!/bin/bash
+# Baseline Comparison Experiment - ROME vs MEMIT
+# Based on TODO.md Section 1.2: Two baseline methods comparison
+# Objective: Compare ROME and MEMIT to validate the unified framework
+#!/bin/bash
 # Baseline Comparison Experiment - ROME vs MEMIT vs EMMET
 # Based on TODO.md Section 1.2: Three baseline methods comparison
 # Objective: Prove the necessity of unified framework and EMMET's advantages
@@ -6,10 +10,9 @@
 echo "========================================"
 echo "Baseline Comparison Experiment"
 echo "========================================"
-echo "Total: 3 experiments"
+echo "Total: 2 experiments"
 echo "- ROME: Single edit (batch_size=1)"
 echo "- MEMIT: Batch edit (batch_size=32)"
-echo "- EMMET: Batch edit (batch_size=32)"
 echo "Model: GPT-2 XL (1.5B)"
 echo "Num edits: 200"
 echo "Dataset: CounterFact"
@@ -25,14 +28,14 @@ MODEL="gpt2-xl"
 NUM_EDITS=200
 SEED=42
 DATASET="counterfact_sampled_unique_cf_10_20000"
-OUTPUT_DIR="results/baseline_comparison"
+OUTPUT_DIR="results/baseline_comparison_rome_memit"
 
 echo "Creating output directory..."
 mkdir -p "$OUTPUT_DIR"
 echo ""
 
 echo "========================================"
-echo "[1/3] Running ROME (batch_size=1)"
+echo "[1/2] Running ROME (batch_size=1)"
 echo "========================================"
 echo "ROME uses single-edit constraint optimization"
 echo "Expected time: ~5-10 minutes"
@@ -48,7 +51,7 @@ echo "✓ ROME experiment completed"
 echo ""
 
 echo "========================================"
-echo "[2/3] Running MEMIT (batch_size=32)"
+echo "[2/2] Running MEMIT (batch_size=32)"
 echo "========================================"
 echo "MEMIT uses least-squares relaxation for batch editing"
 echo "Expected time: ~3-5 minutes"
@@ -83,12 +86,6 @@ echo "========================================"
 echo "All baseline experiments completed!"
 echo "========================================"
 echo ""
-echo "Results saved to: $OUTPUT_DIR"
-echo ""
-echo "Summary:"
-echo "- ROME:  Single-edit constraint (slowest, most precise)"
-echo "- MEMIT: Batch least-squares (faster, approximate)"
-echo "- EMMET: Unified optimization (balanced, flexible)"
 echo ""
 echo "Next steps:"
 echo "1. Compare metrics: ES, PS, NS, Composite Score"
@@ -99,10 +96,10 @@ echo "To aggregate results, run:"
 echo "  python scripts/analyze_results.py --results_dir $OUTPUT_DIR"
 echo ""
 echo "Running automatic analysis and visualization..."
-python scripts/analyze_results.py --results_dir "$OUTPUT_DIR" --output "$OUTPUT_DIR/baseline_comparison.csv"
+python scripts/analyze_results.py --results_dir "$OUTPUT_DIR" --output "$OUTPUT_DIR/baseline_comparison_rome_memit.csv"
 if [ $? -ne 0 ]; then
     echo "WARNING: automatic analysis failed. You can run the analysis script manually."
 else
-    echo "Aggregated results saved to: $OUTPUT_DIR/baseline_comparison.csv"
+    echo "Aggregated results saved to: $OUTPUT_DIR/baseline_comparison_rome_memit.csv"
 fi
 echo ""

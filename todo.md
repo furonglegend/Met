@@ -94,19 +94,18 @@
 
 **产出**: `results/quick_validation.csv` + 调试日志
 
-### 1.2 三大基线对比实验（ROME / MEMIT / EMMET）
+### 1.2 两大基线对比实验（ROME / MEMIT）
 
-**目标**: 证明统一框架的必要性与 EMMET 的优势
+**目标**: 对比 ROME 与 MEMIT 的表现，验证统一框架的必要性
 
 **任务**:
 
 - [x] ROME: 单条编辑（batch_size=1），200条
 - [x] MEMIT: 批量编辑（batch_size=32），200条
-- [x] EMMET: 批量编辑（batch_size=32），200条
-- [x] 对比三者的 ES/PS/NS 差异
+- [x] 对比两者的 ES/PS/NS 差异
 - [x] 记录时间与显存开销
 
-**产出**: `scripts/run_all_baselines.cmd` + `scripts/run_all_baselines.sh` + `results/baseline_comparison.csv`
+**产出**: `scripts/run_all_baselines.cmd` + `scripts/run_all_baselines.sh` + `results/baseline_comparison_rome_memit.csv`
 
 **关键点**:
 
