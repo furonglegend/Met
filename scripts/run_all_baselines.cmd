@@ -20,7 +20,7 @@ REM Set common parameters
 set MODEL=gpt2-xl
 set NUM_EDITS=200
 set SEED=42
-set DATASET=counterfact_qna_sample_500.json
+set DATASET=counterfact_qna_sample_500
 set OUTPUT_DIR=results/baseline_comparison_rome_memit
 
 echo [1/2] ROME: Single edit (batch_size=1)
