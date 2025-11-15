@@ -25,7 +25,7 @@ echo ""
 MODEL="gpt2-xl"
 NUM_EDITS=200
 SEED=42
-DATASET="counterfact_sampled_unique_cf_10_20000"
+DATASET="counterfact_500"
 OUTPUT_DIR="results/baseline_comparison_rome_memit"
 
 echo "Creating output directory..."
