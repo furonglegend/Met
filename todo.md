@@ -87,7 +87,7 @@
 
 **任务**:
 
-- [x] 准备 CounterFact 子集（200条用于调试）
+- [x] 准备 CounterFact 子集（500条用于调试）
 - [x] 运行 EMMET 最小示例，验证代码可用性
 - [x] 确认 ES/PS/NS/GE/S 指标计算正确
 - [x] 调试超参数（学习率、层选择、批量大小）
@@ -100,8 +100,8 @@
 
 **任务**:
 
-- [x] ROME: 单条编辑（batch_size=1），200条
-- [x] MEMIT: 批量编辑（batch_size=32），200条
+- [x] ROME: 单条编辑（batch_size=1），500条
+- [x] MEMIT: 批量编辑（batch_size=32），500条
 - [x] 对比两者的 ES/PS/NS 差异
 - [x] 记录时间与显存开销
 
