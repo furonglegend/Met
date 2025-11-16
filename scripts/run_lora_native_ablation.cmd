@@ -2,30 +2,26 @@
 REM LoRA-native ablation on rank and fit steps (Windows CMD)
 REM Usage: double-click or run from repo root
 
-set MODEL=gpt2
-set METHOD=emmet
-set DATASET=counterfact_sampled_unique_cf_10_20000
-set NUM_EDITS=200
-set BATCH_SIZE=1
-set SEED=42
+echo ========================================
+echo LoRA-native Ablation: rank x fit_steps
+echo ========================================
+echo Sweeping lora_rank and lora_fit_steps in lora_native mode
+echo Results will be grouped under a timestamped folder
+echo ========================================
+echo.
 
-for %%R in (4 8 16) do (
-  for %%S in (0 5 10) do (
-    echo Running rank=%%R fit_steps=%%S...
-    python scripts\run_baseline.py ^
-      --method %METHOD% ^
-      --model %MODEL% ^
-      --num_edits %NUM_EDITS% ^
-      --batch_size %BATCH_SIZE% ^
-      --seed %SEED% ^
-      --dataset %DATASET% ^
-      --edit_mode lora_native ^
-      --lora_rank %%R ^
-      --lora_alpha %%R ^
-      --lora_scale 1.0 ^
-      --lora_fit_steps %%S ^
-      --lora_use_svd
-  )
-)
+REM Assume Python environment already activated before running this script
 
-echo Done.
+python scripts\run_lora_native_ablation.py ^
+    --model gpt2 ^
+    --dataset counterfact_sampled_unique_cf_10_20000 ^
+    --num_edits 200 ^
+    --batch_size 1 ^
+    --seed 42 ^
+    --ranks 4 8 16 ^
+    --fit_steps_list 0 5 10 ^
+    --output_root results
+
+echo.
+echo Done. See the printed suite directory for this run.
+echo.

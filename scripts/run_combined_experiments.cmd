@@ -11,75 +11,17 @@ echo.
 
 REM Assume Python environment already activated before running this script
 
-set MODEL=gpt2-xl
-set NUM_EDITS=200
-set BATCH_SIZE=16
-set SEED=42
-
-echo [1/7] EMMET baseline (no enhancements)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --output_dir results\combined
-
-echo [2/7] EMMET + Replay (rate=0.3)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --replay_rate 0.3 ^
-    --output_dir results\combined
-
-echo [3/7] EMMET + LoRA (rank=8)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --use_lora --lora_rank 8 --edit_mode lora_native ^
-    --output_dir results\combined
-
-echo [4/7] EMMET + Replay + LoRA (rank=8)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --replay_rate 0.3 ^
-    --use_lora --lora_rank 8 --edit_mode lora_native ^
-    --output_dir results\combined
-
-echo [5/7] EMMET + Replay (rate=0.5) + LoRA (rank=4)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --replay_rate 0.5 ^
-    --use_lora --lora_rank 4 --edit_mode lora_native ^
-    --output_dir results\combined
-
-echo [6/7] EMMET + Replay (rate=0.3) + LoRA (rank=16)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --replay_rate 0.3 ^
-    --use_lora --lora_rank 16 --edit_mode lora_native ^
-    --output_dir results\combined
-
-echo [7/7] EMMET + Replay (rate=0.1) + LoRA (rank=8)...
-python scripts\run_baseline.py ^
-    --method emmet --model %MODEL% ^
-    --num_edits %NUM_EDITS% --batch_size %BATCH_SIZE% ^
-    --seed %SEED% --replay_rate 0.1 ^
-    --use_lora --lora_rank 8 --edit_mode lora_native ^
-    --output_dir results\combined
+REM Delegate to the Python orchestrator, which will create a
+REM timestamped suite folder under results/ and run all configs.
+python scripts\run_combined_experiments.py ^
+    --model gpt2-xl ^
+    --num_edits 200 ^
+    --batch_size 16 ^
+    --seed 42 ^
+    --output_root results
 
 echo.
-echo Generating combined scores plot...
-python scripts\plot_combined_experiments.py ^
-    --results_dir results\combined ^
-    --output results\combined\combined_scores.png
-
-echo.
-echo ========================================
-echo All combined experiments completed!
-echo ========================================
-echo Results: results\combined\
-echo Plot:   results\combined\combined_scores.png
+echo Done. See the printed suite directory for this run.
 echo.
 
 pause

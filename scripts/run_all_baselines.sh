@@ -10,94 +10,22 @@
 echo "========================================"
 echo "Baseline Comparison Experiment"
 echo "========================================"
-echo "Total: 2 experiments"
-echo "- ROME: Single edit (batch_size=1)"
-echo "- MEMIT: Batch edit (batch_size=32)"
-echo "Model: GPT-2 XL (1.5B)"
-echo "Num edits: 500"
-echo "Dataset: CounterFact"
+echo "Running ROME, MEMIT, and EMMET baselines"
+echo "Results will be grouped under a timestamped folder"
 echo "========================================"
 echo ""
 
 # Assume Python environment already activated before running this script
 
-# Set common parameters
-MODEL="gpt2-xl"
-NUM_EDITS=500
-SEED=42
-DATASET="counterfact_500"
-OUTPUT_DIR="results/baseline_comparison_rome_memit"
+# Delegate to the Python orchestrator, which will create an
+# all_baselines_* suite folder under results/ and run all configs.
+python scripts/run_all_baselines.py \
+  --model gpt2-xl \
+  --num_edits 500 \
+  --dataset counterfact_500 \
+  --seed 42 \
+  --output_root results
 
-echo "Creating output directory..."
-mkdir -p "$OUTPUT_DIR"
 echo ""
-
-echo "========================================"
-echo "[1/2] Running ROME (batch_size=1)"
-echo "========================================"
-echo "ROME uses single-edit constraint optimization"
-echo "Expected time: ~5-10 minutes"
-echo ""
-python scripts/run_baseline.py --method rome --model "$MODEL" --num_edits "$NUM_EDITS" --batch_size 1 --seed "$SEED" --dataset "$DATASET" --output_dir "$OUTPUT_DIR"
-if [ $? -ne 0 ]; then
-    echo "ERROR: ROME experiment failed!"
-    echo "Check logs for details."
-    exit 1
-fi
-echo ""
-echo "✓ ROME experiment completed"
-echo ""
-
-echo "========================================"
-echo "[2/2] Running MEMIT (batch_size=32)"
-echo "========================================"
-echo "MEMIT uses least-squares relaxation for batch editing"
-echo "Expected time: ~3-5 minutes"
-echo ""
-python scripts/run_baseline.py --method memit --model "$MODEL" --num_edits "$NUM_EDITS" --batch_size 32 --seed "$SEED" --dataset "$DATASET" --output_dir "$OUTPUT_DIR"
-if [ $? -ne 0 ]; then
-    echo "ERROR: MEMIT experiment failed!"
-    echo "Check logs for details."
-    exit 1
-fi
-echo ""
-echo "✓ MEMIT experiment completed"
-echo ""
-
-echo "========================================"
-echo "[3/3] Running EMMET (batch_size=32)"
-echo "========================================"
-echo "EMMET uses unified constraint optimization framework"
-echo "Expected time: ~3-5 minutes"
-echo ""
-python scripts/run_baseline.py --method emmet --model "$MODEL" --num_edits "$NUM_EDITS" --batch_size 32 --seed "$SEED" --dataset "$DATASET" --output_dir "$OUTPUT_DIR"
-if [ $? -ne 0 ]; then
-    echo "ERROR: EMMET experiment failed!"
-    echo "Check logs for details."
-    exit 1
-fi
-echo ""
-echo "✓ EMMET experiment completed"
-echo ""
-
-echo "========================================"
-echo "All baseline experiments completed!"
-echo "========================================"
-echo ""
-echo ""
-echo "Next steps:"
-echo "1. Compare metrics: ES, PS, NS, Composite Score"
-echo "2. Analyze time and memory usage"
-echo "3. Check detailed results in each experiment folder"
-echo ""
-echo "To aggregate results, run:"
-echo "  python scripts/analyze_results.py --results_dir $OUTPUT_DIR"
-echo ""
-echo "Running automatic analysis and visualization..."
-python scripts/analyze_results.py --results_dir "$OUTPUT_DIR" --output "$OUTPUT_DIR/baseline_comparison_rome_memit.csv"
-if [ $? -ne 0 ]; then
-    echo "WARNING: automatic analysis failed. You can run the analysis script manually."
-else
-    echo "Aggregated results saved to: $OUTPUT_DIR/baseline_comparison_rome_memit.csv"
-fi
+echo "Done. See the printed suite directory for this run."
 echo ""

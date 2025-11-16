@@ -65,7 +65,13 @@ class ExperimentConfig:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         replay_suffix = f"_replay{self.replay_rate}" if self.replay_rate > 0 else ""
         lora_suffix = f"_lora{self.lora_rank}" if self.use_lora else ""
-        self.run_dir = Path(self.output_dir) / f"{self.method}_{self.model}_b{self.batch_size}{replay_suffix}{lora_suffix}_{timestamp}"
+        default_run_name = f"{self.method}_{self.model}_b{self.batch_size}{replay_suffix}{lora_suffix}_{timestamp}"
+        run_name = getattr(args, "run_name", None)
+        self.run_name = run_name or default_run_name
+        if run_name:
+            self.run_dir = Path(self.output_dir) / run_name
+        else:
+            self.run_dir = Path(self.output_dir) / default_run_name
         self.run_dir.mkdir(parents=True, exist_ok=True)
         
         # Setup logging
@@ -760,6 +766,8 @@ def main():
                        help="Residual threshold to trigger fallback; if omitted, only failures trigger fallback")
     parser.add_argument("--dataset", type=str, default="counterfact_500",
                        help="Dataset name (without .json extension)")
+    parser.add_argument("--run_name", type=str, default=None,
+                       help="Optional fixed run directory name inside output_dir")
     parser.add_argument("--output_dir", type=str, default="results/baseline",
                        help="Output directory for results")
     parser.add_argument("--sequence_metrics_every", type=int, default=0,

@@ -2,37 +2,27 @@
 REM Replay ablation for EMMET (Windows CMD)
 REM Varies replay_rate, strategy, and buffer size optionally.
 
-set MODEL=gpt2
-set METHOD=emmet
-set DATASET=counterfact_sampled_unique_cf_10_20000
-set NUM_EDITS=200
-set BATCH_SIZE=1
-set SEED=42
+echo ========================================
+echo Replay Ablation: EMMET + Replay
+echo ========================================
+echo Sweeping replay_rate, strategy, and buffer size
+echo Results will be grouped under a timestamped folder
+echo ========================================
+echo.
 
-REM Replay rates grid
-set RATES=0 0.1 0.3 0.5
-REM Strategies to compare (keep "random" only if you want fewer runs)
-set STRATS=random priority recent
-REM Buffer sizes (comment out others to reduce runs)
-set BUFS=100 200
+REM Assume Python environment already activated before running this script
 
-for %%S in (%STRATS%) do (
-  for %%B in (%BUFS%) do (
-    for %%R in (%RATES%) do (
-      echo Running replay_rate=%%R strategy=%%S buffer=%%B...
-      python scripts\run_baseline.py ^
-        --method %METHOD% ^
-        --model %MODEL% ^
-        --num_edits %NUM_EDITS% ^
-        --batch_size %BATCH_SIZE% ^
-        --seed %SEED% ^
-        --dataset %DATASET% ^
-        --replay_rate %%R ^
-        --replay_strategy %%S ^
-        --replay_buffer_size %%B ^
-        --replay_weight 1.0
-    )
-  )
-)
+python scripts\run_replay_ablation.py ^
+    --model gpt2 ^
+    --dataset counterfact_sampled_unique_cf_10_20000 ^
+    --num_edits 200 ^
+    --batch_size 1 ^
+    --seed 42 ^
+    --rates 0 0.1 0.3 0.5 ^
+    --strategies random priority recent ^
+    --buffer_sizes 100 200 ^
+    --output_root results
 
-echo Done.
+echo.
+echo Done. See the printed suite directory for this run.
+echo.
