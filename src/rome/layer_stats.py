@@ -96,17 +96,24 @@ def layer_stats(
     collected_features = None
 
     def get_ds():
-        raw_ds = load_dataset(
-            ds_name,
-            dict(wikitext="wikitext-103-raw-v1", wikipedia="20200501.en")[ds_name],
-        )
+        try:
+            raw_ds = load_dataset(
+                ds_name,
+                dict(wikitext="wikitext-103-raw-v1", wikipedia="20200501.en")[ds_name],
+            )
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to load dataset '{ds_name}' for layer_stats: {e}"
+            )
+
         try:
             maxlen = model.config.n_positions
-        except:
+        except Exception:
             maxlen = model.config.max_position_embeddings
 
         if batch_tokens is not None and batch_tokens < maxlen:
             maxlen = batch_tokens
+
         return TokenizedDataset(raw_ds["train"], tokenizer, maxlen=maxlen)
 
     # Continue with computation of statistics
