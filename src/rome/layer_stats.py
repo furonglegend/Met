@@ -178,24 +178,40 @@ def layer_stats(
     
     collected_features = []
     total_collected_features = 0
-    num_preserve_features = 5e3 if 'llama' not in model.config._name_or_path.lower() else 1e3
+    ds = get_ds() if not filename.exists() else None
+    # ds = get_ds()
     with torch.no_grad():
         for batch_group in progress(loader, total=batch_count):
             for batch in batch_group:
                 batch = dict_to_(batch, "cuda")
-                with Trace(
-                    model, layer_name, retain_input=True, retain_output=False, stop=True
-                ) as tr:
-                    model(**batch)
-                feats = flatten_masked_batch(tr.input, batch["attention_mask"])
-                # feats = flatten_masked_batch(tr.output, batch["attention_mask"])
-                feats = feats.to(dtype=dtype)
+    stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
 
-                if 'llama' in model.config._name_or_path.lower():
-                    feats = feats.cpu()
+    # If we already have a cached stats file, load it directly and skip
+    # constructing a DataLoader. Passing dataset=None into tally/make_loader
+    # would otherwise cause a TypeError when len(dataset) is evaluated.
+    if ds is None and not force_recompute:
+        # CombinedStat exposes a load() helper that uses runningstats
+        # caching under the hood.
+        if not filename.exists():
+            raise RuntimeError(
+                f"Expected cached stats at {filename} but file does not exist."
+            )
+        stat.load(str(filename))
+        collected_features = None
+        return stat, collected_features
 
-                if total_collected_features < num_preserve_features:            
-                    collected_features.append(feats)
+    loader = tally(
+        stat,
+        ds,
+        cache=(filename if not force_recompute else None),
+        sample_size=sample_size,
+        batch_size=batch_size,
+        collate_fn=length_collation(batch_tokens),
+        pin_memory=True,
+        random_sample=1,
+        num_workers=0,
+    )
+    batch_count = -(-(sample_size or len(ds)) // batch_size)
                     total_collected_features += feats.shape[0]
 
                 stat.add(feats)
