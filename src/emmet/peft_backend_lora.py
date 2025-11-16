@@ -21,6 +21,7 @@ from typing import Dict, Optional
 
 import torch
 import torch.nn as nn
+from transformers.models.gpt2.modeling_gpt2 import Conv1D
 
 from .lora_wrapper import LoRALayer
 
@@ -71,20 +72,32 @@ class LoRANativeBackend:
         parent_name, child_name = self._split_module_path(module_path)
         parent = self._get_module_by_path(self.model, parent_name)
         orig = getattr(parent, child_name)
-        if not isinstance(orig, nn.Linear):
-            raise TypeError(f"Module at {module_path} is not nn.Linear: {type(orig)}")
+        # Support both standard Linear layers and GPT-2 Conv1D layers
+        is_conv1d = isinstance(orig, Conv1D)
+        if isinstance(orig, nn.Linear):
+            base_weight = orig.weight.data
+        elif is_conv1d:
+            # Conv1D stores weights transposed relative to nn.Linear.
+            # Use the transposed weight so LoRALayer's F.linear reproduces Conv1D.
+            base_weight = orig.weight.data.t()
+        else:
+            raise TypeError(f"Unsupported module type at {module_path}: {type(orig)}")
 
         lora = LoRALayer(
-            original_weight=orig.weight.data,
+            original_weight=base_weight,
             rank=self.rank,
             alpha=self.alpha,
             dropout=self.dropout,
         )
         # copy bias if exists
-        if orig.bias is not None:
+        if getattr(orig, "bias", None) is not None:
             lora.bias = nn.Parameter(orig.bias.data.clone(), requires_grad=False)
         else:
             lora.bias = None
+
+        # Mark Conv1D-backed layers so we can handle delta orientation later
+        if is_conv1d:
+            setattr(lora, "_is_conv1d", True)
 
         setattr(parent, child_name, lora)
         self._registry[module_path] = lora
@@ -124,8 +137,15 @@ class LoRANativeBackend:
         # Ensure LoRA layer exists
         lora = self._ensure_lora_layer(module_path)
 
-        # Target matrix to approximate
-        target = delta.detach().to(lora.base_weight.device).clone() * self.scale
+        # Target matrix to approximate.
+        # For GPT-2 Conv1D, the parameter weight is stored as (in_features, out_features)
+        # while LoRALayer's base_weight is (out_features, in_features). In that case
+        # we transpose delta so that LoRA factors approximate the correct update in
+        # the base_weight orientation.
+        if getattr(lora, "_is_conv1d", False):
+            target = delta.detach().to(lora.base_weight.device).clone().T * self.scale
+        else:
+            target = delta.detach().to(lora.base_weight.device).clone() * self.scale
 
         if use_svd:
             # Full or economic SVD depending on dims

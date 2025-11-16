@@ -13,7 +13,7 @@ echo
 
 # Assume conda/venv is already activated before running this script
 
-MODEL="gpt2"
+MODEL="gpt2-xl"
 NUM_EDITS=200
 BATCH_SIZE=16
 SEED=42
@@ -38,7 +38,7 @@ echo "[3/7] EMMET + LoRA (rank=8)..."
 python scripts/run_baseline.py \
   --method emmet --model "$MODEL" \
   --num_edits "$NUM_EDITS" --batch_size "$BATCH_SIZE" \
-  --seed "$SEED" --use_lora --lora_rank 8 \
+  --seed "$SEED" --use_lora --lora_rank 8 --edit_mode lora_native \
   --output_dir "$OUTPUT_DIR"
 
 echo "[4/7] EMMET + Replay + LoRA (rank=8)..."
@@ -46,7 +46,7 @@ python scripts/run_baseline.py \
   --method emmet --model "$MODEL" \
   --num_edits "$NUM_EDITS" --batch_size "$BATCH_SIZE" \
   --seed "$SEED" --replay_rate 0.3 \
-  --use_lora --lora_rank 8 \
+  --use_lora --lora_rank 8 --edit_mode lora_native \
   --output_dir "$OUTPUT_DIR"
 
 echo "[5/7] EMMET + Replay (rate=0.5) + LoRA (rank=4)..."
@@ -54,7 +54,7 @@ python scripts/run_baseline.py \
   --method emmet --model "$MODEL" \
   --num_edits "$NUM_EDITS" --batch_size "$BATCH_SIZE" \
   --seed "$SEED" --replay_rate 0.5 \
-  --use_lora --lora_rank 4 \
+  --use_lora --lora_rank 4 --edit_mode lora_native \
   --output_dir "$OUTPUT_DIR"
 
 echo "[6/7] EMMET + Replay (rate=0.3) + LoRA (rank=16)..."
@@ -62,7 +62,7 @@ python scripts/run_baseline.py \
   --method emmet --model "$MODEL" \
   --num_edits "$NUM_EDITS" --batch_size "$BATCH_SIZE" \
   --seed "$SEED" --replay_rate 0.3 \
-  --use_lora --lora_rank 16 \
+  --use_lora --lora_rank 16 --edit_mode lora_native \
   --output_dir "$OUTPUT_DIR"
 
 echo "[7/7] EMMET + Replay (rate=0.1) + LoRA (rank=8)..."
@@ -70,7 +70,7 @@ python scripts/run_baseline.py \
   --method emmet --model "$MODEL" \
   --num_edits "$NUM_EDITS" --batch_size "$BATCH_SIZE" \
   --seed "$SEED" --replay_rate 0.1 \
-  --use_lora --lora_rank 8 \
+  --use_lora --lora_rank 8 --edit_mode lora_native \
   --output_dir "$OUTPUT_DIR"
 
 echo
