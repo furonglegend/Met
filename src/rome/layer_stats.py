@@ -153,45 +153,15 @@ def layer_stats(
             print(f"Unable to download due to {e}. Computing locally....")
 
     ds = get_ds() if not filename.exists() else None
-    #ds = get_ds()
 
     if progress is None:
         progress = lambda x: x
 
-    if ds is None and not force_recompute:
-        # 直接走 “完全依赖 npz” 的路径，不用 tally
-        stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
-        stat.load(filename)   # CombinedStat 自己就有 .load()
-        return stat, None
-    loader = tally(
-        stat,
-        ds,
-        cache=(filename if not force_recompute else None),
-        sample_size=sample_size,
-        batch_size=batch_size,
-        collate_fn=length_collation(batch_tokens),
-        pin_memory=True,
-        random_sample=1,
-        num_workers=0,
-    )
-    batch_count = -(-(sample_size or len(ds)) // batch_size)
-    
-    collected_features = []
-    total_collected_features = 0
-    ds = get_ds() if not filename.exists() else None
-    # ds = get_ds()
-    with torch.no_grad():
-        for batch_group in progress(loader, total=batch_count):
-            for batch in batch_group:
-                batch = dict_to_(batch, "cuda")
     stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
 
     # If we already have a cached stats file, load it directly and skip
-    # constructing a DataLoader. Passing dataset=None into tally/make_loader
-    # would otherwise cause a TypeError when len(dataset) is evaluated.
+    # constructing a DataLoader.
     if ds is None and not force_recompute:
-        # CombinedStat exposes a load() helper that uses runningstats
-        # caching under the hood.
         if not filename.exists():
             raise RuntimeError(
                 f"Expected cached stats at {filename} but file does not exist."
@@ -200,6 +170,7 @@ def layer_stats(
         collected_features = None
         return stat, collected_features
 
+    # Otherwise, build a loader over the dataset and compute stats.
     loader = tally(
         stat,
         ds,
@@ -212,13 +183,37 @@ def layer_stats(
         num_workers=0,
     )
     batch_count = -(-(sample_size or len(ds)) // batch_size)
+
+    collected_features = []
+    total_collected_features = 0
+    num_preserve_features = 5e3 if 'llama' not in model.config._name_or_path.lower() else 1e3
+    with torch.no_grad():
+        for batch_group in progress(loader, total=batch_count):
+            for batch in batch_group:
+                batch = dict_to_(batch, "cuda")
+                with Trace(
+                    model,
+                    layer_name,
+                    retain_input=True,
+                    retain_output=False,
+                    stop=True,
+                ) as tr:
+                    model(**batch)
+                feats = flatten_masked_batch(tr.input, batch["attention_mask"])
+                feats = feats.to(dtype=dtype)
+
+                if 'llama' in model.config._name_or_path.lower():
+                    feats = feats.cpu()
+
+                if total_collected_features < num_preserve_features:
+                    collected_features.append(feats)
                     total_collected_features += feats.shape[0]
 
                 stat.add(feats)
 
-    if collected_features:          
-        collected_features = torch.cat(collected_features, dim = 0)
-        #clearing gpu memory
+    if collected_features:
+        collected_features = torch.cat(collected_features, dim=0)
+        # clearing gpu memory
         del feats
         torch.cuda.empty_cache()
 
