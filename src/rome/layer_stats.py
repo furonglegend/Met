@@ -159,30 +159,28 @@ def layer_stats(
         except Exception as e:
             print(f"Unable to download due to {e}. Computing locally....")
 
-    ds = get_ds() if not filename.exists() else None
-
+    if force_recompute:
+    # 强制重算：无论有没有文件，都重新构建数据集
+        ds = get_ds()
+    else:
+    # 只有在没有 stats 文件时才构建数据集；有文件时走缓存 load 分支
+        ds = get_ds() if not filename.exists() else None
     if progress is None:
         progress = lambda x: x
 
     stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
 
     # If we already have a cached stats file, load it directly and skip constructing a DataLoader.
-    if ds is None and not force_recompute:
-        if not filename.exists():
-            raise RuntimeError(
-                f"Expected cached stats at {filename} but file does not exist."
-            )
+    if filename.exists() and not force_recompute:
+    # 既然文件存在且不强制重算，直接从缓存加载
         stat.load(str(filename))
         collected_features = None
         return stat, collected_features
 
     # Safety check: from here on, ds must be a real dataset.
     if ds is None:
-        raise RuntimeError(
-            "Internal error: dataset is None but cache is not used. "
-            "This should not happen; please check layer_stats logic."
-        )
-
+    # 理论上不应该发生，但为了健壮性再构建一次
+        ds = get_ds()
     # If sample_size is None, default to full dataset length.
     effective_sample_size = sample_size if sample_size is not None else len(ds)
 

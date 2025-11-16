@@ -1,0 +1,162 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 1,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 1,
+    "start_idx": 1,
+    "end_idx": 2,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 2,
+    "start_idx": 2,
+    "end_idx": 3,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 3,
+    "start_idx": 3,
+    "end_idx": 4,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 4,
+    "start_idx": 4,
+    "end_idx": 5,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 5,
+    "start_idx": 5,
+    "end_idx": 6,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 6,
+    "start_idx": 6,
+    "end_idx": 7,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 7,
+    "start_idx": 7,
+    "end_idx": 8,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 8,
+    "start_idx": 8,
+    "end_idx": 9,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 9,
+    "start_idx": 9,
+    "end_idx": 10,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 10,
+    "start_idx": 10,
+    "end_idx": 11,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 11,
+    "start_idx": 11,
+    "end_idx": 12,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 12,
+    "start_idx": 12,
+    "end_idx": 13,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 13,
+    "start_idx": 13,
+    "end_idx": 14,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 14,
+    "start_idx": 14,
+    "end_idx": 15,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 15,
+    "start_idx": 15,
+    "end_idx": 16,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 16,
+    "start_idx": 16,
+    "end_idx": 17,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 17,
+    "start_idx": 17,
+    "end_idx": 18,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 18,
+    "start_idx": 18,
+    "end_idx": 19,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  },
+  {
+    "batch_idx": 19,
+    "start_idx": 19,
+    "end_idx": 20,
+    "num_edits": 1,
+    "status": "failed",
+    "error": "local variable 'stat' referenced before assignment"
+  }
+]
