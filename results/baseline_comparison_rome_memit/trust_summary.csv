@@ -1,2 +1,0 @@
-run_dir,events,trust_score_mean,trust_score_std,rollback_count,scale_count,applied_count
-results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,16,,,0,0,0

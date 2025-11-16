@@ -1,1 +1,0 @@
-{"run_dir": "results\\combined\\emmet_gpt2-xl_b16_replay0.3_lora16_20251116_204016", "batch_idx": 0, "layer": "17", "weight_name": "transformer.h.17.mlp.c_proj.weight", "delta_norm": 33.41008908815999, "trust_enable": false, "trust_score": null, "trust_applied": false, "trust_action": null, "trust_scale": 1.0}

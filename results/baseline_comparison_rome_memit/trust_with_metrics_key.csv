@@ -1,5 +1,0 @@
-run_dir,method,batch_size,replay_rate,efficacy_success,paraphrase_success,neighborhood_specificity,composite_score,trust_score_mean,trust_score_std,events
-results/baseline_comparison_rome_memit/rome_gpt2-xl_b1_20251115_222414,rome,1,0.0,0.59,0.562,0.5067999999999999,0.5529333333333334,,,
-results/baseline_comparison_rome_memit/emmet_gpt2-xl_b32_20251115_232944,emmet,32,0.0,0.992,0.944,0.6356,0.8572000000000001,,,16.0
-results/baseline_comparison_rome_memit/memit_gpt2-xl_b32_20251115_231126,memit,32,0.0,0.968,0.875,0.718,0.8536666666666667,,,
-results/baseline_comparison_rome_memit/rome_gpt2-xl_b1_20251115_225616,rome,1,0.0,0.59,0.562,0.5067999999999999,0.5529333333333334,,,
