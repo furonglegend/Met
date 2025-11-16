@@ -20,12 +20,15 @@ Each subfolder is produced by scripts/run_baseline.py using --run_name.
 """
 
 import argparse
+import json
 import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
 
+import matplotlib.pyplot as plt
+import numpy as np
 
 def run_emmet_lora_compare(
     model: str,
@@ -135,6 +138,50 @@ def run_emmet_lora_compare(
         print("Aggregated CSV:", analysis_csv)
     except Exception as e:  # noqa: BLE001
         print("Analysis failed:", e)
+
+    # Create a simple ES/PS/NS/S comparison plot between raw and LoRA-native runs
+    try:
+        raw_metrics_path = suite_dir / raw_run_name / "metrics.json"
+        lora_metrics_path = suite_dir / lora_run_name / "metrics.json"
+        if raw_metrics_path.exists() and lora_metrics_path.exists():
+            with open(raw_metrics_path, "r", encoding="utf-8") as f_raw:
+                raw_metrics = json.load(f_raw)
+            with open(lora_metrics_path, "r", encoding="utf-8") as f_lora:
+                lora_metrics = json.load(f_lora)
+
+            labels = ["ES", "PS", "NS", "S"]
+            keys = [
+                "efficacy_success",
+                "paraphrase_success",
+                "neighborhood_specificity",
+                "composite_score",
+            ]
+            raw_vals = [raw_metrics.get(k, 0.0) for k in keys]
+            lora_vals = [lora_metrics.get(k, 0.0) for k in keys]
+
+            x = np.arange(len(labels))
+            width = 0.35
+
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.bar(x - width / 2, raw_vals, width, label="EMMET raw")
+            ax.bar(x + width / 2, lora_vals, width, label=f"LoRA-native (r={lora_rank})")
+
+            ax.set_ylabel("Score")
+            ax.set_title("EMMET vs LoRA-native (ES/PS/NS/S)")
+            ax.set_xticks(x)
+            ax.set_xticklabels(labels)
+            ax.set_ylim(0.0, 1.05)
+            ax.legend()
+            fig.tight_layout()
+
+            plot_path = suite_dir / "emmet_lora_compare.png"
+            fig.savefig(plot_path, dpi=150)
+            plt.close(fig)
+            print("Saved comparison plot to", plot_path)
+        else:
+            print("metrics.json not found for one or both runs; skipping plot.")
+    except Exception as e:  # noqa: BLE001
+        print("Failed to generate comparison plot:", e)
 
     print()
     print("========================================")
