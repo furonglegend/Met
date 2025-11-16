@@ -18,11 +18,32 @@ from .compute_ks import compute_ks
 from .compute_z import compute_z, get_module_input_output_at_words, find_fact_lookup_idx
 from .emmet_hparams import EMMETHyperParams
 from .peft_backend_lora import LoRANativeBackend
+from .lora_wrapper import LoRALayer
 from .trust import compute_trust_score
 
 # Cache variable(s)
 CONTEXT_TEMPLATES_CACHE = None
 COV_CACHE = {}
+
+
+def _get_weight_or_lora_base(model: AutoModelForCausalLM, weight_name: str) -> torch.Tensor:
+    """Resolve a weight tensor by name, supporting LoRA-native overlays.
+
+    In raw mode this returns the Parameter referenced by ``weight_name``.
+    In LoRA-native mode, if the original module has been replaced by a
+    ``LoRALayer`` (and thus no longer exposes ``.weight`` as a Parameter),
+    this returns the layer's ``base_weight`` buffer instead.
+    """
+    try:
+        return nethook.get_parameter(model, weight_name)
+    except LookupError:
+        # If LoRA-native has replaced the module, look up its base_weight buffer.
+        module_name = weight_name[:-7] if weight_name.endswith(".weight") else weight_name
+        module = nethook.get_module(model, module_name)
+        if isinstance(module, LoRALayer):
+            return module.base_weight
+        # Propagate the original error if this is not a LoRALayer-backed module.
+        raise
 
 
 def apply_emmet_to_model(
@@ -65,7 +86,8 @@ def apply_emmet_to_model(
         for w_name, (key_mat, val_mat, preservation_distance, new_edit_distance, old_edit_distance, inside_norms) in deltas.items():
             key_mat, val_mat = key_mat.to("cuda"), val_mat.to("cuda")
             upd_matrix = key_mat @ val_mat.T
-            w = nethook.get_parameter(model, w_name)
+            # Support both raw parameters and LoRA-native overlays
+            w = _get_weight_or_lora_base(model, w_name)
             upd_matrix = upd_matrix_match_shape(upd_matrix, w.shape)
 
             if return_orig_weights and w_name not in weights_copy:
@@ -224,7 +246,7 @@ def execute_emmet(
 
     # Retrieve weights that user desires to change
     weights = {
-        f"{hparams.rewrite_module_tmp.format(layer)}.weight": nethook.get_parameter(
+        f"{hparams.rewrite_module_tmp.format(layer)}.weight": _get_weight_or_lora_base(
             model, f"{hparams.rewrite_module_tmp.format(layer)}.weight"
         )
         for layer in hparams.layers
