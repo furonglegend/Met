@@ -72,6 +72,12 @@ class LoRANativeBackend:
         parent_name, child_name = self._split_module_path(module_path)
         parent = self._get_module_by_path(self.model, parent_name)
         orig = getattr(parent, child_name)
+
+        # If the module is already a LoRALayer (from a previous batch), just reuse it.
+        if isinstance(orig, LoRALayer):
+            self._registry[module_path] = orig
+            return orig
+
         # Support both standard Linear layers and GPT-2 Conv1D layers
         is_conv1d = isinstance(orig, Conv1D)
         if isinstance(orig, nn.Linear):
