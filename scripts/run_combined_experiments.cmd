@@ -69,13 +69,17 @@ python scripts\run_baseline.py ^
     --output_dir results\combined
 
 echo.
+echo Generating combined scores plot...
+python scripts\plot_combined_experiments.py ^
+    --results_dir results\combined ^
+    --output results\combined\combined_scores.png
+
+echo.
 echo ========================================
 echo All combined experiments completed!
 echo ========================================
 echo Results: results\combined\
-echo.
-echo Analyze with:
-echo   python scripts\analyze_results.py --results_dir results\combined
+echo Plot:   results\combined\combined_scores.png
 echo.
 
 pause
