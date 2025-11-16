@@ -2,33 +2,28 @@
 EXPERIMENTAL RESULTS REPORT
 ================================================================================
 
-<<<<<<< HEAD
 Total Experiments: 2
 Analysis Date: 2025-11-16 13:38:25
-=======
 Total Experiments: 4
 Analysis Date: 2025-11-15 23:36:53
->>>>>>> 4fb0aa6 (Add new metrics and trust event files for baseline comparison)
 
 --------------------------------------------------------------------------------
 Results by Method:
 --------------------------------------------------------------------------------
 
-<<<<<<< HEAD
 method=memit_replay_rate=0.0_batch_size=32:
   Count: 1
-  Efficacy Success (ES): 0.9750 ± nan
-  Paraphrase Success (PS): 0.8875 ± nan
-  Neighborhood Specificity (NS): 0.7360 ± nan
-  Composite Score (S): 0.8662 ± nan
+  Efficacy Success (ES): 0.9750 ï¿½ nan
+  Paraphrase Success (PS): 0.8875 ï¿½ nan
+  Neighborhood Specificity (NS): 0.7360 ï¿½ nan
+  Composite Score (S): 0.8662 ï¿½ nan
 
 method=rome_replay_rate=0.0_batch_size=1:
   Count: 1
-  Efficacy Success (ES): 0.7050 ± nan
-  Paraphrase Success (PS): 0.7000 ± nan
-  Neighborhood Specificity (NS): 0.5210 ± nan
-  Composite Score (S): 0.6420 ± nan
-=======
+  Efficacy Success (ES): 0.7050 ï¿½ nan
+  Paraphrase Success (PS): 0.7000 ï¿½ nan
+  Neighborhood Specificity (NS): 0.5210 ï¿½ nan
+  Composite Score (S): 0.6420 ï¿½ nan
 method=emmet_replay_rate=0.0_batch_size=32:
   Count: 1
   Efficacy Success (ES): 0.9920 Â± nan
@@ -49,4 +44,3 @@ method=rome_replay_rate=0.0_batch_size=1:
   Paraphrase Success (PS): 0.5620 Â± 0.0000
   Neighborhood Specificity (NS): 0.5068 Â± 0.0000
   Composite Score (S): 0.5529 Â± 0.0000
->>>>>>> 4fb0aa6 (Add new metrics and trust event files for baseline comparison)
