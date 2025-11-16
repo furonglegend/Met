@@ -41,13 +41,13 @@ class EMMETHyperParams(HyperParams):
 
     # LoRA-native integration (optional; defaults keep raw editing)
     edit_mode: Literal["raw", "lora_native"] = "raw"
-    lora_rank: int = 8
-    lora_alpha: float = 8.0
+    lora_rank: int = 16
+    lora_alpha: float = 16.0
     lora_scale: float = 1.0
     lora_use_svd: bool = True
     lora_fit_steps: int = 0
-    allow_fallback: bool = False
-    lora_residual_threshold: Optional[float] = None
+    allow_fallback: bool = True
+    lora_residual_threshold: Optional[float] = 0.3
 
     # Trust / Rollback (Phase 4)
     trust_enable: bool = False
