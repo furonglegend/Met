@@ -130,12 +130,15 @@ class LoRANativeBackend:
         fit_steps: int = 0,
         fit_lr: float = 1e-2,
     ) -> None:
-        """
-        Apply a delta matrix to the linear layer specified by its parameter name
-        (e.g., 'transformer.h.10.mlp.c_fc.weight').
+        """Map a new EMMET delta into the cumulative LoRA overlay for a layer.
 
-        Replaces that layer with LoRALayer and sets lora_A, lora_B so that
-        (alpha/r) * B @ A ≈ delta * scale.
+        Each call updates the LoRA factors so that they approximate the sum of all
+        scaled deltas seen so far at this layer:
+
+            B @ A ≈ B_prev @ A_prev + scale * delta_aligned.
+
+        This ensures that multi-batch editing in `lora_native` mode tracks the
+        same cumulative update that raw EMMET would apply to the base weight.
         """
         assert weight_param_name.endswith(".weight"), "Expected a .weight parameter name"
         module_path = weight_param_name[:-7]  # strip '.weight'
@@ -143,24 +146,22 @@ class LoRANativeBackend:
         # Ensure LoRA layer exists
         lora = self._ensure_lora_layer(module_path)
 
-        # Target matrix to approximate.
-        # Align delta orientation with the LoRA base_weight purely by shape:
-        # - On the first edit for a Conv1D-backed layer, delta matches the
-        #   original Conv1D weight (in_features, out_features), while
-        #   base_weight is stored transposed as (out_features, in_features).
-        # - On subsequent edits (e.g., with replay), execute_emmet computes
-        #   deltas directly in base_weight orientation.
-        # We therefore compare shapes and only transpose when needed.
+        # Align new delta to the LoRA base_weight orientation by shape
         delta_dev = delta.detach().to(lora.base_weight.device).clone()
         if delta_dev.shape == lora.base_weight.shape:
-            target = delta_dev * self.scale
+            delta_aligned = delta_dev
         elif delta_dev.T.shape == lora.base_weight.shape:
-            target = delta_dev.T * self.scale
+            delta_aligned = delta_dev.T
         else:
             raise ValueError(
                 f"Delta shape {tuple(delta_dev.shape)} is incompatible with base_weight "
                 f"shape {tuple(lora.base_weight.shape)} for {weight_param_name}"
             )
+
+        # Current cumulative approximation (B @ A) in base_weight orientation
+        current = lora.lora_B @ lora.lora_A
+        # New target cumulative delta
+        target = current + self.scale * delta_aligned
 
         if use_svd:
             # Full or economic SVD depending on dims
@@ -170,6 +171,7 @@ class LoRANativeBackend:
                 # nothing to do
                 lora.lora_A.zero_()
                 lora.lora_B.zero_()
+                setattr(lora, "_last_residual_rel", 0.0)
                 return
             Sr = S[:r]
             Ur = U[:, :r]
@@ -193,7 +195,7 @@ class LoRANativeBackend:
             lora.lora_A.data.zero_()
             lora.lora_B.data.zero_()
 
-        # Optional tiny fitting to refine
+        # Optional tiny fitting to refine around the target
         if fit_steps > 0:
             lora.lora_A.requires_grad_(True)
             lora.lora_B.requires_grad_(True)
@@ -207,8 +209,14 @@ class LoRANativeBackend:
             lora.lora_A.requires_grad_(False)
             lora.lora_B.requires_grad_(False)
 
-        # Return nothing; callers can compute residual from registry if needed
-        # Return nothing; callers can compute residual from registry if needed
+        # Cache relative residual ||B@A - target||_F / ||target||_F for logging
+        approx = lora.lora_B @ lora.lora_A
+        denom = torch.norm(target)
+        if denom.item() == 0:
+            residual = float(torch.norm(approx))
+        else:
+            residual = float(torch.norm(approx - target) / denom)
+        setattr(lora, "_last_residual_rel", residual)
 
     @torch.no_grad()
     def fallback_to_raw(self, weight_param_name: str, delta: torch.Tensor) -> None:

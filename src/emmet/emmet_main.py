@@ -152,13 +152,16 @@ def apply_emmet_to_model(
                 try:
                     module_path = w_name[:-7]
                     lora_layer = lora_backend.get_lora_layer(module_path)
-                    approx = lora_layer.lora_B @ lora_layer.lora_A
-                    target = upd_matrix.to(approx.device)
-                    denom = torch.norm(target)
-                    if denom.item() == 0:
-                        lora_residual_rel = 0.0
+                    if hasattr(lora_layer, "_last_residual_rel"):
+                        lora_residual_rel = float(getattr(lora_layer, "_last_residual_rel"))
                     else:
-                        lora_residual_rel = (torch.norm(approx - target) / denom).detach().cpu().item()
+                        approx = lora_layer.lora_B @ lora_layer.lora_A
+                        target = upd_matrix.to(approx.device)
+                        denom = torch.norm(target)
+                        if denom.item() == 0:
+                            lora_residual_rel = 0.0
+                        else:
+                            lora_residual_rel = (torch.norm(approx - target) / denom).detach().cpu().item()
                 except Exception:
                     lora_residual_rel = None
 
