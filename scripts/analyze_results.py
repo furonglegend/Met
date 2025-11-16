@@ -243,13 +243,13 @@ class ResultsAnalyzer:
         output_path = Path(self.output_file)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
-        df.to_csv(output_path, index=False)
+        df.to_csv(output_path, index=False, encoding="utf-8")
         self.logger.info(f"Detailed results saved to {output_path}")
         
         # Save statistics
         if stats is not None:
             stats_file = output_path.with_name(output_path.stem + "_stats.csv")
-            stats.to_csv(stats_file)
+            stats.to_csv(stats_file, encoding="utf-8")
             self.logger.info(f"Statistics saved to {stats_file}")
 
         # Emit a general ablation matrix grouped by key config fields
@@ -267,7 +267,7 @@ class ResultsAnalyzer:
             if group_cols and metric_cols:
                 ablation_matrix = df.groupby(group_cols)[metric_cols].mean().reset_index()
                 ablation_file = output_path.with_name('ablation_matrix.csv')
-                ablation_matrix.to_csv(ablation_file, index=False)
+                ablation_matrix.to_csv(ablation_file, index=False, encoding="utf-8")
                 self.logger.info(f"General ablation matrix saved to {ablation_file}")
 
             # Preserve the more specific Replay-only ablation for convenience
@@ -281,7 +281,7 @@ class ResultsAnalyzer:
                 if r_group_cols and metric_cols:
                     replay_ablation = df.groupby(r_group_cols)[metric_cols].mean().reset_index()
                     replay_file = output_path.with_name('replay_ablation.csv')
-                    replay_ablation.to_csv(replay_file, index=False)
+                    replay_ablation.to_csv(replay_file, index=False, encoding="utf-8")
                     self.logger.info(f"Replay ablation saved to {replay_file}")
         except Exception as e:
             self.logger.warning(f"Failed to save ablation CSVs: {e}")
@@ -318,7 +318,7 @@ class ResultsAnalyzer:
             trust_df = self._load_all_trust_events()
             if trust_df is not None and not trust_df.empty:
                 trust_events_csv = output_path.with_name('trust_events.csv')
-                trust_df.to_csv(trust_events_csv, index=False)
+                trust_df.to_csv(trust_events_csv, index=False, encoding="utf-8")
                 # Summary per run
                 g = trust_df.groupby('run_dir')
                 summary = pd.DataFrame({
@@ -331,7 +331,7 @@ class ResultsAnalyzer:
                     'applied_count': g.apply(lambda x: x.get('trust_applied', pd.Series(dtype=bool)).fillna(False).sum()).values
                 })
                 trust_summary_csv = output_path.with_name('trust_summary.csv')
-                summary.to_csv(trust_summary_csv, index=False)
+                summary.to_csv(trust_summary_csv, index=False, encoding="utf-8")
                 self.logger.info(f"Trust events saved to {trust_events_csv} and {trust_summary_csv}")
 
                 # Join with run-level metrics for downstream correlation plots
@@ -340,7 +340,7 @@ class ResultsAnalyzer:
                     if 'run_dir' in df.columns:
                         trust_joined = df.merge(summary, on='run_dir', how='left')
                         trust_joined_csv = output_path.with_name('trust_with_metrics.csv')
-                        trust_joined.to_csv(trust_joined_csv, index=False)
+                        trust_joined.to_csv(trust_joined_csv, index=False, encoding="utf-8")
                         self.logger.info(f"Trust + metrics joined CSV saved to {trust_joined_csv}")
                         # Save a thin version with just key metrics for easier plotting elsewhere
                         key_cols = [c for c in ['run_dir','method','batch_size','replay_rate',
@@ -349,7 +349,7 @@ class ResultsAnalyzer:
                         if key_cols:
                             trust_key = trust_joined[key_cols]
                             trust_key_csv = output_path.with_name('trust_with_metrics_key.csv')
-                            trust_key.to_csv(trust_key_csv, index=False)
+                            trust_key.to_csv(trust_key_csv, index=False, encoding="utf-8")
                 except Exception as _e_join:
                     self.logger.warning(f"Failed to join trust summary with metrics: {_e_join}")
         except Exception as e:
@@ -362,7 +362,7 @@ class ResultsAnalyzer:
         
         report_file = Path(self.output_file).with_suffix('.txt')
         
-        with open(report_file, 'w') as f:
+        with open(report_file, 'w', encoding="utf-8") as f:
             f.write("="*80 + "\n")
             f.write("EXPERIMENTAL RESULTS REPORT\n")
             f.write("="*80 + "\n\n")

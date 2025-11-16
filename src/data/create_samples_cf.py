@@ -50,5 +50,5 @@ if __name__ == '__main__':
 
     if write_flag:
         json_object = json.dumps(sampled_indices, indent=4)
-        with open(output_filename , "w") as outfile:
+        with open(output_filename , "w", encoding="utf-8") as outfile:
             outfile.write(json_object)

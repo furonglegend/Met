@@ -105,7 +105,7 @@ def main() -> int:
         out_prefix = input_path.with_suffix("")
 
     out_csv = out_prefix.with_name(out_prefix.name + "_threshold_sweep.csv")
-    sweep_df.to_csv(out_csv, index=False)
+    sweep_df.to_csv(out_csv, index=False, encoding="utf-8")
     logger.info("Threshold sweep CSV saved to %s", out_csv)
 
     # Optional: simple text summary

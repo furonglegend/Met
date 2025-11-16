@@ -159,7 +159,7 @@ class BatchExperimentRunner:
             "results": self.results
         }
         
-        with open(summary_file, 'w') as f:
+        with open(summary_file, 'w', encoding='utf-8') as f:
             json.dump(summary, f, indent=2)
         
         self.logger.info(f"\nBatch experiments completed!")
