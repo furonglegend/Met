@@ -11,7 +11,7 @@ echo.
 
 REM Assume Python environment already activated before running this script
 
-set MODEL=gpt2
+set MODEL=gpt2-xl
 set NUM_EDITS=200
 set BATCH_SIZE=16
 set SEED=42
