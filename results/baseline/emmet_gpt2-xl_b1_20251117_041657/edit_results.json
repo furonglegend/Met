@@ -1,0 +1,4702 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 1,
+    "num_edits": 1,
+    "subjects": [
+      "Nicholas Fairbairn"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 5.816145586238112,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 120.02680969238281,
+          "cur_zs_norm": 100.09766387939453,
+          "layer_ks_norm": 15.351907717770999,
+          "adj_norm": 0.08675342530646922,
+          "residual_norm": 67.04225874300322,
+          "inside_update_norm": 5.816145586238112,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08328406328688329,
+          "D_norm": 12.007099083955161,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 1,
+    "start_idx": 1,
+    "end_idx": 2,
+    "num_edits": 1,
+    "subjects": [
+      "Alston G. Dayton"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.850689683228222,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 143.07421875,
+          "cur_zs_norm": 117.7243881225586,
+          "layer_ks_norm": 12.964217620101948,
+          "adj_norm": 0.11156779946260076,
+          "residual_norm": 88.29330443619912,
+          "inside_update_norm": 9.85068968322822,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12201909284040267,
+          "D_norm": 8.195438736034287,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 2,
+    "start_idx": 2,
+    "end_idx": 3,
+    "num_edits": 1,
+    "subjects": [
+      "Sunday Night Baseball"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.7144100682416505,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 150.86068725585938,
+          "cur_zs_norm": 131.13528442382812,
+          "layer_ks_norm": 15.627215505958084,
+          "adj_norm": 0.09540824495051944,
+          "residual_norm": 80.85684913544412,
+          "inside_update_norm": 7.7144100682416505,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.07511046910180783,
+          "D_norm": 13.313723265987845,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 3,
+    "start_idx": 3,
+    "end_idx": 4,
+    "num_edits": 1,
+    "subjects": [
+      "Primorsky Krai"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.198173394359488,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.31625366210938,
+          "cur_zs_norm": 110.19042205810547,
+          "layer_ks_norm": 16.566735882998014,
+          "adj_norm": 0.07499955255550925,
+          "residual_norm": 82.64280496569694,
+          "inside_update_norm": 6.198173394359488,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.06746227089051941,
+          "D_norm": 14.823100183254159,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 4,
+    "start_idx": 4,
+    "end_idx": 5,
+    "num_edits": 1,
+    "subjects": [
+      "Henrique Maximiano Coelho Neto"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.07284670237889,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 140.98524475097656,
+          "cur_zs_norm": 113.1324462890625,
+          "layer_ks_norm": 15.276948574076044,
+          "adj_norm": 0.0833577201464894,
+          "residual_norm": 84.8493299714695,
+          "inside_update_norm": 7.07284670237889,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08069975486514758,
+          "D_norm": 12.391611370704148,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 5,
+    "start_idx": 5,
+    "end_idx": 6,
+    "num_edits": 1,
+    "subjects": [
+      "Sheryl Crow"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.528371822518803,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 150.47328186035156,
+          "cur_zs_norm": 124.04959106445312,
+          "layer_ks_norm": 14.792142024291822,
+          "adj_norm": 0.0916662593947396,
+          "residual_norm": 93.03719687953381,
+          "inside_update_norm": 8.528371822518803,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10061118935970759,
+          "D_norm": 9.939252347219309,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 6,
+    "start_idx": 6,
+    "end_idx": 7,
+    "num_edits": 1,
+    "subjects": [
+      "Manuel Ferraz de Campos Sales"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.713078823337458,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 151.21368408203125,
+          "cur_zs_norm": 123.94103240966797,
+          "layer_ks_norm": 12.81065570065188,
+          "adj_norm": 0.11261606901720268,
+          "residual_norm": 86.24949270653138,
+          "inside_update_norm": 9.713078823337458,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.13237952464271563,
+          "D_norm": 7.554038305387029,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 7,
+    "start_idx": 7,
+    "end_idx": 8,
+    "num_edits": 1,
+    "subjects": [
+      "Nintendo Software Planning & Development"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.144266018912894,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 161.42433166503906,
+          "cur_zs_norm": 132.80230712890625,
+          "layer_ks_norm": 16.083913785127848,
+          "adj_norm": 0.08176829874173927,
+          "residual_norm": 99.60175452146947,
+          "inside_update_norm": 8.144266018912894,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08245218247780804,
+          "D_norm": 12.128241726883935,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 8,
+    "start_idx": 8,
+    "end_idx": 9,
+    "num_edits": 1,
+    "subjects": [
+      "Karim Abdul Razak"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.878273834597858,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 131.5316925048828,
+          "cur_zs_norm": 110.34361267089844,
+          "layer_ks_norm": 14.773473661409723,
+          "adj_norm": 0.08311340266494385,
+          "residual_norm": 82.75769748383821,
+          "inside_update_norm": 6.878273834597858,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08453676943566485,
+          "D_norm": 11.829172165858923,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 9,
+    "start_idx": 9,
+    "end_idx": 10,
+    "num_edits": 1,
+    "subjects": [
+      "Norway"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 14.358746465432231,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 183.99012756347656,
+          "cur_zs_norm": 156.11782836914062,
+          "layer_ks_norm": 11.992449188129838,
+          "adj_norm": 0.12263170935498541,
+          "residual_norm": 117.08836597773885,
+          "inside_update_norm": 14.358746465432231,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.20600781086194347,
+          "D_norm": 4.8541848768547515,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 10,
+    "start_idx": 10,
+    "end_idx": 11,
+    "num_edits": 1,
+    "subjects": [
+      "Opeth"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.53820302122286,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 160.27020263671875,
+          "cur_zs_norm": 133.8038330078125,
+          "layer_ks_norm": 14.396071325086227,
+          "adj_norm": 0.09307248624834946,
+          "residual_norm": 91.73713269504795,
+          "inside_update_norm": 8.53820302122286,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09629758743126991,
+          "D_norm": 10.384476150181083,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 11,
+    "start_idx": 11,
+    "end_idx": 12,
+    "num_edits": 1,
+    "subjects": [
+      "Nadia Boulanger"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.174882140074045,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 130.56297302246094,
+          "cur_zs_norm": 106.38716125488281,
+          "layer_ks_norm": 12.81212639508883,
+          "adj_norm": 0.10245448854676911,
+          "residual_norm": 79.7903757661366,
+          "inside_update_norm": 8.174882140074045,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12776427308509797,
+          "D_norm": 7.826914174465232,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 12,
+    "start_idx": 12,
+    "end_idx": 13,
+    "num_edits": 1,
+    "subjects": [
+      "Merisant"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.835492783359266,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.76742553710938,
+          "cur_zs_norm": 106.82676696777344,
+          "layer_ks_norm": 15.299308156606779,
+          "adj_norm": 0.08531560574924325,
+          "residual_norm": 80.12007561019863,
+          "inside_update_norm": 6.835492783359266,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.0758948165610007,
+          "D_norm": 13.176130404060558,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 13,
+    "start_idx": 13,
+    "end_idx": 14,
+    "num_edits": 1,
+    "subjects": [
+      "Wallace Carothers"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.632555516166116,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 118.65575408935547,
+          "cur_zs_norm": 98.10508728027344,
+          "layer_ks_norm": 12.85633126377233,
+          "adj_norm": 0.11732393559873092,
+          "residual_norm": 73.57880957634269,
+          "inside_update_norm": 8.632555516166116,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.18239355822389197,
+          "D_norm": 5.482649769749427,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 14,
+    "start_idx": 14,
+    "end_idx": 15,
+    "num_edits": 1,
+    "subjects": [
+      "The Bronx Is Burning"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.707165893696141,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 148.903564453125,
+          "cur_zs_norm": 126.05399322509766,
+          "layer_ks_norm": 16.591852375762716,
+          "adj_norm": 0.08106168446781152,
+          "residual_norm": 82.74150651729256,
+          "inside_update_norm": 6.70716589369614,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.07085793419170001,
+          "D_norm": 14.11274561426793,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 15,
+    "start_idx": 15,
+    "end_idx": 16,
+    "num_edits": 1,
+    "subjects": [
+      "Cloud Nothings"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.8281755530339945,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.66563415527344,
+          "cur_zs_norm": 104.32727813720703,
+          "layer_ks_norm": 15.909657562691423,
+          "adj_norm": 0.08726610404890499,
+          "residual_norm": 78.24544967892002,
+          "inside_update_norm": 6.8281755530339945,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08847117614852443,
+          "D_norm": 11.303116376809676,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 16,
+    "start_idx": 16,
+    "end_idx": 17,
+    "num_edits": 1,
+    "subjects": [
+      "Antonio Vivaldi"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.77205609470403,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 144.68556213378906,
+          "cur_zs_norm": 116.03287506103516,
+          "layer_ks_norm": 13.108686566878,
+          "adj_norm": 0.11229065755373013,
+          "residual_norm": 87.02465821814414,
+          "inside_update_norm": 9.77205609470403,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.14406435756917177,
+          "D_norm": 6.941342167300855,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 17,
+    "start_idx": 17,
+    "end_idx": 18,
+    "num_edits": 1,
+    "subjects": [
+      "Bernard Giraudeau"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.674470615580955,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 154.1408233642578,
+          "cur_zs_norm": 124.56938171386719,
+          "layer_ks_norm": 13.731300672992994,
+          "adj_norm": 0.10355106620674984,
+          "residual_norm": 93.42704976368789,
+          "inside_update_norm": 9.674470615580955,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12071355114120824,
+          "D_norm": 8.284074079058618,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 18,
+    "start_idx": 18,
+    "end_idx": 19,
+    "num_edits": 1,
+    "subjects": [
+      "Bob Mason"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.83810401412839,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 137.49488830566406,
+          "cur_zs_norm": 116.40953063964844,
+          "layer_ks_norm": 12.688802450761683,
+          "adj_norm": 0.11268383182842916,
+          "residual_norm": 87.30714827933568,
+          "inside_update_norm": 9.83810401412839,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.14953689921358804,
+          "D_norm": 6.687312665027713,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 19,
+    "start_idx": 19,
+    "end_idx": 20,
+    "num_edits": 1,
+    "subjects": [
+      "Hilary Putnam"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.532052449540924,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 148.03025817871094,
+          "cur_zs_norm": 117.26322174072266,
+          "layer_ks_norm": 14.950132271634784,
+          "adj_norm": 0.08564267451430042,
+          "residual_norm": 87.94742214972793,
+          "inside_update_norm": 7.532052449540924,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08482561971207597,
+          "D_norm": 11.788891179272312,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 20,
+    "start_idx": 20,
+    "end_idx": 21,
+    "num_edits": 1,
+    "subjects": [
+      "Philippine Lotto Draw"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 12.319822174508392,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 164.29824829101562,
+          "cur_zs_norm": 131.0487518310547,
+          "layer_ks_norm": 11.474067969627448,
+          "adj_norm": 0.1253459454498891,
+          "residual_norm": 98.28656308180005,
+          "inside_update_norm": 12.319822174508394,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.16042021183083888,
+          "D_norm": 6.233628472293052,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 21,
+    "start_idx": 21,
+    "end_idx": 22,
+    "num_edits": 1,
+    "subjects": [
+      "Loviisa"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.364222225851034,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 134.52651977539062,
+          "cur_zs_norm": 109.29399108886719,
+          "layer_ks_norm": 12.537920096032515,
+          "adj_norm": 0.10203943452953788,
+          "residual_norm": 81.97048782576111,
+          "inside_update_norm": 8.364222225851034,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.11824014171503132,
+          "D_norm": 8.457364694386818,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 22,
+    "start_idx": 22,
+    "end_idx": 23,
+    "num_edits": 1,
+    "subjects": [
+      "United States Patent and Trademark Office"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.392065437353478,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 160.53810119628906,
+          "cur_zs_norm": 131.5741424560547,
+          "layer_ks_norm": 14.518519568051927,
+          "adj_norm": 0.09187235690127954,
+          "residual_norm": 91.3448366887015,
+          "inside_update_norm": 8.392065437353478,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09653256905809507,
+          "D_norm": 10.359198038106515,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 23,
+    "start_idx": 23,
+    "end_idx": 24,
+    "num_edits": 1,
+    "subjects": [
+      "Paul Brill"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.70920980307653,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 157.00540161132812,
+          "cur_zs_norm": 125.8073501586914,
+          "layer_ks_norm": 12.046022554669744,
+          "adj_norm": 0.11349850392685375,
+          "residual_norm": 94.35551511743522,
+          "inside_update_norm": 10.70920980307653,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1558426263731773,
+          "D_norm": 6.416729641127981,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 24,
+    "start_idx": 24,
+    "end_idx": 25,
+    "num_edits": 1,
+    "subjects": [
+      "Larry Stabbins"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.12299236188662,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 121.5967025756836,
+          "cur_zs_norm": 97.018798828125,
+          "layer_ks_norm": 13.820408257182917,
+          "adj_norm": 0.09789159458262763,
+          "residual_norm": 72.76408554029933,
+          "inside_update_norm": 7.12299236188662,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10185815979829123,
+          "D_norm": 9.817573790654482,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 25,
+    "start_idx": 25,
+    "end_idx": 26,
+    "num_edits": 1,
+    "subjects": [
+      "Upper Canada District School Board"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.433791951809253,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 157.26547241210938,
+          "cur_zs_norm": 126.70320129394531,
+          "layer_ks_norm": 13.549157576800573,
+          "adj_norm": 0.09927444100871696,
+          "residual_norm": 95.02739935831924,
+          "inside_update_norm": 9.433791951809253,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1304336337671766,
+          "D_norm": 7.666734193612939,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 26,
+    "start_idx": 26,
+    "end_idx": 27,
+    "num_edits": 1,
+    "subjects": [
+      "Samuel Naumbourg"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.614429759547817,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 137.5253143310547,
+          "cur_zs_norm": 108.9068832397461,
+          "layer_ks_norm": 15.566986769172226,
+          "adj_norm": 0.08097963764937686,
+          "residual_norm": 81.68015999511842,
+          "inside_update_norm": 6.614429759547818,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.07291629208258897,
+          "D_norm": 13.71435616703254,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 27,
+    "start_idx": 27,
+    "end_idx": 28,
+    "num_edits": 1,
+    "subjects": [
+      "Windows Mobile 6.5"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.41245674193636,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 145.881103515625,
+          "cur_zs_norm": 121.01288604736328,
+          "layer_ks_norm": 12.610307518046659,
+          "adj_norm": 0.10370749774304552,
+          "residual_norm": 90.75965524939633,
+          "inside_update_norm": 9.41245674193636,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1238215896470385,
+          "D_norm": 8.076136018367759,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 28,
+    "start_idx": 28,
+    "end_idx": 29,
+    "num_edits": 1,
+    "subjects": [
+      "Gantz"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.662729574549948,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 148.7816925048828,
+          "cur_zs_norm": 120.40489196777344,
+          "layer_ks_norm": 13.403976882635192,
+          "adj_norm": 0.10700264018296113,
+          "residual_norm": 90.3036556670741,
+          "inside_update_norm": 9.662729574549948,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.11398056005552963,
+          "D_norm": 8.773425920286888,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 29,
+    "start_idx": 29,
+    "end_idx": 30,
+    "num_edits": 1,
+    "subjects": [
+      "Bentley Continental"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.690029311009573,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 151.66796875,
+          "cur_zs_norm": 128.4539337158203,
+          "layer_ks_norm": 11.907362396636767,
+          "adj_norm": 0.11025168254556586,
+          "residual_norm": 78.81992465210747,
+          "inside_update_norm": 8.690029311009573,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.13775736169808706,
+          "D_norm": 7.259140184403563,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 30,
+    "start_idx": 30,
+    "end_idx": 31,
+    "num_edits": 1,
+    "subjects": [
+      "Joao Plata"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.701937158781904,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 136.4748077392578,
+          "cur_zs_norm": 112.05647277832031,
+          "layer_ks_norm": 14.038859077648995,
+          "adj_norm": 0.09164351861889303,
+          "residual_norm": 84.04235536624287,
+          "inside_update_norm": 7.701937158781903,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10379418472251122,
+          "D_norm": 9.634451127232726,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 31,
+    "start_idx": 31,
+    "end_idx": 32,
+    "num_edits": 1,
+    "subjects": [
+      "Passer \u00e0 l'acte"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.340628094672737,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 128.8251190185547,
+          "cur_zs_norm": 110.94171905517578,
+          "layer_ks_norm": 14.705453979993807,
+          "adj_norm": 0.08822201850027561,
+          "residual_norm": 83.20630404358526,
+          "inside_update_norm": 7.340628094672737,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08576622239806586,
+          "D_norm": 11.659601787737724,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 32,
+    "start_idx": 32,
+    "end_idx": 33,
+    "num_edits": 1,
+    "subjects": [
+      "Cyberdog"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.168998570771285,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 154.19955444335938,
+          "cur_zs_norm": 128.51515197753906,
+          "layer_ks_norm": 12.770078519878162,
+          "adj_norm": 0.10550245270198373,
+          "residual_norm": 96.38637122016482,
+          "inside_update_norm": 10.168998570771285,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.11256455049559046,
+          "D_norm": 8.883791527592637,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 33,
+    "start_idx": 33,
+    "end_idx": 34,
+    "num_edits": 1,
+    "subjects": [
+      "Rudolph Isley"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.698381737164327,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 145.09317016601562,
+          "cur_zs_norm": 114.89187622070312,
+          "layer_ks_norm": 13.237775010137318,
+          "adj_norm": 0.10094570282098685,
+          "residual_norm": 86.16891550688092,
+          "inside_update_norm": 8.698381737164327,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12392041079174199,
+          "D_norm": 8.069695650707443,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 34,
+    "start_idx": 34,
+    "end_idx": 35,
+    "num_edits": 1,
+    "subjects": [
+      "Windows Embedded Automotive"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.193275321065336,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 186.44557189941406,
+          "cur_zs_norm": 153.97802734375,
+          "layer_ks_norm": 13.496983976024536,
+          "adj_norm": 0.09692529954198448,
+          "residual_norm": 115.48352570441963,
+          "inside_update_norm": 11.193275321065336,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10528234185839576,
+          "D_norm": 9.49826896275726,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 35,
+    "start_idx": 35,
+    "end_idx": 36,
+    "num_edits": 1,
+    "subjects": [
+      "Leo Villareal"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.930061283817951,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 120.2330322265625,
+          "cur_zs_norm": 99.24578857421875,
+          "layer_ks_norm": 12.945125474731977,
+          "adj_norm": 0.10567142851419198,
+          "residual_norm": 65.58122078275134,
+          "inside_update_norm": 6.930061283817951,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1288430044574737,
+          "D_norm": 7.761383741482549,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 36,
+    "start_idx": 36,
+    "end_idx": 37,
+    "num_edits": 1,
+    "subjects": [
+      "Trevor Dunn"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.911217308294168,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 153.8016357421875,
+          "cur_zs_norm": 124.85721588134766,
+          "layer_ks_norm": 11.514788949044263,
+          "adj_norm": 0.12719829028645013,
+          "residual_norm": 93.6429041732412,
+          "inside_update_norm": 11.91121730829417,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.19162622504508786,
+          "D_norm": 5.218492405017681,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 37,
+    "start_idx": 37,
+    "end_idx": 38,
+    "num_edits": 1,
+    "subjects": [
+      "Shunyi Olympic Rowing-Canoeing Park"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.09177770991843,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 140.40109252929688,
+          "cur_zs_norm": 112.40502166748047,
+          "layer_ks_norm": 12.249309300666233,
+          "adj_norm": 0.11970732650407669,
+          "residual_norm": 84.30375988369225,
+          "inside_update_norm": 10.09177770991843,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.16482983383226582,
+          "D_norm": 6.0668628776124365,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 38,
+    "start_idx": 38,
+    "end_idx": 39,
+    "num_edits": 1,
+    "subjects": [
+      "Delta Goodrem"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.838523817100958,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 150.76431274414062,
+          "cur_zs_norm": 122.34173583984375,
+          "layer_ks_norm": 15.69524751785938,
+          "adj_norm": 0.07966779378094205,
+          "residual_norm": 85.83799666781853,
+          "inside_update_norm": 6.838523817100958,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.06891648499020746,
+          "D_norm": 14.510316365410873,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 39,
+    "start_idx": 39,
+    "end_idx": 40,
+    "num_edits": 1,
+    "subjects": [
+      "Yutaka Abe"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.022159177303452,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 172.0275421142578,
+          "cur_zs_norm": 137.16493225097656,
+          "layer_ks_norm": 13.04725295601148,
+          "adj_norm": 0.10714262843990814,
+          "residual_norm": 102.87370524501668,
+          "inside_update_norm": 11.022159177303452,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12616813423860765,
+          "D_norm": 7.9259315835551,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 40,
+    "start_idx": 40,
+    "end_idx": 41,
+    "num_edits": 1,
+    "subjects": [
+      "Honda Civic Hybrid"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 13.050069326383413,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 181.98037719726562,
+          "cur_zs_norm": 148.9239959716797,
+          "layer_ks_norm": 11.763077875967367,
+          "adj_norm": 0.11683875639555015,
+          "residual_norm": 111.6929838092699,
+          "inside_update_norm": 13.050069326383413,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.16263032354625284,
+          "D_norm": 6.148914779202264,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 41,
+    "start_idx": 41,
+    "end_idx": 42,
+    "num_edits": 1,
+    "subjects": [
+      "Luca Pacioli"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.767928983983201,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 131.17660522460938,
+          "cur_zs_norm": 106.61509704589844,
+          "layer_ks_norm": 15.979825730786738,
+          "adj_norm": 0.08464004212121863,
+          "residual_norm": 79.96131398765611,
+          "inside_update_norm": 6.767928983983201,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09831155522169736,
+          "D_norm": 10.171744285246541,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 42,
+    "start_idx": 42,
+    "end_idx": 43,
+    "num_edits": 1,
+    "subjects": [
+      "Halvor Schou"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.681254631603776,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 160.04763793945312,
+          "cur_zs_norm": 129.0984649658203,
+          "layer_ks_norm": 14.413670890926598,
+          "adj_norm": 0.08966030377401256,
+          "residual_norm": 96.82383692882355,
+          "inside_update_norm": 8.681254631603775,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09596011879890065,
+          "D_norm": 10.420995852408806,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 43,
+    "start_idx": 43,
+    "end_idx": 44,
+    "num_edits": 1,
+    "subjects": [
+      "John James Rickard Macleod"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.621495223245071,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 145.81373596191406,
+          "cur_zs_norm": 117.79075622558594,
+          "layer_ks_norm": 16.497968509000874,
+          "adj_norm": 0.07495205715249251,
+          "residual_norm": 88.34307522438527,
+          "inside_update_norm": 6.621495223245071,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.06291398298934496,
+          "D_norm": 15.894717715922688,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 44,
+    "start_idx": 44,
+    "end_idx": 45,
+    "num_edits": 1,
+    "subjects": [
+      "Pittsburgh"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 18.236673868748767,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 177.87059020996094,
+          "cur_zs_norm": 144.3583526611328,
+          "layer_ks_norm": 9.8465562641779,
+          "adj_norm": 0.16843891689740184,
+          "residual_norm": 108.26876712735539,
+          "inside_update_norm": 18.236673868748767,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.3598443283490129,
+          "D_norm": 2.778979467560484,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 45,
+    "start_idx": 45,
+    "end_idx": 46,
+    "num_edits": 1,
+    "subjects": [
+      "Bertrand Russell"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.314410416725412,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 159.28346252441406,
+          "cur_zs_norm": 126.97706604003906,
+          "layer_ks_norm": 15.37966152904289,
+          "adj_norm": 0.0873061566238349,
+          "residual_norm": 95.23280760770022,
+          "inside_update_norm": 8.31441041672541,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09382673921723303,
+          "D_norm": 10.657942590168703,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 46,
+    "start_idx": 46,
+    "end_idx": 47,
+    "num_edits": 1,
+    "subjects": [
+      "Henri Queuille"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.455683970895699,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 141.5406951904297,
+          "cur_zs_norm": 114.05379486083984,
+          "layer_ks_norm": 14.739271469204779,
+          "adj_norm": 0.08715985633097686,
+          "residual_norm": 85.54034259285405,
+          "inside_update_norm": 7.4556839708956995,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.0812758942816514,
+          "D_norm": 12.303771109975433,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 47,
+    "start_idx": 47,
+    "end_idx": 48,
+    "num_edits": 1,
+    "subjects": [
+      "DJ Die"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.359039988458761,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 163.98805236816406,
+          "cur_zs_norm": 131.66246032714844,
+          "layer_ks_norm": 11.888491524837306,
+          "adj_norm": 0.11503190831003937,
+          "residual_norm": 98.74686211275697,
+          "inside_update_norm": 11.359039988458761,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1434612635579982,
+          "D_norm": 6.970522740417117,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 48,
+    "start_idx": 48,
+    "end_idx": 49,
+    "num_edits": 1,
+    "subjects": [
+      "Thoranai"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.746665620715327,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 138.37684631347656,
+          "cur_zs_norm": 114.45453643798828,
+          "layer_ks_norm": 14.295592371080584,
+          "adj_norm": 0.09024446688593522,
+          "residual_norm": 85.84089294368319,
+          "inside_update_norm": 7.746665620715328,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09718576494780092,
+          "D_norm": 10.289572763429977,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 49,
+    "start_idx": 49,
+    "end_idx": 50,
+    "num_edits": 1,
+    "subjects": [
+      "Georgina Leonidas"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.961620606396409,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 158.08973693847656,
+          "cur_zs_norm": 125.08375549316406,
+          "layer_ks_norm": 14.056804092816249,
+          "adj_norm": 0.09552661241484395,
+          "residual_norm": 93.81281697165947,
+          "inside_update_norm": 8.961620606396409,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.11255358666979633,
+          "D_norm": 8.884656896219099,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 50,
+    "start_idx": 50,
+    "end_idx": 51,
+    "num_edits": 1,
+    "subjects": [
+      "Jean Bourdichon"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.485260785766711,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 128.04017639160156,
+          "cur_zs_norm": 101.41309356689453,
+          "layer_ks_norm": 15.451271721773129,
+          "adj_norm": 0.08526524451692388,
+          "residual_norm": 76.05983918194806,
+          "inside_update_norm": 6.485260785766711,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08812165609823412,
+          "D_norm": 11.347948328220753,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 51,
+    "start_idx": 51,
+    "end_idx": 52,
+    "num_edits": 1,
+    "subjects": [
+      "Bayazid Bastami"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.071289978705221,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 141.14857482910156,
+          "cur_zs_norm": 113.6242446899414,
+          "layer_ks_norm": 15.539542474675661,
+          "adj_norm": 0.08297865225733782,
+          "residual_norm": 85.218183066837,
+          "inside_update_norm": 7.071289978705221,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08117191841359742,
+          "D_norm": 12.319531428402044,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 52,
+    "start_idx": 52,
+    "end_idx": 53,
+    "num_edits": 1,
+    "subjects": [
+      "Turkmenistan"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.827657303466253,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 155.06048583984375,
+          "cur_zs_norm": 126.4139404296875,
+          "layer_ks_norm": 13.53576371548298,
+          "adj_norm": 0.10365585003913118,
+          "residual_norm": 94.81044533189599,
+          "inside_update_norm": 9.827657303466253,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12770710677726851,
+          "D_norm": 7.8304177835935205,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 53,
+    "start_idx": 53,
+    "end_idx": 54,
+    "num_edits": 1,
+    "subjects": [
+      "Ludwig Klages"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.959308065432902,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.55686950683594,
+          "cur_zs_norm": 108.42027282714844,
+          "layer_ks_norm": 13.129671609070975,
+          "adj_norm": 0.09788216518044407,
+          "residual_norm": 81.31520232271177,
+          "inside_update_norm": 7.959308065432902,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10862478790815597,
+          "D_norm": 9.206001864376631,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 54,
+    "start_idx": 54,
+    "end_idx": 55,
+    "num_edits": 1,
+    "subjects": [
+      "Gentle Ben"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.301047078536541,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 161.06744384765625,
+          "cur_zs_norm": 129.48703002929688,
+          "layer_ks_norm": 12.244864051134332,
+          "adj_norm": 0.11636735065447186,
+          "residual_norm": 97.11527344205507,
+          "inside_update_norm": 11.301047078536541,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.126378359503114,
+          "D_norm": 7.912747118507736,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 55,
+    "start_idx": 55,
+    "end_idx": 56,
+    "num_edits": 1,
+    "subjects": [
+      "Melbourne Airport"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 14.35220645600491,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 174.1630401611328,
+          "cur_zs_norm": 145.82237243652344,
+          "layer_ks_norm": 11.458882205833962,
+          "adj_norm": 0.13123004856127465,
+          "residual_norm": 109.36676937449656,
+          "inside_update_norm": 14.352206456004907,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.21994096757071477,
+          "D_norm": 4.546674551108733,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 56,
+    "start_idx": 56,
+    "end_idx": 57,
+    "num_edits": 1,
+    "subjects": [
+      "John Huarte"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.027742194029313,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 140.92340087890625,
+          "cur_zs_norm": 112.81583404541016,
+          "layer_ks_norm": 13.910482840617803,
+          "adj_norm": 0.09487725963986365,
+          "residual_norm": 84.61186826538966,
+          "inside_update_norm": 8.027742194029313,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10585043481186049,
+          "D_norm": 9.44729232125885,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 57,
+    "start_idx": 57,
+    "end_idx": 58,
+    "num_edits": 1,
+    "subjects": [
+      "The Good Heart"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.093756797354652,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 163.7690887451172,
+          "cur_zs_norm": 133.1171112060547,
+          "layer_ks_norm": 15.857979626517032,
+          "adj_norm": 0.08106902991475655,
+          "residual_norm": 99.83783950375596,
+          "inside_update_norm": 8.093756797354652,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.06837616660627718,
+          "D_norm": 14.62497898950943,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 58,
+    "start_idx": 58,
+    "end_idx": 59,
+    "num_edits": 1,
+    "subjects": [
+      "Mount Carmel"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.348841016578537,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 138.17544555664062,
+          "cur_zs_norm": 109.42973327636719,
+          "layer_ks_norm": 16.08777576642966,
+          "adj_norm": 0.07735669425910922,
+          "residual_norm": 82.07228963679407,
+          "inside_update_norm": 6.348841016578536,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.07337852283084811,
+          "D_norm": 13.627965805542258,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 59,
+    "start_idx": 59,
+    "end_idx": 60,
+    "num_edits": 1,
+    "subjects": [
+      "Democrats 66"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.6030958103277,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 158.6774139404297,
+          "cur_zs_norm": 132.20213317871094,
+          "layer_ks_norm": 12.265857659191443,
+          "adj_norm": 0.11702377622851842,
+          "residual_norm": 99.15160990591971,
+          "inside_update_norm": 11.6030958103277,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12591971119288323,
+          "D_norm": 7.941568405189595,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 60,
+    "start_idx": 60,
+    "end_idx": 61,
+    "num_edits": 1,
+    "subjects": [
+      "Five Star Krishna"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 12.248968775704741,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 173.56793212890625,
+          "cur_zs_norm": 144.6602325439453,
+          "layer_ks_norm": 12.33525120310673,
+          "adj_norm": 0.11289873368264039,
+          "residual_norm": 108.49518303842743,
+          "inside_update_norm": 12.248968775704743,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.13318111919510728,
+          "D_norm": 7.508571830929149,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 61,
+    "start_idx": 61,
+    "end_idx": 62,
+    "num_edits": 1,
+    "subjects": [
+      "Sommariva del Bosco"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.849860347811019,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.74049377441406,
+          "cur_zs_norm": 105.8905258178711,
+          "layer_ks_norm": 13.46978839757827,
+          "adj_norm": 0.09884247909251541,
+          "residual_norm": 79.41788206732087,
+          "inside_update_norm": 7.849860347811019,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.11624191181490982,
+          "D_norm": 8.602749080661065,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 62,
+    "start_idx": 62,
+    "end_idx": 63,
+    "num_edits": 1,
+    "subjects": [
+      "Nahum Sokolow"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.90406791695421,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 138.0255889892578,
+          "cur_zs_norm": 111.13493347167969,
+          "layer_ks_norm": 13.71352744045278,
+          "adj_norm": 0.09482848684044122,
+          "residual_norm": 83.35119730691923,
+          "inside_update_norm": 7.90406791695421,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09683636079604345,
+          "D_norm": 10.326699514309485,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 63,
+    "start_idx": 63,
+    "end_idx": 64,
+    "num_edits": 1,
+    "subjects": [
+      "Manila"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 16.561364208524996,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 186.318115234375,
+          "cur_zs_norm": 156.58242797851562,
+          "layer_ks_norm": 10.874984191330993,
+          "adj_norm": 0.14102362159043016,
+          "residual_norm": 117.43680967592485,
+          "inside_update_norm": 16.561364208524996,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2590973607685973,
+          "D_norm": 3.859553015258658,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 64,
+    "start_idx": 64,
+    "end_idx": 65,
+    "num_edits": 1,
+    "subjects": [
+      "Neuburg Peak"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.382985437394703,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 155.14918518066406,
+          "cur_zs_norm": 124.24476623535156,
+          "layer_ks_norm": 12.182172218419556,
+          "adj_norm": 0.12215656117282934,
+          "residual_norm": 93.18357792742582,
+          "inside_update_norm": 11.382985437394703,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.19710359884488027,
+          "D_norm": 5.07347408094256,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 65,
+    "start_idx": 65,
+    "end_idx": 66,
+    "num_edits": 1,
+    "subjects": [
+      "Jim Pugliese"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.089252956141571,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 130.5219268798828,
+          "cur_zs_norm": 102.22919464111328,
+          "layer_ks_norm": 14.957746868336462,
+          "adj_norm": 0.09246221706534828,
+          "residual_norm": 76.67189021793838,
+          "inside_update_norm": 7.089252956141571,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10420361060479856,
+          "D_norm": 9.596596453769617,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 66,
+    "start_idx": 66,
+    "end_idx": 67,
+    "num_edits": 1,
+    "subjects": [
+      "Jens Evensen"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.195219955966163,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 147.9240264892578,
+          "cur_zs_norm": 122.1500473022461,
+          "layer_ks_norm": 14.512467023132974,
+          "adj_norm": 0.0894552336270431,
+          "residual_norm": 91.61252644125538,
+          "inside_update_norm": 8.195219955966163,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08660738723220442,
+          "D_norm": 11.546359172790705,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 67,
+    "start_idx": 67,
+    "end_idx": 68,
+    "num_edits": 1,
+    "subjects": [
+      "Suzuki MR Wagon"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.462975488330622,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 167.12220764160156,
+          "cur_zs_norm": 133.50730895996094,
+          "layer_ks_norm": 12.670531368514977,
+          "adj_norm": 0.10449341082010412,
+          "residual_norm": 100.13048101514921,
+          "inside_update_norm": 10.462975488330622,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.13076777052595764,
+          "D_norm": 7.647144215871587,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 68,
+    "start_idx": 68,
+    "end_idx": 69,
+    "num_edits": 1,
+    "subjects": [
+      "John Henry Poynting"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.940072597121293,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 126.81643676757812,
+          "cur_zs_norm": 99.43888092041016,
+          "layer_ks_norm": 14.272080576686909,
+          "adj_norm": 0.09305641900620155,
+          "residual_norm": 74.57919261495314,
+          "inside_update_norm": 6.940072597121293,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09553637567329402,
+          "D_norm": 10.467217255757141,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 69,
+    "start_idx": 69,
+    "end_idx": 70,
+    "num_edits": 1,
+    "subjects": [
+      "Kyustendil Province"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 11.625295557606448,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 159.37155151367188,
+          "cur_zs_norm": 129.85484313964844,
+          "layer_ks_norm": 12.36183210227778,
+          "adj_norm": 0.11936709595706668,
+          "residual_norm": 97.39112327728718,
+          "inside_update_norm": 11.625295557606448,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.20425413854037397,
+          "D_norm": 4.895861631720792,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 70,
+    "start_idx": 70,
+    "end_idx": 71,
+    "num_edits": 1,
+    "subjects": [
+      "Mary Garden"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.028477907485541,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 147.6125030517578,
+          "cur_zs_norm": 118.51463317871094,
+          "layer_ks_norm": 14.295664293477248,
+          "adj_norm": 0.09032333156743104,
+          "residual_norm": 88.88598071132782,
+          "inside_update_norm": 8.028477907485543,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09195134739599534,
+          "D_norm": 10.87531643982796,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 71,
+    "start_idx": 71,
+    "end_idx": 72,
+    "num_edits": 1,
+    "subjects": [
+      "Fenn Tower"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.735666526842882,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 165.50018310546875,
+          "cur_zs_norm": 131.69119262695312,
+          "layer_ks_norm": 12.813742971529416,
+          "adj_norm": 0.10869536393801786,
+          "residual_norm": 98.76839395804184,
+          "inside_update_norm": 10.735666526842882,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.14423266923717856,
+          "D_norm": 6.933241999117299,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 72,
+    "start_idx": 72,
+    "end_idx": 73,
+    "num_edits": 1,
+    "subjects": [
+      "Peter Jason"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.4176926010145605,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 149.60574340820312,
+          "cur_zs_norm": 117.64358520507812,
+          "layer_ks_norm": 15.026557645570024,
+          "adj_norm": 0.08406965526675257,
+          "residual_norm": 88.2326991526046,
+          "inside_update_norm": 7.4176926010145605,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08294796330765367,
+          "D_norm": 12.055751101338124,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 73,
+    "start_idx": 73,
+    "end_idx": 74,
+    "num_edits": 1,
+    "subjects": [
+      "Versoix"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.105977497474052,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 135.32774353027344,
+          "cur_zs_norm": 108.85816192626953,
+          "layer_ks_norm": 14.757788359996708,
+          "adj_norm": 0.08703653076851282,
+          "residual_norm": 81.64362061228638,
+          "inside_update_norm": 7.1059774974740515,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08353079556510326,
+          "D_norm": 11.971632656372915,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 74,
+    "start_idx": 74,
+    "end_idx": 75,
+    "num_edits": 1,
+    "subjects": [
+      "Alain de Benoist"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.58924931458331,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 140.0372772216797,
+          "cur_zs_norm": 113.49897003173828,
+          "layer_ks_norm": 15.935648541175361,
+          "adj_norm": 0.07740745059134471,
+          "residual_norm": 85.12422595299999,
+          "inside_update_norm": 6.58924931458331,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.07129582619003623,
+          "D_norm": 14.026066509623426,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 75,
+    "start_idx": 75,
+    "end_idx": 76,
+    "num_edits": 1,
+    "subjects": [
+      "Arthur Griffith"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.19203935943299,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 150.611083984375,
+          "cur_zs_norm": 122.46099853515625,
+          "layer_ks_norm": 12.320273349209774,
+          "adj_norm": 0.11096909787025727,
+          "residual_norm": 91.84574404082574,
+          "inside_update_norm": 10.19203935943299,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1422819456585025,
+          "D_norm": 7.028298603676299,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 76,
+    "start_idx": 76,
+    "end_idx": 77,
+    "num_edits": 1,
+    "subjects": [
+      "Austin Currie"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 5.4839982060183,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 126.24974822998047,
+          "cur_zs_norm": 116.54529571533203,
+          "layer_ks_norm": 13.11994072380833,
+          "adj_norm": 0.10541681942566697,
+          "residual_norm": 52.0220419843463,
+          "inside_update_norm": 5.4839982060183,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12429556033054964,
+          "D_norm": 8.045339651236262,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 77,
+    "start_idx": 77,
+    "end_idx": 78,
+    "num_edits": 1,
+    "subjects": [
+      "Mandailing language"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.973593289124496,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 150.18099975585938,
+          "cur_zs_norm": 124.4034423828125,
+          "layer_ks_norm": 13.809346857315285,
+          "adj_norm": 0.09617733727302807,
+          "residual_norm": 93.3025756748731,
+          "inside_update_norm": 8.973593289124496,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09923821764761079,
+          "D_norm": 10.076763002243174,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 78,
+    "start_idx": 78,
+    "end_idx": 79,
+    "num_edits": 1,
+    "subjects": [
+      "Rogers Radio"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 5.938406299432838,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 141.27679443359375,
+          "cur_zs_norm": 128.02381896972656,
+          "layer_ks_norm": 14.57483087951313,
+          "adj_norm": 0.0919765896522608,
+          "residual_norm": 64.564323616307,
+          "inside_update_norm": 5.938406299432838,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09444205501394072,
+          "D_norm": 10.5885031816852,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 79,
+    "start_idx": 79,
+    "end_idx": 80,
+    "num_edits": 1,
+    "subjects": [
+      "Jean-Louis Barrault"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.486892687968673,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 141.5621795654297,
+          "cur_zs_norm": 115.77822875976562,
+          "layer_ks_norm": 15.246551826520301,
+          "adj_norm": 0.08622106411442272,
+          "residual_norm": 86.83368460905245,
+          "inside_update_norm": 7.486892687968673,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09031735062451028,
+          "D_norm": 11.072069686337992,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 80,
+    "start_idx": 80,
+    "end_idx": 81,
+    "num_edits": 1,
+    "subjects": [
+      "Kuala Lumpur"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 15.510797867503255,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 199.3123779296875,
+          "cur_zs_norm": 163.37600708007812,
+          "layer_ks_norm": 11.708013612487973,
+          "adj_norm": 0.1265856868329748,
+          "residual_norm": 122.53200385892909,
+          "inside_update_norm": 15.510797867503257,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.19512753697069912,
+          "D_norm": 5.124853290953817,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 81,
+    "start_idx": 81,
+    "end_idx": 82,
+    "num_edits": 1,
+    "subjects": [
+      "Riky Rick"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.519246107960265,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 149.7285919189453,
+          "cur_zs_norm": 125.8905258178711,
+          "layer_ks_norm": 13.49001640794782,
+          "adj_norm": 0.10082035799928588,
+          "residual_norm": 94.41789631442978,
+          "inside_update_norm": 9.519246107960265,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10599878405732716,
+          "D_norm": 9.434070483857358,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 82,
+    "start_idx": 82,
+    "end_idx": 83,
+    "num_edits": 1,
+    "subjects": [
+      "Cincinnati"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 5.789457117083775,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 173.04058837890625,
+          "cur_zs_norm": 166.48361206054688,
+          "layer_ks_norm": 11.487480017503698,
+          "adj_norm": 0.1286151258607392,
+          "residual_norm": 45.01381216508263,
+          "inside_update_norm": 5.789457117083775,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.21302813407150684,
+          "D_norm": 4.694215646015711,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 83,
+    "start_idx": 83,
+    "end_idx": 84,
+    "num_edits": 1,
+    "subjects": [
+      "Baja Fresh"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.179089650662235,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 174.97055053710938,
+          "cur_zs_norm": 140.0835418701172,
+          "layer_ks_norm": 13.451956288593877,
+          "adj_norm": 0.09688590860456749,
+          "residual_norm": 105.06264323955943,
+          "inside_update_norm": 10.179089650662235,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10415711878721946,
+          "D_norm": 9.600880013231553,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 84,
+    "start_idx": 84,
+    "end_idx": 85,
+    "num_edits": 1,
+    "subjects": [
+      "George Cadogan, 5th Earl Cadogan"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.853165183815952,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 142.01760864257812,
+          "cur_zs_norm": 116.67725372314453,
+          "layer_ks_norm": 15.985407395543387,
+          "adj_norm": 0.1011698570460353,
+          "residual_norm": 87.50793410519003,
+          "inside_update_norm": 8.853165183815952,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.13730170788915164,
+          "D_norm": 7.28323059759267,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 85,
+    "start_idx": 85,
+    "end_idx": 86,
+    "num_edits": 1,
+    "subjects": [
+      "Cutie Honey"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.8897017134337775,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 151.91734313964844,
+          "cur_zs_norm": 134.58755493164062,
+          "layer_ks_norm": 13.946968080635365,
+          "adj_norm": 0.0971761855051455,
+          "residual_norm": 70.89907550517063,
+          "inside_update_norm": 6.8897017134337775,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10179171379741729,
+          "D_norm": 9.823982352730292,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 86,
+    "start_idx": 86,
+    "end_idx": 87,
+    "num_edits": 1,
+    "subjects": [
+      "Enhanced Music"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 10.944845541764934,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 162.688232421875,
+          "cur_zs_norm": 134.87831115722656,
+          "layer_ks_norm": 12.81342302834896,
+          "adj_norm": 0.10819478288386236,
+          "residual_norm": 101.15871810116083,
+          "inside_update_norm": 10.944845541764932,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.13974689820120742,
+          "D_norm": 7.15579388789153,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 87,
+    "start_idx": 87,
+    "end_idx": 88,
+    "num_edits": 1,
+    "subjects": [
+      "Antoine Houdar de La Motte"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 5.074072870390127,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 129.11866760253906,
+          "cur_zs_norm": 113.88935852050781,
+          "layer_ks_norm": 14.788403081745779,
+          "adj_norm": 0.08506302932114108,
+          "residual_norm": 59.65074264206866,
+          "inside_update_norm": 5.074072870390127,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08100636878963677,
+          "D_norm": 12.344708384557673,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 88,
+    "start_idx": 88,
+    "end_idx": 89,
+    "num_edits": 1,
+    "subjects": [
+      "Marc Lavoie"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.379754188197362,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 146.95968627929688,
+          "cur_zs_norm": 117.57180786132812,
+          "layer_ks_norm": 17.13834290487007,
+          "adj_norm": 0.07235016686388232,
+          "residual_norm": 88.17884553328071,
+          "inside_update_norm": 6.379754188197363,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.05950888597217595,
+          "D_norm": 16.804213079498098,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 89,
+    "start_idx": 89,
+    "end_idx": 90,
+    "num_edits": 1,
+    "subjects": [
+      "Peter Kassovitz"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.485990840408217,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 147.5916290283203,
+          "cur_zs_norm": 120.12037658691406,
+          "layer_ks_norm": 14.542412583208753,
+          "adj_norm": 0.09419429792944722,
+          "residual_norm": 90.09028175744074,
+          "inside_update_norm": 8.485990840408217,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10008443716399658,
+          "D_norm": 9.991563407220024,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 90,
+    "start_idx": 90,
+    "end_idx": 91,
+    "num_edits": 1,
+    "subjects": [
+      "Aram Khachaturian"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.118037707782944,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 119.88054656982422,
+          "cur_zs_norm": 103.93533325195312,
+          "layer_ks_norm": 13.315022925125872,
+          "adj_norm": 0.10520795205560655,
+          "residual_norm": 58.15185628315738,
+          "inside_update_norm": 6.118037707782944,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12541186652870345,
+          "D_norm": 7.973727109556467,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 91,
+    "start_idx": 91,
+    "end_idx": 92,
+    "num_edits": 1,
+    "subjects": [
+      "Jean Chiappe"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.537505906461686,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 141.27847290039062,
+          "cur_zs_norm": 112.17463684082031,
+          "layer_ks_norm": 14.3188930271055,
+          "adj_norm": 0.08959251632508033,
+          "residual_norm": 84.13097673373028,
+          "inside_update_norm": 7.537505906461685,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09270229276202795,
+          "D_norm": 10.787219713832288,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 92,
+    "start_idx": 92,
+    "end_idx": 93,
+    "num_edits": 1,
+    "subjects": [
+      "Avie Bennett"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.5664712014648705,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 159.6506805419922,
+          "cur_zs_norm": 138.7434539794922,
+          "layer_ks_norm": 13.875139018547838,
+          "adj_norm": 0.09621635770717964,
+          "residual_norm": 78.64017493254437,
+          "inside_update_norm": 7.56647120146487,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.10249908316587149,
+          "D_norm": 9.756184827348427,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 93,
+    "start_idx": 93,
+    "end_idx": 94,
+    "num_edits": 1,
+    "subjects": [
+      "Sangamam"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.263546675023075,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 129.17465209960938,
+          "cur_zs_norm": 105.7453842163086,
+          "layer_ks_norm": 14.5873531863022,
+          "adj_norm": 0.09158535989887073,
+          "residual_norm": 79.30903676137257,
+          "inside_update_norm": 7.2635466750230755,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08091718897368783,
+          "D_norm": 12.358313637479103,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 94,
+    "start_idx": 94,
+    "end_idx": 95,
+    "num_edits": 1,
+    "subjects": [
+      "Subotica"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 7.400448871779909,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 131.9918670654297,
+          "cur_zs_norm": 107.88433074951172,
+          "layer_ks_norm": 14.553039487696989,
+          "adj_norm": 0.09146152721562219,
+          "residual_norm": 80.91324403902875,
+          "inside_update_norm": 7.400448871779909,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.09938220010575946,
+          "D_norm": 10.062164038789954,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 95,
+    "start_idx": 95,
+    "end_idx": 96,
+    "num_edits": 1,
+    "subjects": [
+      "Aloha Stadium"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 13.772885903835265,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 181.3232421875,
+          "cur_zs_norm": 145.57554626464844,
+          "layer_ks_norm": 11.50995056868968,
+          "adj_norm": 0.12614653254950017,
+          "residual_norm": 109.18164475452986,
+          "inside_update_norm": 13.772885903835265,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.19006994887164344,
+          "D_norm": 5.261220965947185,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 96,
+    "start_idx": 96,
+    "end_idx": 97,
+    "num_edits": 1,
+    "subjects": [
+      "Daejeon"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 6.7471215608990205,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.8309783935547,
+          "cur_zs_norm": 108.20343780517578,
+          "layer_ks_norm": 15.696427272654663,
+          "adj_norm": 0.08314118573783592,
+          "residual_norm": 81.15257800356987,
+          "inside_update_norm": 6.7471215608990205,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.0872549747955483,
+          "D_norm": 11.460664590679812,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 97,
+    "start_idx": 97,
+    "end_idx": 98,
+    "num_edits": 1,
+    "subjects": [
+      "Istanbul University"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.779728271438605,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 171.47427368164062,
+          "cur_zs_norm": 151.69895935058594,
+          "layer_ks_norm": 11.95062726822137,
+          "adj_norm": 0.1191355016710713,
+          "residual_norm": 73.69531456441179,
+          "inside_update_norm": 8.779728271438605,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.18042094978774342,
+          "D_norm": 5.542593591134799,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 98,
+    "start_idx": 98,
+    "end_idx": 99,
+    "num_edits": 1,
+    "subjects": [
+      "The Miser"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 8.712328100214359,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 174.2172393798828,
+          "cur_zs_norm": 145.8502960205078,
+          "layer_ks_norm": 15.683121887205248,
+          "adj_norm": 0.07964630844230088,
+          "residual_norm": 109.38772016691689,
+          "inside_update_norm": 8.712328100214359,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.06629746073673082,
+          "D_norm": 15.08353395269586,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 99,
+    "start_idx": 99,
+    "end_idx": 100,
+    "num_edits": 1,
+    "subjects": [
+      "omphacite"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": null,
+        "new_edit_distance": null,
+        "old_edit_distance": null,
+        "delta_norm": 9.85825095528446,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 131.88450622558594,
+          "cur_zs_norm": 112.22059631347656,
+          "layer_ks_norm": 11.466446015621921,
+          "adj_norm": 0.12674243564072224,
+          "residual_norm": 77.78176981882942,
+          "inside_update_norm": 9.85825095528446,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.17909388610482319,
+          "D_norm": 5.583663528383669,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  }
+]
