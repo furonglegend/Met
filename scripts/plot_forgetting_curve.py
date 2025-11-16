@@ -9,6 +9,8 @@ Generates ES/PS/NS vs cumulative_edits line plots.
 import argparse
 import json
 from pathlib import Path
+from datetime import datetime
+import logging
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -65,21 +67,29 @@ def plot_curves(df: pd.DataFrame, out_dir: Path):
         plt.close()
         saved.append(str(out))
     return saved
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--results_dir', type=str, default='results', help='Root results directory')
     ap.add_argument('--output', type=str, default='results/figs', help='Output directory for plots')
+    ap.add_argument('--log_file', type=str, default=None,
+                    help='Optional log file path; if unset, logs/ with timestamped name is used')
     args = ap.parse_args()
+
+    # Default log path if not provided
+    if args.log_file is None:
+        results_name = Path(args.results_dir).name or 'results'
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        args.log_file = str(Path('logs') / f'plot_forgetting_curve_{results_name}_{timestamp}.log')
+
+    logger = setup_logging(args.log_file)
 
     results_dir = Path(args.results_dir)
     df = load_sequence_metrics(results_dir)
     if df.empty:
-        print('No sequence_metrics.jsonl found.')
+        logger.warning('No sequence_metrics.jsonl found.')
         return 1
     saved = plot_curves(df, Path(args.output))
-    print(f'Saved {len(saved)} forgetting curve plots to {args.output}')
+    logger.info('Saved %d forgetting curve plots to %s', len(saved), args.output)
     return 0
 
 if __name__ == '__main__':

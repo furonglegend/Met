@@ -17,15 +17,22 @@ might affect metrics, without re-running experiments.
 import argparse
 import logging
 from pathlib import Path
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
 
 
-def setup_logging():
+def setup_logging(log_file=None):
+    handlers = [logging.StreamHandler()]
+    if log_file:
+        log_path = Path(log_file)
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        handlers.append(logging.FileHandler(log_path, encoding="utf-8"))
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=handlers,
     )
     return logging.getLogger(__name__)
 
@@ -51,12 +58,26 @@ def parse_args():
         default=[0.2, 0.3, 0.4, 0.5, 0.6],
         help="List of trust_score_mean thresholds to sweep",
     )
+    parser.add_argument(
+        "--log_file",
+        type=str,
+        default=None,
+        help="Optional log file path; if set, logs are written to this file as well as console",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
-    logger = setup_logging()
     args = parse_args()
+
+    # If no log file is provided, default to logs/ directory with a timestamped name
+    if args.log_file is None:
+        input_stem = Path(args.input).stem
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        default_log_dir = Path("logs")
+        args.log_file = str(default_log_dir / f"trust_thresholds_{input_stem}_{timestamp}.log")
+
+    logger = setup_logging(args.log_file)
 
     input_path = Path(args.input)
     if not input_path.exists():

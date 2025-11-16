@@ -40,7 +40,7 @@ class BatchExperimentRunner:
     def setup_logging(self):
         """Setup logging"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = f"results/batch_experiments_{timestamp}.log"
+        log_file = f"logs/batch_experiments_{timestamp}.log"
         
         Path(log_file).parent.mkdir(parents=True, exist_ok=True)
         

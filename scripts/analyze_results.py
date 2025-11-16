@@ -27,18 +27,33 @@ except Exception:
 class ResultsAnalyzer:
     """Analyze experimental results"""
     
-    def __init__(self, results_dir, output_file=None):
+    def __init__(self, results_dir, output_file=None, log_file=None):
         self.results_dir = Path(results_dir)
         self.output_file = output_file or f"results/analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
-        self.setup_logging()
+        self.setup_logging(log_file)
         
-    def setup_logging(self):
+    def setup_logging(self, log_file=None):
         """Setup logging"""
+        handlers = [logging.StreamHandler()]
+
+        # Default log path under logs/ if not provided
+        if log_file is None:
+            results_name = self.results_dir.name or "results"
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            log_path = Path("logs") / f"analyze_results_{results_name}_{timestamp}.log"
+        else:
+            log_path = Path(log_file)
+
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        handlers.append(logging.FileHandler(log_path, encoding="utf-8"))
+
         logging.basicConfig(
             level=logging.INFO,
-            format='%(asctime)s [%(levelname)s] %(message)s'
+            format='%(asctime)s [%(levelname)s] %(message)s',
+            handlers=handlers,
         )
         self.logger = logging.getLogger(__name__)
+        self.logger.info(f"Logging to {log_path}")
         
     def find_result_dirs(self):
         """Find all result directories"""
@@ -449,10 +464,12 @@ def main():
                        help="Results directory")
     parser.add_argument("--output", type=str, default=None,
                        help="Output CSV file")
+    parser.add_argument("--log_file", type=str, default=None,
+                       help="Optional log file path; if unset, logs/ with timestamped name is used")
     
     args = parser.parse_args()
     
-    analyzer = ResultsAnalyzer(args.results_dir, args.output)
+    analyzer = ResultsAnalyzer(args.results_dir, args.output, args.log_file)
     success = analyzer.run()
     
     return 0 if success else 1
