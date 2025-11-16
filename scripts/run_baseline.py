@@ -304,7 +304,7 @@ class BaselineRunner:
                     )
                     edit_distances = {}
                 
-                self.logger.info(f"✅ Batch editing completed successfully")
+                self.logger.info("Batch editing completed successfully")
                 
                 # Store batch results
                 batch_result = {
@@ -456,11 +456,11 @@ class BaselineRunner:
                 # Get the LoRA-enhanced model
                 model = lora_wrapper.model
                 
-                self.logger.info("✅ LoRA applied successfully")
+                self.logger.info("LoRA applied successfully")
                 self.logger.info(f"{'='*80}\n")
                 
             except Exception as e:
-                self.logger.error(f"❌ LoRA application failed: {str(e)}", exc_info=True)
+                self.logger.error(f"LoRA application failed: {str(e)}", exc_info=True)
                 self.logger.warning("Continuing with non-LoRA model...")
         
         return all_results, model, tokenizer
@@ -646,7 +646,7 @@ class BaselineRunner:
                            f"{result['paraphrase_score']},"
                            f"{result['neighborhood_score']}\n")
         
-        self.logger.info(f"\n✅ Results saved to {self.config.run_dir}")
+        self.logger.info(f"\nResults saved to {self.config.run_dir}")
         self.logger.info(f"   - Edit results: {edit_results_file.name}")
         self.logger.info(f"   - Detailed results: {detailed_file.name}")
         self.logger.info(f"   - Metrics: {metrics_file.name}")
@@ -690,7 +690,7 @@ class BaselineRunner:
             self.save_results(edit_results, metrics, detailed_results)
             
             self.logger.info("\n" + "="*80)
-            self.logger.info("✅ EXPERIMENT COMPLETED SUCCESSFULLY!")
+            self.logger.info("EXPERIMENT COMPLETED SUCCESSFULLY")
             self.logger.info("="*80)
             self.logger.info(f"Total duration: {metrics['duration_formatted']}")
             self.logger.info(f"Results directory: {self.config.run_dir}")
@@ -700,7 +700,7 @@ class BaselineRunner:
             
         except Exception as e:
             self.logger.error("\n" + "="*80)
-            self.logger.error("❌ EXPERIMENT FAILED")
+            self.logger.error("EXPERIMENT FAILED")
             self.logger.error("="*80)
             self.logger.error(f"Error: {str(e)}", exc_info=True)
             self.logger.error("="*80 + "\n")

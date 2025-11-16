@@ -31,6 +31,7 @@ from copy import deepcopy
 import torch
 import torch.nn as nn
 from transformers import AutoModelForCausalLM
+from transformers.models.gpt2.modeling_gpt2 import Conv1D
 
 
 logger = logging.getLogger(__name__)
@@ -170,7 +171,8 @@ class MinimalLoRAWrapper:
         for name, module in self.model.named_modules():
             # Check if this module matches any target pattern
             if self._is_target_module(name):
-                if isinstance(module, nn.Linear):
+                # Support both standard Linear layers and GPT-2 Conv1D MLP layers
+                if isinstance(module, (nn.Linear, Conv1D)):
                     self._replace_with_lora(name, module)
     
     def _is_target_module(self, module_name: str) -> bool:
@@ -180,18 +182,25 @@ class MinimalLoRAWrapper:
                 return True
         return False
     
-    def _replace_with_lora(self, module_path: str, linear_module: nn.Linear):
-        """Replace a Linear module with LoRA-enhanced version"""
+    def _replace_with_lora(self, module_path: str, linear_module: nn.Module):
+        """Replace a Linear-like module with LoRA-enhanced version"""
+        # For GPT-2 Conv1D, weight is stored with transposed shape compared to nn.Linear.
+        # We convert it to (out_features, in_features) so that F.linear reproduces Conv1D.
+        if isinstance(linear_module, Conv1D):
+            base_weight = linear_module.weight.data.t()
+        else:
+            base_weight = linear_module.weight.data
+
         # Create LoRA layer
         lora_layer = LoRALayer(
-            original_weight=linear_module.weight.data,
+            original_weight=base_weight,
             rank=self.rank,
             alpha=self.alpha,
             dropout=self.dropout
         )
         
         # Copy bias if present
-        if linear_module.bias is not None:
+        if getattr(linear_module, "bias", None) is not None:
             lora_layer.bias = nn.Parameter(linear_module.bias.data.clone())
         else:
             lora_layer.bias = None
