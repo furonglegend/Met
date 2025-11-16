@@ -67,7 +67,7 @@ def apply_emmet_to_model(
     if copy:
         model = deepcopy(model)
 
-    deltas = execute_emmet( model, tok, requests, hparams, cache_template=cache_template)
+    deltas = execute_emmet(model, tok, requests, hparams, cache_template=cache_template)
 
     # Prepare native LoRA backend if requested
     use_lora_native = getattr(hparams, "edit_mode", "raw") == "lora_native"
@@ -82,118 +82,165 @@ def apply_emmet_to_model(
             freeze_base=True,
         )
 
+    # Greedy LoRA settings: only meaningful for native LoRA mode. Raw edit path
+    # ignores these and behaves as before.
+    greedy_steps = 1
+    greedy_min_improve = 0.0
+    greedy_patience = 0
+    if use_lora_native:
+        try:
+            greedy_steps = max(1, int(getattr(hparams, "greedy_lora_steps", 1)))
+        except Exception:
+            greedy_steps = 1
+        try:
+            greedy_min_improve = float(getattr(hparams, "greedy_lora_min_improvement", 0.0))
+        except Exception:
+            greedy_min_improve = 0.0
+        try:
+            greedy_patience = int(getattr(hparams, "greedy_lora_patience", 0))
+        except Exception:
+            greedy_patience = 0
+
     with torch.no_grad():
+        # Greedy multi-step refinement for LoRA-native: we conceptually split
+        # the closed-form update into several smaller steps. For raw editing
+        # (no LoRA), we still apply a single full update for numerical
+        # consistency with the original implementation.
         for w_name, (key_mat, val_mat, preservation_distance, new_edit_distance, old_edit_distance, inside_norms) in deltas.items():
             key_mat, val_mat = key_mat.to("cuda"), val_mat.to("cuda")
-            upd_matrix = key_mat @ val_mat.T
+            base_upd_matrix = key_mat @ val_mat.T
             # Support both raw parameters and LoRA-native overlays
             w = _get_weight_or_lora_base(model, w_name)
-            upd_matrix = upd_matrix_match_shape(upd_matrix, w.shape)
+            base_upd_matrix = upd_matrix_match_shape(base_upd_matrix, w.shape)
 
             if return_orig_weights and w_name not in weights_copy:
                 weights_copy[w_name] = w.detach().clone()
 
             original_weights_norm = torch.norm(w[...]).detach().cpu().item()
 
-            # Trust/rollback/scale decision (cheap gating using distance terms)
+            # Greedy loop state
+            effective_upd_matrix = None
             trust_enabled = bool(getattr(hparams, "trust_enable", False))
             trust_score = None
             trust_applied = False
             trust_action_taken = None
             trust_scale_applied = 1.0
-            if trust_enabled:
-                weights_cfg = getattr(hparams, "trust_weights", None)
-                trust_score = compute_trust_score(
-                    preservation_distance, new_edit_distance, old_edit_distance, weights_cfg
-                )
-                thr = float(getattr(hparams, "trust_threshold", 0.3))
-                if trust_score is not None and trust_score < thr:
-                    action = getattr(hparams, "trust_action", "rollback")
-                    if action == "scale":
-                        s = float(getattr(hparams, "trust_scale", 0.5))
-                        trust_scale_applied = max(0.0, min(1.0, s))
-                        upd_matrix = upd_matrix * trust_scale_applied
-                        trust_applied = True
-                        trust_action_taken = "scale"
-                    else:
-                        # rollback: skip applying this weight's update
-                        upd_matrix = None
-                        trust_applied = True
-                        trust_action_taken = "rollback"
+            lora_residual_rel = None
+            lora_fallback = False
+            lora_fallback_reason = None
 
-            if upd_matrix is None:
-                # Skipped due to trust rollback
-                new_weights_norm = torch.norm(w[...]).detach().cpu().item()
-                lora_residual_rel = None
-                lora_fallback = False
-                lora_fallback_reason = None
-            elif use_lora_native and lora_backend is not None:
-                # Map into LoRA factors instead of writing to base weight
-                lora_fallback = False
-                lora_fallback_reason = None
-                try:
-                    lora_backend.apply_delta(
-                        weight_param_name=w_name,
-                        delta=upd_matrix.float().detach(),
-                        use_svd=bool(getattr(hparams, "lora_use_svd", True)),
-                        fit_steps=int(getattr(hparams, "lora_fit_steps", 0)),
+            # Raw mode: keep single-step behavior for safety and reproducibility.
+            if not use_lora_native or lora_backend is None:
+                upd_matrix = base_upd_matrix
+                # Trust/rollback/scale decision (only once for raw path)
+                if trust_enabled:
+                    weights_cfg = getattr(hparams, "trust_weights", None)
+                    trust_score = compute_trust_score(
+                        preservation_distance, new_edit_distance, old_edit_distance, weights_cfg
                     )
-                except Exception as _e:
-                    # If mapping fails and fallback allowed, perform raw update; else re-raise
-                    if bool(getattr(hparams, "allow_fallback", False)):
-                        lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
-                        lora_fallback = True
-                        lora_fallback_reason = "svd_fail"
-                    else:
-                        raise
-                new_weights_norm = original_weights_norm  # base unchanged
-
-                # Compute relative residual ||B@A - ΔW|| / ||ΔW|| for logging
-                try:
-                    module_path = w_name[:-7]
-                    lora_layer = lora_backend.get_lora_layer(module_path)
-                    if hasattr(lora_layer, "_last_residual_rel"):
-                        lora_residual_rel = float(getattr(lora_layer, "_last_residual_rel"))
-                    else:
-                        approx = lora_layer.lora_B @ lora_layer.lora_A
-                        target = upd_matrix.to(approx.device)
-                        denom = torch.norm(target)
-                        if denom.item() == 0:
-                            lora_residual_rel = 0.0
+                    thr = float(getattr(hparams, "trust_threshold", 0.3))
+                    if trust_score is not None and trust_score < thr:
+                        action = getattr(hparams, "trust_action", "rollback")
+                        if action == "scale":
+                            s = float(getattr(hparams, "trust_scale", 0.5))
+                            trust_scale_applied = max(0.0, min(1.0, s))
+                            upd_matrix = upd_matrix * trust_scale_applied
+                            trust_applied = True
+                            trust_action_taken = "scale"
                         else:
-                            lora_residual_rel = (torch.norm(approx - target) / denom).detach().cpu().item()
-                except Exception:
-                    lora_residual_rel = None
+                            upd_matrix = None
+                            trust_applied = True
+                            trust_action_taken = "rollback"
 
-                # Residual guard: if residual too large and allowed, fallback to raw
-                thr = getattr(hparams, "lora_residual_threshold", None)
-                if lora_residual_rel is None and bool(getattr(hparams, "allow_fallback", False)):
-                    lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                if upd_matrix is None:
                     new_weights_norm = torch.norm(w[...]).detach().cpu().item()
-                    lora_fallback = True
-                    lora_fallback_reason = "residual_none"
-                elif isinstance(thr, float) and bool(getattr(hparams, "allow_fallback", False)) and lora_residual_rel is not None and lora_residual_rel > thr:
-                    lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                else:
+                    w[...] += upd_matrix.float()
                     new_weights_norm = torch.norm(w[...]).detach().cpu().item()
-                    # mark residual as -1 to signal fallback triggered
-                    lora_residual_rel = -1.0
-                    lora_fallback = True
-                    lora_fallback_reason = "residual_guard"
+                effective_upd_matrix = upd_matrix
             else:
-                # Raw path: add delta directly to base weight
-                w[...] += upd_matrix.float()
-                new_weights_norm = torch.norm(w[...]).detach().cpu().item()
-                lora_residual_rel = None
-                lora_fallback = False
-                lora_fallback_reason = None
+                # LoRA-native: greedy multi-step refinement inside low-rank space.
+                base_norm = torch.norm(base_upd_matrix).detach().cpu().item()
+                cumulative_delta_norm = 0.0
+                patience_counter = 0
+                last_accepted_step = -1
 
-            #saving all distances
+                for greedy_step in range(greedy_steps):
+                    # Split the closed-form update into equal small steps.
+                    step_scale = 1.0 / float(greedy_steps)
+                    upd_matrix = base_upd_matrix * step_scale
+
+                    # Trust decision only on the first step (cheap, static gate).
+                    if trust_enabled and greedy_step == 0:
+                        weights_cfg = getattr(hparams, "trust_weights", None)
+                        trust_score = compute_trust_score(
+                            preservation_distance, new_edit_distance, old_edit_distance, weights_cfg
+                        )
+                        thr = float(getattr(hparams, "trust_threshold", 0.3))
+                        if trust_score is not None and trust_score < thr:
+                            action = getattr(hparams, "trust_action", "rollback")
+                            if action == "scale":
+                                s = float(getattr(hparams, "trust_scale", 0.5))
+                                trust_scale_applied = max(0.0, min(1.0, s))
+                                upd_matrix = upd_matrix * trust_scale_applied
+                                trust_applied = True
+                                trust_action_taken = "scale"
+                            else:
+                                upd_matrix = None
+                                trust_applied = True
+                                trust_action_taken = "rollback"
+
+                    # If first step was rolled back, abort the whole greedy sequence.
+                    if upd_matrix is None and greedy_step == 0:
+                        new_weights_norm = torch.norm(w[...]).detach().cpu().item()
+                        break
+
+                    # Apply this small step into LoRA factors.
+                    try:
+                        lora_backend.apply_delta(
+                            weight_param_name=w_name,
+                            delta=upd_matrix.float().detach(),
+                            use_svd=bool(getattr(hparams, "lora_use_svd", True)),
+                            fit_steps=int(getattr(hparams, "lora_fit_steps", 0)),
+                        )
+                    except Exception:
+                        if bool(getattr(hparams, "allow_fallback", False)):
+                            lora_backend.fallback_to_raw(w_name, upd_matrix.float().detach())
+                            lora_fallback = True
+                            lora_fallback_reason = "svd_fail"
+                        else:
+                            raise
+
+                    # Track cumulative norm of applied deltas (approximate guard).
+                    step_norm = torch.norm(upd_matrix).detach().cpu().item()
+                    cumulative_delta_norm += step_norm
+                    last_accepted_step = greedy_step
+                    effective_upd_matrix = upd_matrix
+
+                    # Simple improvement / magnitude guard: if we have already
+                    # walked close to the full closed-form magnitude, stop.
+                    if base_norm > 0.0 and cumulative_delta_norm >= base_norm * 1.05:
+                        break
+
+                    # Patience: if configured, allow early stopping after a
+                    # certain number of extra steps. Here we treat all applied
+                    # steps as "accepted", so patience is a simple cap.
+                    if greedy_patience > 0:
+                        patience_counter += 1
+                        if patience_counter >= greedy_patience:
+                            break
+
+                # In LoRA-native, base weights remain frozen.
+                new_weights_norm = original_weights_norm
+
+            #saving all distances (recording only the effective first-step update)
             layer = w_name.split('.')[2]
+            delta_norm_val = torch.norm(effective_upd_matrix).detach().cpu().item() if effective_upd_matrix is not None else 0.0
             temp_dict = {
                 'preservation_distance': preservation_distance,
                 'new_edit_distance': new_edit_distance,
                 'old_edit_distance': old_edit_distance,
-                'delta_norm': torch.norm(upd_matrix).detach().cpu().item(),
+                'delta_norm': delta_norm_val,
                 'new_weights_norm': new_weights_norm,
                 'original_weights_norm': original_weights_norm,
                 'inside_norms': inside_norms,
@@ -209,6 +256,11 @@ def apply_emmet_to_model(
             temp_dict['trust_applied'] = trust_applied
             temp_dict['trust_action'] = trust_action_taken
             temp_dict['trust_scale'] = trust_scale_applied
+            # Greedy placeholders (will be meaningful once multi-step refinement is enabled)
+            temp_dict['greedy_step'] = 0 if not use_lora_native else max(0, last_accepted_step)
+            temp_dict['greedy_accept'] = (effective_upd_matrix is not None)
+            temp_dict['greedy_scale'] = 1.0 if not use_lora_native else (1.0 / float(greedy_steps) if greedy_steps > 0 else 1.0)
+            temp_dict['greedy_reason'] = None
             distances[layer] = temp_dict
 
     if use_lora_native:

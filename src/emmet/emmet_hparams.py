@@ -57,3 +57,10 @@ class EMMETHyperParams(HyperParams):
     trust_heldout_samples: int = 0
     # Optional component weights, e.g., {"gain":0.7, "preserve":0.3}
     trust_weights: Optional[Dict[str, float]] = None
+
+    # Greedy LoRA incremental editing (per-batch / per-call small-step refinement)
+    # When edit_mode != "lora_native" these fields are ignored.
+    greedy_lora_steps: int = 1
+    greedy_lora_min_improvement: float = 0.0
+    greedy_lora_patience: int = 0
+    greedy_lora_use_distance_only: bool = True

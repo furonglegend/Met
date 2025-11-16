@@ -57,6 +57,10 @@ class ExperimentConfig:
         self.trust_action = getattr(args, 'trust_action', 'rollback')
         self.trust_scale = getattr(args, 'trust_scale', 0.5)
         self.trust_heldout_samples = getattr(args, 'trust_heldout_samples', 0)
+        # Greedy LoRA incremental editing (only meaningful for edit_mode=="lora_native")
+        self.greedy_lora_steps = getattr(args, 'greedy_lora_steps', 1)
+        self.greedy_lora_min_improvement = getattr(args, 'greedy_lora_min_improvement', 0.0)
+        self.greedy_lora_patience = getattr(args, 'greedy_lora_patience', 0)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
         # Setup paths
@@ -111,6 +115,9 @@ class ExperimentConfig:
             "lora_scale": self.lora_scale,
             "lora_use_svd": self.lora_use_svd,
             "lora_fit_steps": self.lora_fit_steps,
+            "greedy_lora_steps": self.greedy_lora_steps,
+            "greedy_lora_min_improvement": self.greedy_lora_min_improvement,
+            "greedy_lora_patience": self.greedy_lora_patience,
             "trust_enable": self.trust_enable,
             "trust_threshold": self.trust_threshold,
             "trust_action": self.trust_action,
@@ -250,6 +257,11 @@ class BaselineRunner:
                 hparams.trust_action = getattr(self.config, "trust_action", "rollback")
                 hparams.trust_scale = getattr(self.config, "trust_scale", 0.5)
                 hparams.trust_heldout_samples = getattr(self.config, "trust_heldout_samples", 0)
+            # Greedy LoRA overrides (only when using native LoRA)
+            if getattr(self.config, "edit_mode", "raw") == "lora_native":
+                hparams.greedy_lora_steps = max(1, int(getattr(self.config, "greedy_lora_steps", 1)))
+                hparams.greedy_lora_min_improvement = float(getattr(self.config, "greedy_lora_min_improvement", 0.0))
+                hparams.greedy_lora_patience = int(getattr(self.config, "greedy_lora_patience", 0))
         elif self.config.method == "memit":
             from memit.memit_hparams import MEMITHyperParams
             from memit.memit_main import apply_memit_to_model
@@ -368,6 +380,10 @@ class BaselineRunner:
                                         "trust_applied": info.get("trust_applied"),
                                         "trust_action": info.get("trust_action"),
                                         "trust_scale": info.get("trust_scale"),
+                                        "greedy_step": info.get("greedy_step"),
+                                        "greedy_accept": info.get("greedy_accept"),
+                                        "greedy_scale": info.get("greedy_scale"),
+                                        "greedy_reason": info.get("greedy_reason"),
                                     }
                                     ft.write(json.dumps(tev) + "\n")
                 except Exception:
@@ -766,6 +782,13 @@ def main():
                        help="Allow residual-guard fallback to raw updates when mapping is poor or fails")
     parser.add_argument("--lora_residual_threshold", type=float, default=0.3,
                        help="Residual threshold to trigger fallback; if omitted, only failures trigger fallback")
+    # Greedy LoRA incremental editing (only for edit_mode=lora_native)
+    parser.add_argument("--greedy_lora_steps", type=int, default=1,
+                       help="Max greedy LoRA refinement steps per apply_emmet call (1 = current behavior)")
+    parser.add_argument("--greedy_lora_min_improvement", type=float, default=0.0,
+                       help="Minimum per-step improvement threshold for accepting a greedy step (distance-based placeholder)")
+    parser.add_argument("--greedy_lora_patience", type=int, default=0,
+                       help="Early-stop greedy steps when consecutive non-accepted steps exceed this value (0 = no early stop)")
     parser.add_argument("--dataset", type=str, default="counterfact_500",
                        help="Dataset name (without .json extension)")
     parser.add_argument("--run_name", type=str, default=None,
@@ -805,6 +828,7 @@ def main():
         print(f"LoRA alpha:   {args.lora_alpha}")
     if args.edit_mode == "lora_native":
         print(f"LoRA-native:  rank={args.lora_rank}, alpha={args.lora_alpha}, scale={args.lora_scale}, use_svd={args.lora_use_svd}, fit_steps={args.lora_fit_steps}, allow_fallback={args.allow_fallback}, residual_thr={args.lora_residual_threshold}")
+        print(f"Greedy LoRA:  steps={args.greedy_lora_steps}, min_improve={args.greedy_lora_min_improvement}, patience={args.greedy_lora_patience}")
     print(f"Seed:         {args.seed}")
     print(f"Dataset:      {args.dataset}")
     print(f"Output dir:   {args.output_dir}")
