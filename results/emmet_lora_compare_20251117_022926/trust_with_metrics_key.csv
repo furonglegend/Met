@@ -1,0 +1,3 @@
+run_dir,method,batch_size,replay_rate,efficacy_success,paraphrase_success,neighborhood_specificity,composite_score,trust_score_mean,trust_score_std,events
+results\emmet_lora_compare_20251117_022926\emmet_lora_r8,emmet,16,0.0,0.575,0.52,0.61,0.5683333333333334,,,13
+results\emmet_lora_compare_20251117_022926\emmet_raw,emmet,16,0.0,0.99,0.9225,0.521,0.8111666666666667,,,13
