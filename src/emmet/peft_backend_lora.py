@@ -144,14 +144,23 @@ class LoRANativeBackend:
         lora = self._ensure_lora_layer(module_path)
 
         # Target matrix to approximate.
-        # For GPT-2 Conv1D, the parameter weight is stored as (in_features, out_features)
-        # while LoRALayer's base_weight is (out_features, in_features). In that case
-        # we transpose delta so that LoRA factors approximate the correct update in
-        # the base_weight orientation.
-        if getattr(lora, "_is_conv1d", False):
-            target = delta.detach().to(lora.base_weight.device).clone().T * self.scale
+        # Align delta orientation with the LoRA base_weight purely by shape:
+        # - On the first edit for a Conv1D-backed layer, delta matches the
+        #   original Conv1D weight (in_features, out_features), while
+        #   base_weight is stored transposed as (out_features, in_features).
+        # - On subsequent edits (e.g., with replay), execute_emmet computes
+        #   deltas directly in base_weight orientation.
+        # We therefore compare shapes and only transpose when needed.
+        delta_dev = delta.detach().to(lora.base_weight.device).clone()
+        if delta_dev.shape == lora.base_weight.shape:
+            target = delta_dev * self.scale
+        elif delta_dev.T.shape == lora.base_weight.shape:
+            target = delta_dev.T * self.scale
         else:
-            target = delta.detach().to(lora.base_weight.device).clone() * self.scale
+            raise ValueError(
+                f"Delta shape {tuple(delta_dev.shape)} is incompatible with base_weight "
+                f"shape {tuple(lora.base_weight.shape)} for {weight_param_name}"
+            )
 
         if use_svd:
             # Full or economic SVD depending on dims
