@@ -8,14 +8,12 @@ EMMET 基线复现与评测脚本集合，支持 Memory Replay 机制。
 |------|------|------|----------|
 | `prepare_data.py` | 数据采样工具 | 从完整数据集中采样指定数量 | Phase 1.1 |
 | `run_baseline.py` | **主实验脚本** | 运行单个编辑实验并评测 | 所有 Phase |
-| `run_all_baselines.cmd/sh` | **三大基线对比** | ROME vs MEMIT vs EMMET | **Phase 1.2** |
-| `run_batch_experiments.py` | 批量实验运行器 | 网格搜索多个配置 | Phase 5.2 |
-| `run_lora_ablation.cmd/sh` | **LoRA 消融实验** | 测试不同 rank 的影响 | **Phase 3.2** |
-| `run_lora_native_ablation.cmd` | **LoRA 原生消融** | 测试 rank×fit_steps 的影响 | **Phase 3.2** |
-| `run_combined_experiments.cmd` | **组合配置实验** | Replay + LoRA 组合测试 | **Phase 3.2** |
+| `run_all_baselines.py/cmd/sh` | **三大基线对比 orchestrator** | ROME vs MEMIT vs EMMET，生成 timestamped `all_baselines_*` 套件目录 | **Phase 1.2** |
+| `run_batch_experiments.py` | 通用批量实验运行器 | 网格搜索多个配置 | Phase 5.2 |
+| `run_replay_ablation.py/cmd` | **Replay 消融 orchestrator** | 遍历 replay_rate/strategy/buffer，生成 `replay_ablation_*` 套件目录 | **Phase 2.3** |
+| `run_lora_native_ablation.py/cmd` | **LoRA 原生消融 orchestrator** | 在 `lora_native` 模式下测试 rank×fit_steps 网格，生成 `lora_native_ablation_*` 套件目录 | **Phase 3.2** |
+| `run_combined_experiments.py/cmd/sh` | **组合配置实验 orchestrator** | 一次性跑 baseline/Replay/LoRA 组合，生成 `combined_experiments_*` 套件目录 | **Phase 3.2** |
 | `analyze_results.py` | 结果分析脚本 | 聚合和统计实验结果（含 LoRA/Replay/Trust 可视化与 ablation_matrix/replay_ablation 等 CSV 导出） | Phase 5.3 |
-| `run_replay_ablation.cmd` | **Replay 消融实验** | 遍历 replay_rate/strategy/buffer | **Phase 2.3** |
-| `run_mvp_experiments.cmd/sh` | MVP 实验矩阵 | Phase 2 的 6 组最小实验 | **Phase 2** |
 | `analyze_trust_thresholds.py` | Trust 阈值分析脚本 | 基于 trust_with_metrics 对 trust_score_mean 做阈值扫描，导出 *_threshold_sweep.csv/.txt | Phase 4 |
 
 ## 🚀 快速开始
@@ -38,7 +36,7 @@ bash scripts/run_all_baselines.sh
 - MEMIT: 批量编辑（batch_size=32），200条
 - EMMET: 批量编辑（batch_size=32），200条
 
-**输出**: `results/baseline_comparison/` + `baseline_comparison.csv`
+**输出（示例）**: `results/all_baselines_YYYYMMDD_HHMMSS/` 下的 `rome_b1/`、`memit_b32/`、`emmet_b32/` 子目录 + `baseline_comparison_rome_memit.csv` 和 `figs/*.png`
 
 ### 第2步: Memory Replay 实验（Phase 2）
 
@@ -54,32 +52,26 @@ python scripts\run_baseline.py --method emmet --model gpt2 \
 scripts\run_replay_ablation.cmd
 ```
 
-### 第3步: LoRA 消融实验（Phase 3）
+### 第3步: LoRA 原生消融实验（Phase 3）
 
 ```bash
 # Windows
-scripts\run_lora_ablation.cmd
-
-# Linux
-bash scripts/run_lora_ablation.sh
-```
-
-测试不同 LoRA rank（4/8/16）对性能的影响。
-
-LoRA 原生（lora_native）消融（rank × fit_steps 网格）：
-
-```cmd
 scripts\run_lora_native_ablation.cmd
 ```
+
+该脚本会调用 `run_lora_native_ablation.py`，在 `lora_native` 模式下遍历多个 `lora_rank × lora_fit_steps` 组合，结果写入 `results/lora_native_ablation_YYYYMMDD_HHMMSS/`。
 
 ### 第4步: 组合配置实验
 
 ```bash
 # Windows
 scripts\run_combined_experiments.cmd
+
+# Linux
+bash scripts/run_combined_experiments.sh
 ```
 
-测试 EMMET + Replay + LoRA 的各种组合配置。
+测试 EMMET + Replay + LoRA 的各种组合配置，结果写入 `results/combined_experiments_YYYYMMDD_HHMMSS/`，并在该目录下生成 `combined_scores.png` 总览图。
 
 ## 📊 实验矩阵概览
 
@@ -95,11 +87,15 @@ scripts\run_combined_experiments.cmd
 
 **脚本**: `run_all_baselines.cmd`
 
-### MVP实验矩阵（TODO Phase 2）
+### MVP 实验矩阵（TODO Phase 2, 已由 orchestrator 覆盖）
 
 **目标**: 验证 Memory Replay 缓解遗忘
 
-根据 TODO.md Phase 2，最小可行实验包括:
+根据 TODO.md Phase 2，最小可行实验包括下表中的 6 组（不同 batch_size 和 replay_rate 的组合）。
+目前推荐通过以下两类脚本覆盖这些配置：
+
+- `run_batch_experiments.py`：通用网格搜索（可精确复刻表格中的配置）。
+- `run_replay_ablation.py/cmd`：固定 batch_size，扫 replay_rate/strategy/buffer。
 
 | 实验ID | 方法 | Batch Size | Replay Rate | 说明 |
 |--------|------|------------|-------------|------|
@@ -109,12 +105,6 @@ scripts\run_combined_experiments.cmd
 | 4 | EMMET | 1 | 0.3 | Replay-单条编辑 |
 | 5 | EMMET | 32 | 0.3 | Replay-中等批量 |
 | 6 | EMMET | 256 | 0.3 | Replay-大批量 |
-
-**固定参数**:
-
-- Model: GPT-2 (774M)
-- Num edits: 500
-- Seed: 42
 
 ## 🔧 脚本详解
 
@@ -222,13 +212,14 @@ bash scripts/run_all_baselines.sh
 3. **Neighborhood Specificity (NS)**: 知识局部性
 4. **时间与显存开销**: 效率对比
 
-**输出结构**:
+**输出结构（示例）**:
 ```plaintext
-results/baseline_comparison/
-├── rome_gpt2-xl_b1_20231114_*/     # ROME 结果
-├── memit_gpt2-xl_b32_20231114_*/   # MEMIT 结果
-├── emmet_gpt2-xl_b32_20231114_*/   # EMMET 结果
-└── baseline_comparison.csv          # 聚合对比表
+results/all_baselines_YYYYMMDD_HHMMSS/
+├── rome_b1/                        # ROME 结果
+├── memit_b32/                      # MEMIT 结果
+├── emmet_b32/                      # EMMET 结果
+├── baseline_comparison_rome_memit.csv   # 聚合对比表
+└── figs/                           # 可视化图像
 ```
 
 **关键点**（对应 TODO 1.2）:
@@ -318,44 +309,48 @@ python scripts/run_baseline.py \
 
 ### LoRA 实验脚本
 
-#### run_lora_ablation.cmd/sh - LoRA 消融实验
+#### run_lora_native_ablation.py/cmd - LoRA 原生消融实验
 
-测试不同 rank 对性能的影响：
+在 `lora_native` 编辑模式下测试不同 `lora_rank × lora_fit_steps` 组合：
 
 ```bash
 # Windows
-scripts\run_lora_ablation.cmd
+scripts\run_lora_native_ablation.cmd
 
-# Linux
-bash scripts/run_lora_ablation.sh
+# 也可以直接调用 Python orchestrator
+python scripts/run_lora_native_ablation.py \
+    --model gpt2 \
+    --dataset counterfact_sampled_unique_cf_10_20000 \
+    --num_edits 200 \
+    --batch_size 1 \
+    --ranks 4 8 16 \
+    --fit_steps_list 0 5 10
 ```
 
-**实验配置**:
+**输出结构（示例）**:
 
-- EMMET baseline (no LoRA)
-- EMMET + LoRA rank=4 (α=8)
-- EMMET + LoRA rank=8 (α=16)
-- EMMET + LoRA rank=16 (α=32)
+```plaintext
+results/lora_native_ablation_YYYYMMDD_HHMMSS/
+├── r4_s0/
+├── r4_s5/
+├── r8_s0/
+├── ...
+└── lora_native_ablation.csv
+```
 
-**固定参数**: MODEL=gpt2, NUM_EDITS=100, BATCH_SIZE=10, SEED=42
+#### run_combined_experiments.py/cmd/sh - 组合配置实验
 
-#### run_combined_experiments.cmd - 组合配置实验
-
-测试所有组合配置：
+测试 EMMET baseline / Replay / LoRA 以及多种组合配置，一次性产出一个套件目录：
 
 ```bash
+# Windows
 scripts\run_combined_experiments.cmd
+
+# Linux
+bash scripts/run_combined_experiments.sh
 ```
 
-**包含 7 种配置**:
-
-1. EMMET baseline
-2. EMMET + Replay (0.3)
-3. EMMET + LoRA (rank=8)
-4. EMMET + Replay (0.3) + LoRA (rank=8)
-5. EMMET + Replay (0.5) + LoRA (rank=4)
-6. EMMET + Replay (0.3) + LoRA (rank=16)
-7. EMMET + Replay (0.1) + LoRA (rank=8)
+该 orchestrator 会在 `results/combined_experiments_YYYYMMDD_HHMMSS/` 下创建多个短目录名子实验（如 `b16`, `b16_r0.3`, `b16_l8`, `b16_r0.3_l8`），并在同一目录下生成 `combined_scores.png` 总览图。
 
 ### LoRA 支持的模型
 
@@ -525,14 +520,18 @@ python scripts\analyze_results.py --results_dir results/baseline_comparison
 **目标**: 验证 Replay 机制缓解遗忘
 
 ```bash
-# 运行 MVP 实验矩阵（6组）
-scripts\run_mvp_experiments.cmd
+# 运行 Replay 消融实验（rate/strategy/buffer 网格）
+scripts\run_replay_ablation.cmd
 
-# 分析遗忘曲线
-python scripts\analyze_results.py --results_dir results/baseline
+# 或手动运行单个 Replay 实验
+python scripts/run_baseline.py --method emmet --model gpt2 \
+    --num_edits 200 --batch_size 32 --replay_rate 0.3 --seed 42
+
+# 分析遗忘与 Replay 效果
+python scripts\analyze_results.py --results_dir results
 ```
 
-**产出**: 遗忘曲线图 + Replay 效果分析
+**产出**: `replay_ablation_*` 套件目录 + 遗忘/Replay 效果分析图表
 
 ---
 
@@ -648,9 +647,9 @@ python scripts/prepare_data.py --num 500 --seed 42
 ### Day 1-2 (11/14-15) - EMMET基线
 
 ```bash
-# 选项1: 运行完整MVP矩阵
-scripts\run_mvp_experiments.cmd  # Windows
-bash scripts/run_mvp_experiments.sh  # Linux
+# 选项1: 运行组合配置实验套件
+scripts\run_combined_experiments.cmd  # Windows
+bash scripts/run_combined_experiments.sh  # Linux
 
 # 选项2: 手动运行单个实验
 python scripts/run_baseline.py --method emmet --model gpt2 --num_edits 500 --batch_size 32 --seed 42
@@ -776,7 +775,7 @@ set HF_ENDPOINT=https://hf-mirror.com  # Windows
 - [x] `run_batch_experiments.py` - 批量实验运行器
 - [x] `analyze_results.py` - 结果分析脚本
 - [x] `quick_test.cmd/sh` - 便携测试脚本
-- [x] `run_mvp_experiments.cmd/sh` - MVP实验矩阵脚本
+- [x] `run_combined_experiments.py/cmd/sh` - 组合配置 orchestrator（替代早期 MVP 实验脚本）
 - [x] 文档合并 (README.md)
 
 ### ⏰ 待实现 (Day 1-5)
@@ -842,5 +841,5 @@ set HF_ENDPOINT=https://hf-mirror.com  # Windows
 
 ---
 
-**最后更新**: 2025-11-13
-**状态**: Day 0 完成，所有基础脚本就绪 ✅
+**最后更新**: 2025-11-17
+**状态**: Day 0 完成，orchestrator 脚本与文档已对齐 ✅
