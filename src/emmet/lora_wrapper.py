@@ -61,16 +61,17 @@ class LoRALayer(nn.Module):
         self.alpha = alpha
         self.scaling = alpha / rank
         
-        # Store original weight (frozen)
+        # Store original weight (frozen) and record its device
         self.register_buffer('base_weight', original_weight.detach().clone())
+        device = self.base_weight.device
         
         out_features, in_features = original_weight.shape
         
-        # Initialize LoRA matrices
+        # Initialize LoRA matrices on the same device as base_weight
         # A: (rank, in_features) - initialized with kaiming uniform
         # B: (out_features, rank) - initialized with zeros (stable init)
-        self.lora_A = nn.Parameter(torch.zeros(rank, in_features))
-        self.lora_B = nn.Parameter(torch.zeros(out_features, rank))
+        self.lora_A = nn.Parameter(torch.zeros(rank, in_features, device=device))
+        self.lora_B = nn.Parameter(torch.zeros(out_features, rank, device=device))
         
         # Initialize A with small random values
         nn.init.kaiming_uniform_(self.lora_A, a=5**0.5)
