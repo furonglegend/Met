@@ -1,0 +1,5 @@
+,,,efficacy_success,efficacy_success,efficacy_success,paraphrase_success,paraphrase_success,paraphrase_success,neighborhood_specificity,neighborhood_specificity,neighborhood_specificity,composite_score,composite_score,composite_score
+,,,mean,std,count,mean,std,count,mean,std,count,mean,std,count
+method,batch_size,replay_rate,,,,,,,,,,,,
+memit,32,0.0,0.975,,1,0.8875,,1,0.7360000000000001,,1,0.8661666666666666,,1
+rome,1,0.0,0.705,,1,0.7,,1,0.5209999999999999,,1,0.6419999999999999,,1

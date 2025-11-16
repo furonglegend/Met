@@ -39,5 +39,5 @@ Thumbs.db
 pyproject.toml.bak
 data/stats/gpt2-xl/wikipedia_stats/transformer.h.17.mlp.c_proj_float32_mom2_100000.npz
 
-# Igore results
-results/
+# Ignore models
+*/stats/*
