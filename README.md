@@ -72,7 +72,7 @@ git clone <repo-url>
 cd emmet-stability-replay
 
 # 2. 创建环境（自动检测 GPU/CPU）
-make env
+
 
 # 3. 安装项目（开发模式）+ 可视化依赖
 make install
