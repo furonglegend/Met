@@ -244,10 +244,12 @@ class LoRANativeBackend:
 
         merged = base_w + delta.to(base_w.device)
         out_features, in_features = merged.shape
+        # Create a new Linear layer on the same device as the base weights
         new_linear = nn.Linear(in_features, out_features, bias=(bias is not None))
+        new_linear = new_linear.to(base_w.device)
         new_linear.weight.data.copy_(merged)
         if bias is not None:
-            new_linear.bias.data.copy_(bias)
+            new_linear.bias.data.copy_(bias.to(base_w.device))
 
         setattr(parent, child_name, new_linear)
         # remove registry entry if existed
