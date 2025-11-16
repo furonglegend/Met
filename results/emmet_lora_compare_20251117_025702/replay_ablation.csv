@@ -1,0 +1,2 @@
+method,batch_size,replay_rate,replay_strategy,replay_buffer_size,efficacy_success,paraphrase_success,neighborhood_specificity,composite_score
+emmet,16,0.0,random,200,0.69,0.6575,0.5715,0.6396666666666667
