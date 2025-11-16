@@ -159,8 +159,7 @@ def layer_stats(
 
     stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
 
-    # If we already have a cached stats file, load it directly and skip
-    # constructing a DataLoader.
+    # If we already have a cached stats file, load it directly and skip constructing a DataLoader.
     if ds is None and not force_recompute:
         if not filename.exists():
             raise RuntimeError(
@@ -170,19 +169,28 @@ def layer_stats(
         collected_features = None
         return stat, collected_features
 
-    # Otherwise, build a loader over the dataset and compute stats.
+    # Safety check: from here on, ds must be a real dataset.
+    if ds is None:
+        raise RuntimeError(
+            "Internal error: dataset is None but cache is not used. "
+            "This should not happen; please check layer_stats logic."
+        )
+
+    # If sample_size is None, default to full dataset length.
+    effective_sample_size = sample_size if sample_size is not None else len(ds)
+
     loader = tally(
         stat,
         ds,
         cache=(filename if not force_recompute else None),
-        sample_size=sample_size,
+        sample_size=effective_sample_size,
         batch_size=batch_size,
         collate_fn=length_collation(batch_tokens),
         pin_memory=True,
         random_sample=1,
         num_workers=0,
     )
-    batch_count = -(-(sample_size or len(ds)) // batch_size)
+    batch_count = -(-(effective_sample_size) // batch_size)
 
     collected_features = []
     total_collected_features = 0
