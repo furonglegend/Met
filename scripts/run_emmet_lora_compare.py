@@ -207,7 +207,7 @@ def main() -> int:
     parser.add_argument("--num_edits", type=int, default=200, help="Number of edits per run")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
-    parser.add_argument("--lora_rank", type=int, default=8, help="LoRA rank")
+    parser.add_argument("--lora_rank", type=int, default=16, help="LoRA rank")
     parser.add_argument(
         "--lora_fit_steps",
         type=int,

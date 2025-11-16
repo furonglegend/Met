@@ -44,11 +44,13 @@ class ExperimentConfig:
         self.replay_weight = args.replay_weight if hasattr(args, 'replay_weight') else 1.0
         self.use_lora = args.use_lora if hasattr(args, 'use_lora') else False
         self.edit_mode = args.edit_mode if hasattr(args, 'edit_mode') else "raw"
-        self.lora_rank = args.lora_rank if hasattr(args, 'lora_rank') else 8
+        self.lora_rank = args.lora_rank if hasattr(args, 'lora_rank') else 16
         self.lora_alpha = args.lora_alpha if hasattr(args, 'lora_alpha') else 16.0
         self.lora_scale = args.lora_scale if hasattr(args, 'lora_scale') else 1.0
         self.lora_use_svd = args.lora_use_svd if hasattr(args, 'lora_use_svd') else True
         self.lora_fit_steps = args.lora_fit_steps if hasattr(args, 'lora_fit_steps') else 0
+        self.allow_fallback = getattr(args, 'allow_fallback', False)
+        self.lora_residual_threshold = getattr(args, 'lora_residual_threshold', None)
         # Trust / Rollback
         self.trust_enable = getattr(args, 'trust_enable', False)
         self.trust_threshold = getattr(args, 'trust_threshold', 0.3)
@@ -747,7 +749,7 @@ def main():
     parser.add_argument("--edit_mode", type=str, default="raw",
                        choices=["raw", "lora_native"],
                        help="Editing application mode: raw updates or native LoRA overlays")
-    parser.add_argument("--lora_rank", type=int, default=8,
+    parser.add_argument("--lora_rank", type=int, default=16,
                        help="LoRA rank (number of low-rank dimensions)")
     parser.add_argument("--lora_alpha", type=float, default=16.0,
                        help="LoRA alpha scaling factor")
@@ -760,9 +762,9 @@ def main():
     parser.set_defaults(lora_use_svd=True)
     parser.add_argument("--lora_fit_steps", type=int, default=0,
                        help="Optional tiny fitting steps to refine LoRA factors")
-    parser.add_argument("--allow_fallback", action="store_true",
+    parser.add_argument("--allow_fallback", action="store_true", default=True,
                        help="Allow residual-guard fallback to raw updates when mapping is poor or fails")
-    parser.add_argument("--lora_residual_threshold", type=float, default=None,
+    parser.add_argument("--lora_residual_threshold", type=float, default=0.3,
                        help="Residual threshold to trigger fallback; if omitted, only failures trigger fallback")
     parser.add_argument("--dataset", type=str, default="counterfact_500",
                        help="Dataset name (without .json extension)")

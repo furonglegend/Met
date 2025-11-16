@@ -18,7 +18,7 @@ python scripts\run_emmet_lora_compare.py ^
     --num_edits 200 ^
     --batch_size 16 ^
     --seed 42 ^
-    --lora_rank 8 ^
+    --lora_rank 16 ^
     --lora_fit_steps 0 ^
     --output_root results
 
