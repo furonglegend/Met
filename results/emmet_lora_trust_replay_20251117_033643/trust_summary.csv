@@ -1,0 +1,5 @@
+run_dir,events,trust_score_mean,trust_score_std,rollback_count,scale_count,applied_count
+results\emmet_lora_trust_replay_20251117_033643\emmet_b16,13,,,0,0,0
+results\emmet_lora_trust_replay_20251117_033643\emmet_b16_r0.3,13,,,0,0,0
+results\emmet_lora_trust_replay_20251117_033643\emmet_b16_r0.3_l16,13,,,0,0,0
+results\emmet_lora_trust_replay_20251117_033643\emmet_b16_r0.3_l16_trust,13,,,0,0,0

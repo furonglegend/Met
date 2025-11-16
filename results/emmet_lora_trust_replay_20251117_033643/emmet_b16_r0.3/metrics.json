@@ -1,0 +1,10 @@
+{
+  "efficacy_success": 0.985,
+  "paraphrase_success": 0.92,
+  "neighborhood_specificity": 0.522,
+  "num_examples": 200,
+  "num_evaluated": 200,
+  "composite_score": 0.809,
+  "duration_seconds": 76.214177,
+  "duration_formatted": "0:01:16.214177"
+}

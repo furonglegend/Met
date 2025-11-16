@@ -1,0 +1,24 @@
+================================================================================
+EXPERIMENTAL RESULTS REPORT
+================================================================================
+
+Total Experiments: 4
+Analysis Date: 2025-11-17 03:42:10
+
+--------------------------------------------------------------------------------
+Results by Method:
+--------------------------------------------------------------------------------
+
+method=emmet_replay_rate=0.0_batch_size=16:
+  Count: 1
+  Efficacy Success (ES): 0.9900 ± nan
+  Paraphrase Success (PS): 0.9225 ± nan
+  Neighborhood Specificity (NS): 0.5210 ± nan
+  Composite Score (S): 0.8112 ± nan
+
+method=emmet_replay_rate=0.3_batch_size=16:
+  Count: 3
+  Efficacy Success (ES): 0.8083 ± 0.1530
+  Paraphrase Success (PS): 0.7650 ± 0.1342
+  Neighborhood Specificity (NS): 0.5587 ± 0.0318
+  Composite Score (S): 0.7107 ± 0.0852

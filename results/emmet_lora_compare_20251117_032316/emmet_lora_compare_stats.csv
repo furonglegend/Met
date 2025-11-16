@@ -1,0 +1,4 @@
+,,,efficacy_success,efficacy_success,efficacy_success,paraphrase_success,paraphrase_success,paraphrase_success,neighborhood_specificity,neighborhood_specificity,neighborhood_specificity,composite_score,composite_score,composite_score
+,,,mean,std,count,mean,std,count,mean,std,count,mean,std,count
+method,batch_size,replay_rate,,,,,,,,,,,,
+emmet,16,0.0,0.84,0.21213203435596428,2,0.7925,0.18384776310850237,2,0.552,0.043840620433565944,2,0.7281666666666666,0.11737972567696696,2

@@ -1,0 +1,3 @@
+method,model,batch_size,replay_rate,replay_strategy,replay_buffer_size,edit_mode,lora_rank,lora_alpha,trust_enable,efficacy_success,paraphrase_success,neighborhood_specificity,composite_score
+emmet,gpt2,16,0.0,random,200,lora_native,16,16.0,False,0.69,0.6625,0.583,0.6451666666666667
+emmet,gpt2,16,0.0,random,200,raw,16,16.0,False,0.99,0.9225,0.521,0.8111666666666667
