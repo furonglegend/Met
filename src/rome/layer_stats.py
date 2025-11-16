@@ -158,7 +158,11 @@ def layer_stats(
     if progress is None:
         progress = lambda x: x
 
-    stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
+    if ds is None and not force_recompute:
+        # 直接走 “完全依赖 npz” 的路径，不用 tally
+        stat = CombinedStat(**{k: STAT_TYPES[k]() for k in to_collect})
+        stat.load(filename)   # CombinedStat 自己就有 .load()
+        return stat, None
     loader = tally(
         stat,
         ds,
