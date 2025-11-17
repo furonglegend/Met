@@ -21,5 +21,9 @@
     "mom2_dtype": "float32",
     "calculate_objective_value": true,
     "update_norm_lambda": 0,
-    "emmet_lambda": 0.1
+    "emmet_lambda": 0.1,
+    "greedy_lora_steps": 4,
+    "greedy_lora_min_improvement": 0.02,
+    "greedy_lora_patience": 1,
+    "greedy_lora_use_distance_only": false
 }
