@@ -1,0 +1,252 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 4,
+    "num_edits": 4,
+    "subjects": [
+      "Nicholas Fairbairn",
+      "Alston G. Dayton",
+      "Sunday Night Baseball",
+      "Primorsky Krai"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.2596237375520254,
+        "new_edit_distance": 111.10136787783357,
+        "old_edit_distance": 133.2928248548008,
+        "delta_norm": 3.748607134864519,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 136.42691040039062,
+          "cur_zs_norm": 114.80532836914062,
+          "layer_ks_norm": 15.127517564012567,
+          "adj_norm": 0.09136577608567488,
+          "residual_norm": 79.7190776210499,
+          "inside_update_norm": 14.994428539458076,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.17734829628675755,
+          "D_norm": 24.86600911460179,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5563203412581365,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 1,
+        "greedy_accept": true,
+        "greedy_scale": 0.25,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 1,
+    "start_idx": 4,
+    "end_idx": 8,
+    "num_edits": 4,
+    "subjects": [
+      "Henrique Maximiano Coelho Neto",
+      "Sheryl Crow",
+      "Manuel Ferraz de Campos Sales",
+      "Nintendo Software Planning & Development"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.5058910051904726,
+        "new_edit_distance": 119.51848442335131,
+        "old_edit_distance": 146.87558772059097,
+        "delta_norm": 4.100681163747639,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 149.39236450195312,
+          "cur_zs_norm": 122.69422912597656,
+          "layer_ks_norm": 14.740915920050089,
+          "adj_norm": 0.0914483384000665,
+          "residual_norm": 89.94832595214089,
+          "inside_update_norm": 16.402724654990557,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2005089006054772,
+          "D_norm": 21.571207126341758,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5629096891119502,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 1,
+        "greedy_accept": true,
+        "greedy_scale": 0.25,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 2,
+    "start_idx": 8,
+    "end_idx": 12,
+    "num_edits": 4,
+    "subjects": [
+      "Karim Abdul Razak",
+      "Norway",
+      "Opeth",
+      "Merisant"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.8117149868649383,
+        "new_edit_distance": 122.32025933719588,
+        "old_edit_distance": 149.89255828372288,
+        "delta_norm": 4.828289586141428,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 152.81817626953125,
+          "cur_zs_norm": 126.54928588867188,
+          "layer_ks_norm": 14.115326438522176,
+          "adj_norm": 0.09487646882259643,
+          "residual_norm": 94.91196201982567,
+          "inside_update_norm": 19.31315834456571,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2502495703712263,
+          "D_norm": 21.2876822242858,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5618521002711041,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 1,
+        "greedy_accept": true,
+        "greedy_scale": 0.25,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 3,
+    "start_idx": 12,
+    "end_idx": 16,
+    "num_edits": 4,
+    "subjects": [
+      "Wallace Carothers",
+      "The Bronx Is Burning",
+      "Cloud Nothings",
+      "Antonio Vivaldi"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.5031028596362161,
+        "new_edit_distance": 107.20675967262358,
+        "old_edit_distance": 132.9414550343219,
+        "delta_norm": 4.038271353985103,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 135.60568237304688,
+          "cur_zs_norm": 110.8389892578125,
+          "layer_ks_norm": 14.616632044706083,
+          "adj_norm": 0.09825270117072896,
+          "residual_norm": 82.13473035099234,
+          "inside_update_norm": 16.153085415940414,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2556664287396929,
+          "D_norm": 20.32921530884714,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5652230020262305,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 1,
+        "greedy_accept": true,
+        "greedy_scale": 0.25,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 4,
+    "start_idx": 16,
+    "end_idx": 20,
+    "num_edits": 4,
+    "subjects": [
+      "Bernard Giraudeau",
+      "Bob Mason",
+      "Hilary Putnam",
+      "Philippine Lotto Draw"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.766731546927508,
+        "new_edit_distance": 117.25633230502419,
+        "old_edit_distance": 145.58490641042897,
+        "delta_norm": 0.0,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 148.0963134765625,
+          "cur_zs_norm": 120.99623107910156,
+          "layer_ks_norm": 13.211076738136054,
+          "adj_norm": 0.10582579588753581,
+          "residual_norm": 90.74717265374524,
+          "inside_update_norm": 19.573381481775026,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.26218814751104835,
+          "D_norm": 17.314253921968486,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.565437642558588,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": false,
+        "greedy_scale": 0.25,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  }
+]

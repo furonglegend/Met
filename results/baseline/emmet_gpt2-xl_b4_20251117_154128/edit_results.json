@@ -1,0 +1,252 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 4,
+    "num_edits": 4,
+    "subjects": [
+      "Nicholas Fairbairn",
+      "Alston G. Dayton",
+      "Sunday Night Baseball",
+      "Primorsky Krai"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.2596237375520254,
+        "new_edit_distance": 111.10136787783357,
+        "old_edit_distance": 133.2928248548008,
+        "delta_norm": 14.994428539458076,
+        "new_weights_norm": 118.09416961669922,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 136.42691040039062,
+          "cur_zs_norm": 114.80532836914062,
+          "layer_ks_norm": 15.127517564012567,
+          "adj_norm": 0.09136577608567488,
+          "residual_norm": 79.7190776210499,
+          "inside_update_norm": 14.994428539458076,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.17734829628675755,
+          "D_norm": 24.86600911460179,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "raw",
+        "trust_enable": false,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 1,
+    "start_idx": 4,
+    "end_idx": 8,
+    "num_edits": 4,
+    "subjects": [
+      "Henrique Maximiano Coelho Neto",
+      "Sheryl Crow",
+      "Manuel Ferraz de Campos Sales",
+      "Nintendo Software Planning & Development"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.5514700427044126,
+        "new_edit_distance": 119.44911482903181,
+        "old_edit_distance": 147.43614862833584,
+        "delta_norm": 16.963075497743304,
+        "new_weights_norm": 119.33148956298828,
+        "original_weights_norm": 118.09416961669922,
+        "inside_norms": {
+          "zs_norm": 150.4373779296875,
+          "cur_zs_norm": 122.8612289428711,
+          "layer_ks_norm": 14.740915920050089,
+          "adj_norm": 0.0914483384000665,
+          "residual_norm": 92.14591925211192,
+          "inside_update_norm": 16.963075497743304,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2005089006054772,
+          "D_norm": 21.571207126341758,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "raw",
+        "trust_enable": false,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 2,
+    "start_idx": 8,
+    "end_idx": 12,
+    "num_edits": 4,
+    "subjects": [
+      "Karim Abdul Razak",
+      "Norway",
+      "Opeth",
+      "Merisant"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.8134169889025797,
+        "new_edit_distance": 122.33300371956447,
+        "old_edit_distance": 149.91429393749092,
+        "delta_norm": 19.330933353700242,
+        "new_weights_norm": 120.86603546142578,
+        "original_weights_norm": 119.33148956298828,
+        "inside_norms": {
+          "zs_norm": 152.93914794921875,
+          "cur_zs_norm": 126.61721801757812,
+          "layer_ks_norm": 14.115326438522176,
+          "adj_norm": 0.09487646882259643,
+          "residual_norm": 94.96291203309559,
+          "inside_update_norm": 19.330933353700242,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2502495703712263,
+          "D_norm": 21.2876822242858,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "raw",
+        "trust_enable": false,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 3,
+    "start_idx": 12,
+    "end_idx": 16,
+    "num_edits": 4,
+    "subjects": [
+      "Wallace Carothers",
+      "The Bronx Is Burning",
+      "Cloud Nothings",
+      "Antonio Vivaldi"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.5038134444964577,
+        "new_edit_distance": 107.23332439326617,
+        "old_edit_distance": 132.81377550614468,
+        "delta_norm": 16.156880546068802,
+        "new_weights_norm": 121.95600891113281,
+        "original_weights_norm": 120.86603546142578,
+        "inside_norms": {
+          "zs_norm": 136.13014221191406,
+          "cur_zs_norm": 110.86258697509766,
+          "layer_ks_norm": 14.616632044706083,
+          "adj_norm": 0.09825270117072896,
+          "residual_norm": 82.1434408343333,
+          "inside_update_norm": 16.156880546068802,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.2556664287396929,
+          "D_norm": 20.32921530884714,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "raw",
+        "trust_enable": false,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 4,
+    "start_idx": 16,
+    "end_idx": 20,
+    "num_edits": 4,
+    "subjects": [
+      "Bernard Giraudeau",
+      "Bob Mason",
+      "Hilary Putnam",
+      "Philippine Lotto Draw"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.7725257202699538,
+        "new_edit_distance": 117.25415737885125,
+        "old_edit_distance": 145.5135483691114,
+        "delta_norm": 19.653982245322815,
+        "new_weights_norm": 123.54337310791016,
+        "original_weights_norm": 121.95600891113281,
+        "inside_norms": {
+          "zs_norm": 148.87588500976562,
+          "cur_zs_norm": 121.16180419921875,
+          "layer_ks_norm": 13.211076738136054,
+          "adj_norm": 0.10582579588753581,
+          "residual_norm": 90.87135082834305,
+          "inside_update_norm": 19.653982245322815,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.26218814751104835,
+          "D_norm": 17.314253921968486,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "raw",
+        "trust_enable": false,
+        "trust_score": null,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 1.0,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  }
+]

@@ -657,8 +657,8 @@ class BaselineRunner:
         metrics["composite_score"] = (
             metrics["efficacy_success"] + 
             metrics["paraphrase_success"] + 
-            metrics["neighborhood_specificity"]
-        ) / 3.0
+            3.0 * metrics["neighborhood_specificity"]
+        ) / 5.0
         
         self.logger.info("\n" + "="*80)
         self.logger.info("EVALUATION RESULTS:")

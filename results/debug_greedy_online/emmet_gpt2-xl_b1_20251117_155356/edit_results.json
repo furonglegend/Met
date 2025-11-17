@@ -1,0 +1,49 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 1,
+    "num_edits": 1,
+    "subjects": [
+      "Nicholas Fairbairn"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.42198462387199237,
+        "new_edit_distance": 97.00294926654105,
+        "old_edit_distance": 117.17071001764873,
+        "delta_norm": 1.454036396559528,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 120.02680969238281,
+          "cur_zs_norm": 100.09766387939453,
+          "layer_ks_norm": 15.351907717770999,
+          "adj_norm": 0.08675342530646922,
+          "residual_norm": 67.04225874300322,
+          "inside_update_norm": 5.816145586238112,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08328406328688329,
+          "D_norm": 12.007099083955161,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5591148352368291,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 1,
+        "greedy_accept": true,
+        "greedy_scale": 0.25,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  }
+]

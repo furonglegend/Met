@@ -1,0 +1,21 @@
+example_id,subject,target_new,target_true,efficacy_score,paraphrase_score,neighborhood_score
+0,Nicholas Fairbairn,Vienna,London,1.0,1.0,1.0
+1,Alston G. Dayton,actor,politician,1.0,0.5,0.2
+2,Sunday Night Baseball,CBS,ESPN,1.0,1.0,0.8
+3,Primorsky Krai,Antarctica,Asia,1.0,1.0,1.0
+4,Henrique Maximiano Coelho Neto,Norway,Brazil,1.0,1.0,0.4
+5,Sheryl Crow,trumpet,guitar,1.0,1.0,1.0
+6,Manuel Ferraz de Campos Sales,Spain,Brazil,1.0,1.0,0.6
+7,Nintendo Software Planning & Development,Paris,Japan,1.0,1.0,1.0
+8,Karim Abdul Razak,outfielder,midfielder,1.0,0.5,1.0
+9,Norway,Rome,Oslo,1.0,0.0,1.0
+10,Opeth,Italy,Sweden,1.0,1.0,0.8
+11,Merisant,Montreal,Chicago,1.0,1.0,1.0
+12,Wallace Carothers,musician,chemistry,1.0,1.0,1.0
+13,The Bronx Is Burning,CNN,ESPN,1.0,1.0,1.0
+14,Cloud Nothings,Belgium,Cleveland,1.0,1.0,0.8
+15,Antonio Vivaldi,jazz,opera,1.0,1.0,0.2
+16,Bernard Giraudeau,Polish,French,0.0,0.0,1.0
+17,Bob Mason,midfielder,goaltender,0.0,1.0,0.2
+18,Hilary Putnam,actor,philosopher,1.0,0.5,0.6
+19,Philippine Lotto Draw,Italy,Philippines,1.0,0.5,0.0
