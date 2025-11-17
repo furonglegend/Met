@@ -1,0 +1,58 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 10,
+    "num_edits": 10,
+    "subjects": [
+      "Nicholas Fairbairn",
+      "Alston G. Dayton",
+      "Sunday Night Baseball",
+      "Primorsky Krai",
+      "Henrique Maximiano Coelho Neto",
+      "Sheryl Crow",
+      "Manuel Ferraz de Campos Sales",
+      "Nintendo Software Planning & Development",
+      "Karim Abdul Razak",
+      "Norway"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 2.6376516182633125,
+        "new_edit_distance": 118.13763355084866,
+        "old_edit_distance": 143.25192040362114,
+        "delta_norm": 0.27422518201166096,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 145.9175567626953,
+          "cur_zs_norm": 121.54212951660156,
+          "layer_ks_norm": 14.623966160996922,
+          "adj_norm": 0.09354953087774592,
+          "residual_norm": 88.60262925337132,
+          "inside_update_norm": 27.422518201166096,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.34855706606134307,
+          "D_norm": 35.42471858758792,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5579778317011058,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 99,
+        "greedy_accept": true,
+        "greedy_scale": 0.01,
+        "greedy_reason": null
+      }
+    },
+    "status": "success"
+  }
+]

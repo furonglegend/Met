@@ -1,17 +1,5 @@
 # Greedy LoRA + Online ES/PS/NS Improvement ToDo
-python scripts/run_baseline.py `
-  --method emmet `
-  --model gpt2 `
-  --dataset counterfact_500 `
-  --num_edits 20 `
-  --batch_size 4 `
-  --edit_mode lora_native `
-  --lora_rank 16 `
-  --trust_enable `
-  --greedy_lora_steps 4 `
-  --greedy_lora_min_improvement 0.02 `
-  --greedy_lora_patience 1 `
-  --output_dir results/debug_greedy_online
+python scripts/run_baseline.py --method emmet --model gpt2-xl --dataset counterfact_500 --num_edits 20 --batch_size 4 --edit_mode lora_native --lora_rank 16 --trust_enable --greedy_lora_steps 4 --greedy_lora_min_improvement 0.02 --greedy_lora_patience 1 --output_dir results/debug_greedy_online
 > 目标：让 `greedy_lora_min_improvement` 真正变成“在线指标改进门槛”，即：
 > 在 LoRA-native + Greedy 路径中，每一步小步更新后，对一个小批 probe prompts 在线计算 ES/PS/NS（或 composite）；
 > 如果当前步的指标相对上一状态没有达到最小改进量，就**不接受**这一步（回滚这一步的 LoRA 更新），并根据 patience 提前终止 greedy。

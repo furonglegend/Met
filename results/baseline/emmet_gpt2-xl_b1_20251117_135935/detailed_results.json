@@ -1,0 +1,92 @@
+[
+  {
+    "example_id": 0,
+    "subject": "Nicholas Fairbairn",
+    "target_new": "Vienna",
+    "target_true": "London",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 1,
+    "subject": "Alston G. Dayton",
+    "target_new": "actor",
+    "target_true": "politician",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 0.2
+  },
+  {
+    "example_id": 2,
+    "subject": "Sunday Night Baseball",
+    "target_new": "CBS",
+    "target_true": "ESPN",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.8
+  },
+  {
+    "example_id": 3,
+    "subject": "Primorsky Krai",
+    "target_new": "Antarctica",
+    "target_true": "Asia",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 4,
+    "subject": "Henrique Maximiano Coelho Neto",
+    "target_new": "Norway",
+    "target_true": "Brazil",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.4
+  },
+  {
+    "example_id": 5,
+    "subject": "Sheryl Crow",
+    "target_new": "trumpet",
+    "target_true": "guitar",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 6,
+    "subject": "Manuel Ferraz de Campos Sales",
+    "target_new": "Spain",
+    "target_true": "Brazil",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.6
+  },
+  {
+    "example_id": 7,
+    "subject": "Nintendo Software Planning & Development",
+    "target_new": "Paris",
+    "target_true": "Japan",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 8,
+    "subject": "Karim Abdul Razak",
+    "target_new": "outfielder",
+    "target_true": "midfielder",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.5,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 9,
+    "subject": "Norway",
+    "target_new": "Rome",
+    "target_true": "Oslo",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 0.0,
+    "neighborhood_score": 0.6
+  }
+]
