@@ -1,0 +1,20 @@
+[
+  {
+    "example_id": 0,
+    "subject": "Nicholas Fairbairn",
+    "target_new": "Vienna",
+    "target_true": "London",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 1.0
+  },
+  {
+    "example_id": 1,
+    "subject": "Alston G. Dayton",
+    "target_new": "actor",
+    "target_true": "politician",
+    "efficacy_score": 1.0,
+    "paraphrase_score": 1.0,
+    "neighborhood_score": 0.2
+  }
+]
