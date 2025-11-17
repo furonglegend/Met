@@ -1,0 +1,10 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 10,
+    "num_edits": 10,
+    "status": "failed",
+    "error": "local variable 'ds' referenced before assignment"
+  }
+]
