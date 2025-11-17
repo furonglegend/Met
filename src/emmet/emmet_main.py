@@ -1,7 +1,7 @@
 import os
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Callable
 
 import numpy as np
 import torch
@@ -54,6 +54,7 @@ def apply_emmet_to_model(
     copy=False,
     return_orig_weights=False,
     cache_template: Optional[str] = None,
+    metric_fn: Optional[Callable[[AutoModelForCausalLM, AutoTokenizer, List[Dict]], Dict[str, float]]] = None,
 ) -> Tuple[AutoModelForCausalLM, Dict[str, Any]]:
     """
     Returns a model with the desired changes.
@@ -106,6 +107,13 @@ def apply_emmet_to_model(
         # the closed-form update into several smaller steps. For raw editing
         # (no LoRA), we still apply a single full update for numerical
         # consistency with the original implementation.
+        # For online greedy evaluation we reuse a fixed small probe subset
+        # from this batch to avoid per-layer resampling.
+        probe_requests: List[Dict] = []
+        if use_lora_native and metric_fn is not None and len(requests) > 0:
+            max_probes = min(8, len(requests))
+            probe_requests = requests[:max_probes]
+
         for w_name, (key_mat, val_mat, preservation_distance, new_edit_distance, old_edit_distance, inside_norms) in deltas.items():
             key_mat, val_mat = key_mat.to("cuda"), val_mat.to("cuda")
             base_upd_matrix = key_mat @ val_mat.T
@@ -128,6 +136,7 @@ def apply_emmet_to_model(
             lora_residual_rel = None
             lora_fallback = False
             lora_fallback_reason = None
+            greedy_reason = None
 
             # Raw mode: keep single-step behavior for safety and reproducibility.
             if not use_lora_native or lora_backend is None:
@@ -165,6 +174,17 @@ def apply_emmet_to_model(
                 patience_counter = 0
                 last_accepted_step = -1
 
+                # Baseline metrics before any greedy step (if enabled).
+                best_metrics = None
+                last_composite = None
+                if metric_fn is not None and probe_requests:
+                    try:
+                        best_metrics = metric_fn(model, tok, probe_requests)
+                        last_composite = best_metrics.get("composite", None)
+                    except Exception:
+                        best_metrics = None
+                        last_composite = None
+
                 for greedy_step in range(greedy_steps):
                     # Split the closed-form update into equal small steps.
                     step_scale = 1.0 / float(greedy_steps)
@@ -195,6 +215,14 @@ def apply_emmet_to_model(
                         new_weights_norm = torch.norm(w[...]).detach().cpu().item()
                         break
 
+                    # Snapshot current LoRA state for potential rollback.
+                    snapshot_state = None
+                    if metric_fn is not None and not getattr(hparams, "greedy_lora_use_distance_only", True):
+                        try:
+                            snapshot_state = lora_backend.snapshot_layer_state(w_name)
+                        except Exception:
+                            snapshot_state = None
+
                     # Apply this small step into LoRA factors.
                     try:
                         lora_backend.apply_delta(
@@ -211,10 +239,42 @@ def apply_emmet_to_model(
                         else:
                             raise
 
-                    # Track cumulative norm of applied deltas (approximate guard).
+                    # If we have an online metric_fn and are not distance-only,
+                    # evaluate this step and decide accept / rollback.
+                    step_accepted = True
+                    if metric_fn is not None and not getattr(hparams, "greedy_lora_use_distance_only", True) and last_composite is not None:
+                        try:
+                            current_metrics = metric_fn(model, tok, probe_requests)
+                            curr_comp = current_metrics.get("composite", None)
+                        except Exception:
+                            current_metrics = None
+                            curr_comp = None
+                        if curr_comp is not None:
+                            improvement = curr_comp - last_composite
+                            if improvement >= greedy_min_improve:
+                                best_metrics = current_metrics
+                                last_composite = curr_comp
+                                last_accepted_step = greedy_step
+                                greedy_reason = "metric_improved"
+                            else:
+                                # Roll back this step if snapshot is available.
+                                if snapshot_state is not None:
+                                    try:
+                                        lora_backend.restore_layer_state(w_name, snapshot_state)
+                                    except Exception:
+                                        pass
+                                step_accepted = False
+                                greedy_reason = "no_improvement"
+                                patience_counter += 1
+                                if greedy_patience > 0 and patience_counter >= greedy_patience:
+                                    break
+                                # Skip magnitude guard updates for rejected step.
+                                continue
+
+                    # Track cumulative norm of accepted deltas (approx guard).
                     step_norm = torch.norm(upd_matrix).detach().cpu().item()
                     cumulative_delta_norm += step_norm
-                    last_accepted_step = greedy_step
+                    last_accepted_step = greedy_step if step_accepted else last_accepted_step
                     effective_upd_matrix = upd_matrix
 
                     # Simple improvement / magnitude guard: if we have already
@@ -225,7 +285,7 @@ def apply_emmet_to_model(
                     # Patience: if configured, allow early stopping after a
                     # certain number of extra steps. Here we treat all applied
                     # steps as "accepted", so patience is a simple cap.
-                    if greedy_patience > 0:
+                    if greedy_patience > 0 and (metric_fn is None or getattr(hparams, "greedy_lora_use_distance_only", True)):
                         patience_counter += 1
                         if patience_counter >= greedy_patience:
                             break
@@ -260,7 +320,7 @@ def apply_emmet_to_model(
             temp_dict['greedy_step'] = 0 if not use_lora_native else max(0, last_accepted_step)
             temp_dict['greedy_accept'] = (effective_upd_matrix is not None)
             temp_dict['greedy_scale'] = 1.0 if not use_lora_native else (1.0 / float(greedy_steps) if greedy_steps > 0 else 1.0)
-            temp_dict['greedy_reason'] = None
+            temp_dict['greedy_reason'] = greedy_reason
             distances[layer] = temp_dict
 
     if use_lora_native:

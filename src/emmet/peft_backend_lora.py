@@ -266,3 +266,29 @@ class LoRANativeBackend:
             "lora_params": float(lora_params),
             "lora_percentage": float(lora_params) / float(total) * 100.0 if total > 0 else 0.0,
         }
+
+    @torch.no_grad()
+    def snapshot_layer_state(self, weight_param_name: str) -> Dict[str, torch.Tensor]:
+        """Take a lightweight snapshot of the LoRA factors for one layer.
+
+        The snapshot can be used with ``restore_layer_state`` to roll back the
+        last greedy step when online ES/PS/NS does not improve enough.
+        """
+        assert weight_param_name.endswith(".weight"), "Expected a .weight parameter name"
+        module_path = weight_param_name[:-7]
+        layer = self._ensure_lora_layer(module_path)
+        return {
+            "A": layer.lora_A.detach().clone(),
+            "B": layer.lora_B.detach().clone(),
+        }
+
+    @torch.no_grad()
+    def restore_layer_state(self, weight_param_name: str, state: Dict[str, torch.Tensor]) -> None:
+        """Restore LoRA factors for one layer from a snapshot."""
+        assert weight_param_name.endswith(".weight"), "Expected a .weight parameter name"
+        module_path = weight_param_name[:-7]
+        layer = self._ensure_lora_layer(module_path)
+        if "A" in state:
+            layer.lora_A.data.copy_(state["A"])
+        if "B" in state:
+            layer.lora_B.data.copy_(state["B"])

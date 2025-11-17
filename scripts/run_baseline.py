@@ -16,7 +16,7 @@ from datetime import datetime
 from pathlib import Path
 import logging
 import random
-from typing import Dict, List
+from typing import Dict, List, Callable, Optional
 
 import torch
 import numpy as np
@@ -214,6 +214,66 @@ class BaselineRunner:
         self.logger.info(f"Model loaded: {total_params:,} parameters on {self.config.device}")
         
         return model, tok
+
+    def _make_metric_fn(self, max_probes: int = 8) -> Callable[[AutoModelForCausalLM, AutoTokenizer, List[Dict]], Dict[str, float]]:
+        """Build a lightweight online ES/PS/NS evaluator for greedy LoRA.
+
+        This reuses ``_test_prediction`` and limits the number of probe
+        requests to keep the extra cost manageable.
+        """
+
+        def metric_fn(model, tokenizer, probe_requests: List[Dict]) -> Dict[str, float]:
+            if not probe_requests:
+                return {"es": 0.0, "ps": 0.0, "ns": 0.0, "composite": 0.0}
+
+            # Truncate to at most ``max_probes`` to bound compute.
+            subset = probe_requests[: max_probes]
+            es_list, ps_list, ns_list = [], [], []
+            for rq in subset:
+                try:
+                    subject = rq.get("subject", "")
+                    target_new = rq.get("target_new", {}).get("str", "")
+                    target_true = rq.get("target_true", {}).get("str", "")
+                    rewrite_prompt = rq.get("prompt", "").format(subject)
+                    es = self._test_prediction(model, tokenizer, rewrite_prompt, target_new, target_true)
+
+                    # Paraphrase prompts
+                    paraphrase_prompts = rq.get("paraphrase_prompts", [])
+                    if paraphrase_prompts:
+                        pps = paraphrase_prompts[:3]
+                        ps_vals = [
+                            self._test_prediction(model, tokenizer, pp, target_new, target_true)
+                            for pp in pps
+                        ]
+                        ps = float(np.mean(ps_vals)) if ps_vals else 0.0
+                    else:
+                        ps = 0.0
+
+                    # Neighborhood prompts (should preserve original)
+                    neighborhood_prompts = rq.get("neighborhood_prompts", [])
+                    if neighborhood_prompts:
+                        nps = neighborhood_prompts[:3]
+                        ns_vals = [
+                            self._test_prediction(model, tokenizer, np_text, target_true, target_new)
+                            for np_text in nps
+                        ]
+                        ns = float(np.mean(ns_vals)) if ns_vals else 1.0
+                    else:
+                        ns = 1.0
+
+                    es_list.append(es)
+                    ps_list.append(ps)
+                    ns_list.append(ns)
+                except Exception as _e_metric:
+                    self.logger.debug(f"metric_fn probe failed: {_e_metric}")
+
+            es_mean = float(np.mean(es_list)) if es_list else 0.0
+            ps_mean = float(np.mean(ps_list)) if ps_list else 0.0
+            ns_mean = float(np.mean(ns_list)) if ns_list else 0.0
+            composite = (es_mean + ps_mean + ns_mean) / 3.0
+            return {"es": es_mean, "ps": ps_mean, "ns": ns_mean, "composite": composite}
+
+        return metric_fn
     
     def run_editing(self, model, tokenizer, requests):
         """Run model editing"""
@@ -295,6 +355,12 @@ class BaselineRunner:
             # Apply editing
             try:
                 if self.config.method == "emmet":
+                    # Prepare optional online metric function for greedy LoRA.
+                    metric_fn: Optional[Callable] = None
+                    if getattr(self.config, "edit_mode", "raw") == "lora_native" and getattr(
+                        self.config, "greedy_lora_steps", 1
+                    ) > 1:
+                        metric_fn = self._make_metric_fn(max_probes=8)
                     # Pass replay parameters if enabled
                     if self.config.replay_rate > 0:
                         edited_model, orig_weights, edit_distances = apply_emmet_to_model(
@@ -304,12 +370,14 @@ class BaselineRunner:
                             replay_rate=self.config.replay_rate,
                             replay_buffer_size=getattr(self.config, 'replay_buffer_size', 200),
                             replay_strategy=getattr(self.config, 'replay_strategy', 'random'),
-                            replay_weight=getattr(self.config, 'replay_weight', 1.0)
+                            replay_weight=getattr(self.config, 'replay_weight', 1.0),
+                            metric_fn=metric_fn,
                         )
                     else:
                         edited_model, orig_weights, edit_distances = apply_emmet_to_model(
                             model, tokenizer, batch_requests, hparams,
-                            copy=False, return_orig_weights=True
+                            copy=False, return_orig_weights=True,
+                            metric_fn=metric_fn,
                         )
                 elif self.config.method == "memit":
                     edited_model, orig_weights, _ = apply_memit_to_model(
