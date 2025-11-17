@@ -1,0 +1,51 @@
+example_id,subject,target_new,target_true,efficacy_score,paraphrase_score,neighborhood_score
+0,Nicholas Fairbairn,Vienna,London,1.0,1.0,1.0
+1,Alston G. Dayton,actor,politician,1.0,1.0,0.2
+2,Sunday Night Baseball,CBS,ESPN,0.0,0.5,0.8
+3,Primorsky Krai,Antarctica,Asia,1.0,0.5,1.0
+4,Henrique Maximiano Coelho Neto,Norway,Brazil,0.0,0.0,0.4
+5,Sheryl Crow,trumpet,guitar,0.0,0.0,1.0
+6,Manuel Ferraz de Campos Sales,Spain,Brazil,1.0,1.0,0.6
+7,Nintendo Software Planning & Development,Paris,Japan,0.0,0.0,1.0
+8,Karim Abdul Razak,outfielder,midfielder,0.0,0.0,1.0
+9,Norway,Rome,Oslo,1.0,0.0,1.0
+10,Opeth,Italy,Sweden,1.0,0.5,0.8
+11,Merisant,Montreal,Chicago,1.0,1.0,1.0
+12,Wallace Carothers,musician,chemistry,0.0,0.5,1.0
+13,The Bronx Is Burning,CNN,ESPN,1.0,0.5,1.0
+14,Cloud Nothings,Belgium,Cleveland,1.0,0.5,0.8
+15,Antonio Vivaldi,jazz,opera,0.0,0.0,0.4
+16,Bernard Giraudeau,Polish,French,1.0,1.0,1.0
+17,Bob Mason,midfielder,goaltender,1.0,1.0,0.4
+18,Hilary Putnam,actor,philosopher,1.0,1.0,0.6
+19,Philippine Lotto Draw,Italy,Philippines,1.0,1.0,0.0
+20,Loviisa,Italian,Swedish,1.0,1.0,1.0
+21,United States Patent and Trademark Office,Charlotte,Alexandria,1.0,1.0,0.8
+22,Paul Brill,Miami,Rome,1.0,0.5,0.8
+23,Larry Stabbins,Chicago,Bristol,1.0,1.0,0.6
+24,Upper Canada District School Board,Nevada,Ontario,1.0,1.0,0.6
+25,Samuel Naumbourg,London,Paris,0.0,0.0,1.0
+26,Windows Mobile 6.5,Apple,Microsoft,1.0,1.0,1.0
+27,Gantz,Australia,Japan,1.0,1.0,1.0
+28,Bentley Continental,Toyota,Bentley,1.0,0.0,0.8
+29,Passer à l'acte,Georgian,French,0.0,0.0,1.0
+30,Cyberdog,Sega,Apple,1.0,1.0,1.0
+31,Rudolph Isley,London,Cincinnati,1.0,1.0,0.0
+32,Windows Embedded Automotive,Sega,Microsoft,0.0,0.0,1.0
+33,Leo Villareal,Boston,Albuquerque,1.0,1.0,0.0
+34,Trevor Dunn,politician,composer,1.0,1.0,0.4
+35,Shunyi Olympic Rowing-Canoeing Park,Kuwait,Beijing,1.0,0.0,1.0
+36,Delta Goodrem,India,Australia,0.0,0.5,1.0
+37,Yutaka Abe,Chicago,Kyoto,1.0,1.0,0.8
+38,Honda Civic Hybrid,Volvo,Honda,1.0,1.0,1.0
+39,Luca Pacioli,physics,mathematics,0.0,0.5,0.8
+40,Halvor Schou,Sacramento,Oslo,1.0,1.0,0.8
+41,Pittsburgh,Budapest,Sheffield,1.0,1.0,0.2
+42,Henri Queuille,English,French,0.0,0.0,0.4
+43,DJ Die,Madrid,Devon,1.0,1.0,0.8
+44,Jean Bourdichon,English,French,0.0,0.0,0.4
+45,Thoranai,English,Tamil,1.0,0.5,0.8
+46,Georgina Leonidas,composer,actor,0.0,0.5,0.8
+47,Turkmenistan,Antarctica,Asia,0.0,0.0,1.0
+48,Ludwig Klages,chemistry,psychology,1.0,1.0,0.6
+49,Gentle Ben,Netflix,CBS,1.0,1.0,0.8

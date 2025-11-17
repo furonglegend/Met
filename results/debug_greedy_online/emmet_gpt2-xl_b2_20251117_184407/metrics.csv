@@ -1,0 +1,9 @@
+metric,value
+efficacy_success,1.0
+paraphrase_success,0.9
+neighborhood_specificity,0.8133333333333334
+num_examples,15
+num_evaluated,15
+composite_score,0.868
+duration_seconds,579.224315
+duration_formatted,0:09:39.224315

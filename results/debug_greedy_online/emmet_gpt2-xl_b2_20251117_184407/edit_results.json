@@ -1,0 +1,385 @@
+[
+  {
+    "batch_idx": 0,
+    "start_idx": 0,
+    "end_idx": 2,
+    "num_edits": 2,
+    "subjects": [
+      "Nicholas Fairbairn",
+      "Alston G. Dayton"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.8964551324645172,
+        "new_edit_distance": 105.2546045931467,
+        "old_edit_distance": 128.3459895095861,
+        "delta_norm": 5.655453867400359,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 131.35299682617188,
+          "cur_zs_norm": 108.89773559570312,
+          "layer_ks_norm": 14.158063423505766,
+          "adj_norm": 0.0981031186225111,
+          "residual_norm": 77.65780840639914,
+          "inside_update_norm": 11.310907734800718,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.14619779830630464,
+          "D_norm": 14.678544903414714,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5612518548689398,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 1,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "metric_improved"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 1,
+    "start_idx": 2,
+    "end_idx": 4,
+    "num_edits": 2,
+    "subjects": [
+      "Sunday Night Baseball",
+      "Primorsky Krai"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.7625113454483656,
+        "new_edit_distance": 116.90730486152415,
+        "old_edit_distance": 138.27200756763398,
+        "delta_norm": 4.912651333564815,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 141.52842712402344,
+          "cur_zs_norm": 120.6737060546875,
+          "layer_ks_norm": 16.096974420937862,
+          "adj_norm": 0.0846015172311033,
+          "residual_norm": 81.74217959261749,
+          "inside_update_norm": 9.82530266712963,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1002414285165525,
+          "D_norm": 20.065626684556825,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5528257758574049,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 2,
+    "start_idx": 4,
+    "end_idx": 6,
+    "num_edits": 2,
+    "subjects": [
+      "Henrique Maximiano Coelho Neto",
+      "Sheryl Crow"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.9486041162152159,
+        "new_edit_distance": 114.98898316667211,
+        "old_edit_distance": 142.44382406221882,
+        "delta_norm": 5.471213079714586,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 145.21253967285156,
+          "cur_zs_norm": 118.23603057861328,
+          "layer_ks_norm": 15.034545667789976,
+          "adj_norm": 0.08672143376926059,
+          "residual_norm": 88.67702342682644,
+          "inside_update_norm": 10.94242615942917,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.12779242934505872,
+          "D_norm": 16.025878232745793,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.565637497289361,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 3,
+    "start_idx": 6,
+    "end_idx": 8,
+    "num_edits": 2,
+    "subjects": [
+      "Manuel Ferraz de Campos Sales",
+      "Nintendo Software Planning & Development"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.0993353135951547,
+        "new_edit_distance": 124.30207545599337,
+        "old_edit_distance": 153.57670294353778,
+        "delta_norm": 6.482836839258907,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 155.57437133789062,
+          "cur_zs_norm": 127.39524841308594,
+          "layer_ks_norm": 14.447285309716115,
+          "adj_norm": 0.09611760750608611,
+          "residual_norm": 95.54644376857874,
+          "inside_update_norm": 12.965673678517815,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.15437335504664293,
+          "D_norm": 14.433130080081254,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5648464244569054,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 4,
+    "start_idx": 8,
+    "end_idx": 10,
+    "num_edits": 2,
+    "subjects": [
+      "Karim Abdul Razak",
+      "Norway"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 1.4258590119238634,
+        "new_edit_distance": 129.69971451118758,
+        "old_edit_distance": 154.78792321321617,
+        "delta_norm": 7.801900183573368,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 156.88841247558594,
+          "cur_zs_norm": 132.94955444335938,
+          "layer_ks_norm": 13.382961424268423,
+          "adj_norm": 0.10130555489190311,
+          "residual_norm": 99.71216569521003,
+          "inside_update_norm": 15.603800367146736,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.21864603860544832,
+          "D_norm": 12.91827036624877,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5548551038375049,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 5,
+    "start_idx": 10,
+    "end_idx": 12,
+    "num_edits": 2,
+    "subjects": [
+      "Opeth",
+      "Merisant"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.9341648275639319,
+        "new_edit_distance": 114.98258337608844,
+        "old_edit_distance": 145.3092692258864,
+        "delta_norm": 5.7255665971916665,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 149.06057739257812,
+          "cur_zs_norm": 120.17475891113281,
+          "layer_ks_norm": 14.847690486535758,
+          "adj_norm": 0.08841965082370107,
+          "residual_norm": 90.13106096739634,
+          "inside_update_norm": 11.451133194383333,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.1215568562251549,
+          "D_norm": 16.917849794686244,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5710398195612755,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 6,
+    "start_idx": 12,
+    "end_idx": 14,
+    "num_edits": 2,
+    "subjects": [
+      "Wallace Carothers",
+      "The Bronx Is Burning"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.9957487048372613,
+        "new_edit_distance": 107.4508766930313,
+        "old_edit_distance": 130.59626191445085,
+        "delta_norm": 5.548798174459013,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 133.52426147460938,
+          "cur_zs_norm": 111.55238342285156,
+          "layer_ks_norm": 14.724090818480235,
+          "adj_norm": 0.09788178039559611,
+          "residual_norm": 81.65181091373032,
+          "inside_update_norm": 11.097596348918026,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.19247311111402754,
+          "D_norm": 15.270322305749668,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.5602449208434866,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  },
+  {
+    "batch_idx": 7,
+    "start_idx": 14,
+    "end_idx": 15,
+    "num_edits": 1,
+    "subjects": [
+      "Cloud Nothings"
+    ],
+    "edit_distances": {
+      "17": {
+        "preservation_distance": 0.5173029078901318,
+        "new_edit_distance": 101.1113410772027,
+        "old_edit_distance": 130.41745231480004,
+        "delta_norm": 3.4141973201197846,
+        "new_weights_norm": 117.1292953491211,
+        "original_weights_norm": 117.1292953491211,
+        "inside_norms": {
+          "zs_norm": 132.9373779296875,
+          "cur_zs_norm": 104.33064270019531,
+          "layer_ks_norm": 15.909657562691423,
+          "adj_norm": 0.08726610404890499,
+          "residual_norm": 78.24796024368011,
+          "inside_update_norm": 6.828394640239569,
+          "pseudo_inverse": false,
+          "C_inv_norm": 10.260858456386122,
+          "D_inv_norm": 0.08847117614852443,
+          "D_norm": 11.303116376809676,
+          "cov": 22279.11087307563
+        },
+        "lora_residual_rel": null,
+        "weight_name": "transformer.h.17.mlp.c_proj.weight",
+        "lora_fallback": false,
+        "lora_fallback_reason": null,
+        "edit_mode": "lora_native",
+        "trust_enable": true,
+        "trust_score": 0.576755966700474,
+        "trust_applied": false,
+        "trust_action": null,
+        "trust_scale": 1.0,
+        "greedy_step": 0,
+        "greedy_accept": true,
+        "greedy_scale": 0.5,
+        "greedy_reason": "no_improvement"
+      }
+    },
+    "status": "success"
+  }
+]
