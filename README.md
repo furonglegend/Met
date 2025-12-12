@@ -83,7 +83,7 @@ conda activate emmet-edit
 # 5. Verify installation
 python -c "from data import make_dataset; print('✅ Installation successful')"
 
-
+```
 # Running Experiments & Visualizations
 
 ## Three baseline comparison experiments (ROME / MEMIT / EMMET)
@@ -95,7 +95,7 @@ scripts\run_all_baselines.cmd
 # Linux / macOS
 bash scripts/run_all_baselines.sh
 
-
+```
 
 **Auto-generated outputs:**
 - `results/baseline_comparison/baseline_comparison.csv` – Aggregated results
@@ -105,7 +105,7 @@ bash scripts/run_all_baselines.sh
 
 After the experiment completes, charts are saved in the `results/baseline_comparison/figs/` directory:
 
-```bash
+
 # List all charts
 ls results/baseline_comparison/figs/
 
@@ -127,7 +127,7 @@ xdg-open results/baseline_comparison/figs/
 
 ### Manual Result Analysis
 
-```bash
+
 # Analyze experiment results in a specific directory
 python scripts/analyze_results.py --results_dir results/baseline_comparison
 
@@ -158,7 +158,7 @@ python scripts/analyze_results.py --results_dir results/baseline --output my_ana
 
 ### Using uv
 
-```bash
+
 # Add a package
 uv add <package-name>
 
